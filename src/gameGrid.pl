@@ -46,3 +46,24 @@ gamePlay(Grid, Column, PlayerId, Result) :-
 
 gameGridGet(Grid, ColumnId, LineId, Result) :-
     listFetch(Grid, ColumnId, Column) -> listFetch(Column, LineId, Result).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET REMAINING PLAYS
+% Return the list of non-full columns' indexes
+% gameRemainingPlays(Grid, ColumnList).
+gameRemainingPlays([], [], _).
+
+gameRemainingPlays([Column|Grid], Indexes, ColumnId) :-
+    length(Column, ColumnHeight),
+    linesNumber(ColumnHeight),
+    ColumnId1 is ColumnId + 1,
+    gameRemainingPlays(Grid, Indexes, ColumnId1).
+
+gameRemainingPlays([Column|Grid], [ColumnId|Indexes], ColumnId) :-
+    length(Column, ColumnHeight),
+    not(linesNumber(ColumnHeight)),
+    ColumnId1 is ColumnId + 1,
+    gameRemainingPlays(Grid, Indexes, ColumnId1).
+
+gameRemainingPlays(Grid, Indexes) :-
+    gameRemainingPlays(Grid, Indexes, 1).
