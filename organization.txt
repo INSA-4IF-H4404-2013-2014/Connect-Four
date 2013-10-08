@@ -1,17 +1,23 @@
 
+// trelot
+
 PUISSANCE 4
 
-Mechanism de jeux:
+Mechanism de jeux: (done!)
     Sauvgarde des etats des colone et placer un pion
-    - Bob
-    - Aline
-
     - Remi
     - Guillaume
 
-Procedure de verification 4 pions aligners
+Test si un coup est gagnant
+    - Louise
+    - Martin
+
+Partie terminal
     - Martin
     - Louise
+
+
+
 
 IA1: (exploration de l'arbre des possibilitees)
     - Bob
@@ -30,3 +36,5 @@ IA4: (XXX)
 
 Automatisation:
     automatiser les coup de chaque IA
+    - Aline
+    - Bobe
