@@ -1,0 +1,32 @@
+
+PUISSANCE 4
+
+Mechanism de jeux:
+    Sauvgarde des etats des colone et placer un pion
+    - Bob
+    - Aline
+
+    - Remi
+    - Guillaume
+
+Procedure de verification 4 pions aligners
+    - Martin
+    - Louise
+
+IA1: (exploration de l'arbre des possibilitees)
+    - Bob
+    - Louise
+
+IA2: (random)
+    - Aline
+    - Martin
+
+IA3: (moteur d'inferrence)
+    - Remi
+    - Guillaume
+
+IA4: (XXX)
+
+
+Automatisation:
+    automatiser les coup de chaque IA

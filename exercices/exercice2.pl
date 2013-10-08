@@ -78,10 +78,10 @@ testsExo2 :-
     membre(a, [a,b]),
     not(membre(x, [a,b])),
 
-	element1(b,[a,b,c],[a,c]),
-	element1(a,[a,b,c],[b,c]),
-	element1(a,[b,a,c],[b,c]),
-	element1(a,[b,d,w,z,d,a],[b,d,w,z,d]),
+    element1(b,[a,b,c],[a,c]),
+    element1(a,[a,b,c],[b,c]),
+    element1(a,[b,a,c],[b,c]),
+    element1(a,[b,d,w,z,d,a],[b,d,w,z,d]),
 	
     extract([a,b,c,d], [b,c]),
     extract([a,b,c,d], [c,b]),
