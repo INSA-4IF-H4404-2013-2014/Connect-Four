@@ -1,0 +1,49 @@
+
+// trelot
+
+PUISSANCE 4
+
+
+—————— tache finie
+
+Mechanism de jeux:
+    Sauvgarde des etats des colone et placer un pion
+    - Remi
+    - Guillaume
+
+
+—————— tache restante bloquante :
+
+Test gagnant et test fin de partie
+    - Louise
+    - Martin
+
+Automatisation des parties
+    - Aline
+    - Nicolas
+
+
+—————— tache paralelisable :
+
+contrendu LaTeX des exercices :
+    - Aline
+    - Martin
+
+IA1: (exploration de l'arbre des possibilitees)
+    - Bob
+    - Louise
+
+IA2: (random)
+    - Aline
+    - Martin
+
+IA3: (moteur d'inferrence)
+    - Remi
+    - Guillaume
+
+IA4: (a definir ...)
+
+IA permettant de faire jouer le joueur :
+    (http://stackoverflow.com/questions/5107745/user-input-how-can-we-do-it)
+    - Aline
+    - Martin
