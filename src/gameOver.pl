@@ -2,8 +2,8 @@
 :- [gameCore].
 
 % Returns whether the Grid is full or not
-gridIsFull([]).
-gridIsFull([T|M]) :- length(T,N), linesNumber(LN), N == LN, gridIsFull(M).
+gameGridIsFull([]).
+gameGridIsFull([T|M]) :- length(T,N), linesNumber(LN), N == LN, gameGridIsFull(M).
 
 % Check if there is 4 pawns of the same color in one diagonal
 % privateWonDiagonal(P,M) :-
@@ -12,12 +12,12 @@ gridIsFull([T|M]) :- length(T,N), linesNumber(LN), N == LN, gridIsFull(M).
 % privateWonColumn(P,M) :-
 
 % Check if a player won (P is the player, M the grid)
-playerWon(P,M) :- privateWonDiagonal(P,M).
-playerWon(P,M) :- privateWonLine(P,M).
-playerWon(P,M) :- privateWonColumn(P,M).
+gamePlayerWon(P,M) :- privateGameWonDiagonal(P,M).
+gamePlayerWon(P,M) :- privateGameWonLine(P,M).
+gamePlayerWon(P,M) :- privateGameWonColumn(P,M).
 
 
 % Checks if the game is over
-gameOver(1) :- playerWon(1).
-gameOver(2) :- playerWon(2).
-gameOver(0) :- columnsNumber(X), gridIsFull(X).
+gameOver(1) :- gamePlayerWon(1).
+gameOver(2) :- gamePlayerWon(2).
+gameOver(0) :- columnsNumber(X), gameGridIsFull(X).

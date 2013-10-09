@@ -26,9 +26,9 @@ testPrivateAlmostFullGrid([
 testGridIsFull :-
     testPrivateFullGrid(X),
     testPrivateAlmostFullGrid(Y),
-    gridIsFull(X),
-    not(gridIsFull(Y)),
-    not(gridIsFull([[], [], [], [], [], [], []])).
+    gameGridIsFull(X),
+    not(gameGridIsFull(Y)),
+    not(gameGridIsFull([[], [], [], [], [], [], []])).
 
 testAllGameOver :-
     test(testGridIsFull).
