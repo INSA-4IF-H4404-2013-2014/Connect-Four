@@ -41,3 +41,8 @@ testGameIsValidePlay :-
     gameIsValidePlay(R5, 1),
     not(gameIsValidePlay(R6, 1)).
 
+testAllGameGrid :-
+    testListFetch,
+    testGameGridGet,
+    testGameRemainingPlays,
+    testGameIsValidePlay.
