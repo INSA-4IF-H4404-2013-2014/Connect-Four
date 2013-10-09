@@ -1,3 +1,4 @@
+
 :- [gameGrid].
 
 % Returns whether the Grid is full or not
@@ -20,22 +21,3 @@ playerWon(P,M) :- privateWonColumn(P,M).
 gameOver(1) :- playerWon(1).
 gameOver(2) :- playerWon(2).
 gameOver(0) :- columnsNumber(X), gridIsFull(X).
-
-
-
-
-
-
-
-% UNIT TESTS
-fullGrid([[1,1,1,2,1,1],[1,1,1,1,2,1],[1,2,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,2],[1,1,1,1,1,1],[1,1,1,1,1,1]]).
-
-almostFullGrid([[1,1,1,2,1,1],[1,1,1,1,2,1],[2,1,2,1,1,1],[1,1,1,1,1,1],[1,1,1,1,2],[1,1,1,1,1,1],[1,1,1,1,1,1]]).
-
-testGridIsFull :-
-	fullGrid(X), gridIsFull(X),
-	almostFullGrid(Y), not(gridIsFull(Y)),
-	not(gridIsFull([[], [], [], [], [], [], []])).
-
-test :-
-	testGridIsFull.
