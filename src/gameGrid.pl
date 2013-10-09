@@ -20,8 +20,15 @@ listFetch([_|List], Pos, Result) :-
 % Create a new empty matrix
 % gameNewGrid(GridResult).
 
-% work around pour eviter d'exploser la pile
-gameNewGrid([[],[],[],[],[],[],[]]).
+gameNewGrid(0,[]).
+
+gameNewGrid(Col, [[]|Matrix]) :-
+    Col1 is Col-1,
+    gameNewGrid(Col1, Matrix).
+
+gameNewGrid(Matrix) :-
+    columnsNumber(L),
+    gameNewGrid(L, Matrix), !.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INSERT A PAWN IN THE GRID
