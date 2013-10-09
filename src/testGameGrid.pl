@@ -29,3 +29,15 @@ testGameRemainingPlays :-
     gamePlay(R5, 1, 1, R6),
     gameRemainingPlays(R5, [1,2,3,4,5,6,7]),
     gameRemainingPlays(R6, [2,3,4,5,6,7]).
+
+testGameIsValidePlay :-
+    gameNewGrid(R0),
+    gamePlay(R0, 1, 1, R1),
+    gamePlay(R1, 1, 1, R2),
+    gamePlay(R2, 1, 1, R3),
+    gamePlay(R3, 1, 1, R4),
+    gamePlay(R4, 1, 1, R5),
+    gamePlay(R5, 1, 1, R6),
+    gameIsValidePlay(R5, 1),
+    not(gameIsValidePlay(R6, 1)).
+

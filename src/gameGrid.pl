@@ -67,3 +67,12 @@ gameRemainingPlays([Column|Grid], [ColumnId|Indexes], ColumnId) :-
 
 gameRemainingPlays(Grid, Indexes) :-
     gameRemainingPlays(Grid, Indexes, 1).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST IS A VALIDE PLAY
+% Success if the column is not already full
+% gameIsValidePlay(Grid, ColumnId).
+gameIsValidePlay(Grid, ColumnId) :-
+    listFetch(Grid, ColumnId, Column) ->
+        length(Column, ColumnHeight),
+        not(linesNumber(ColumnHeight)).
