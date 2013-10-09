@@ -2,7 +2,7 @@
 %% TODO : delete write()
 %% TODO : get real AIs and gameOver
 
-:- [gameGrid]. % include gameGrid.pl
+:- [gameCore].
 
 %%%%%%%%%%%%
 % Test datas

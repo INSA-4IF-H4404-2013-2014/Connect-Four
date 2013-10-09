@@ -1,10 +1,10 @@
 
-:- [testGameGrid].
+:- [testGameCore].
 :- [testGameOver].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
 
 testAll :-
-    testAllGameGrid,
+    testAllGameCore,
     testAllGameOver.

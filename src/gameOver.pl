@@ -1,5 +1,5 @@
 
-:- [gameGrid].
+:- [gameCore].
 
 % Returns whether the Grid is full or not
 gridIsFull([]).

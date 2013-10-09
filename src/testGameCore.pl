@@ -1,6 +1,6 @@
 
 :- [testUtil].
-:- [gameGrid].
+:- [gameCore].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
@@ -42,7 +42,7 @@ testGameIsValidePlay :-
     gameIsValidePlay(R5, 1),
     not(gameIsValidePlay(R6, 1)).
 
-testAllGameGrid :-
+testAllGameCore :-
     test(testListFetch),
     test(testGameGridGet),
     test(testGameRemainingPlays),
