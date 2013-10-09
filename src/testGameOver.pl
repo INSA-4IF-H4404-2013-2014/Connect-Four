@@ -1,4 +1,5 @@
 
+:- [testUtil].
 :- [gameOver].
 
 
@@ -30,4 +31,4 @@ testGridIsFull :-
     not(gridIsFull([[], [], [], [], [], [], []])).
 
 testAllGameOver :-
-    testGridIsFull.
+    test(testGridIsFull).

@@ -1,4 +1,5 @@
 
+:- [testUtil].
 :- [gameGrid].
 
 
@@ -42,7 +43,7 @@ testGameIsValidePlay :-
     not(gameIsValidePlay(R6, 1)).
 
 testAllGameGrid :-
-    testListFetch,
-    testGameGridGet,
-    testGameRemainingPlays,
-    testGameIsValidePlay.
+    test(testListFetch),
+    test(testGameGridGet),
+    test(testGameRemainingPlays),
+    test(testGameIsValidePlay).
