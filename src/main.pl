@@ -1,0 +1,5 @@
+
+:- [gameCore].
+:- [gamePrint].
+:- [gameOver].
+:- [launcher].

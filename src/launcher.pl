@@ -28,20 +28,20 @@ gameOver(Grid, Result) :- gameGridGet(Grid, Result, 4, Result).
 launch(Player1, Player2, Result) :- write('Debut'), gameNewGrid(Grid), launch(Grid, Player1, Player2, Result, 1).
 
 % Check for the first time if the game is over
-launch(Grid, Player1, Player2, Result, _) :- write('Game over ?'), gameOver(Grid, Result).
+launch(Grid, _, _, Result, _) :- write('Game over ?'), gameOver(Grid, Result).
 
 % Let the Player1 choose the column in which he wants to play
 % Put the pawn in the right column
 % Calls launch for Player2
 launch(Grid, Player1, Player2, Result, 1) :- 
 	write('1'),
-	call(Player1(Grid), NumCol),
+	call(Player1, Grid, NumCol),
 	gamePlay(Grid, NumCol, 1, ResGrid),
 	launch(ResGrid, Player1, Player2, Result, 2).
 
 % Same as precedent call with Player2 playing
 launch(Grid, Player1, Player2, Result, 2) :- 
 	write('2'),
-	call(Player2(Grid), NumCol),
+	call(Player2, Grid, NumCol),
 	gamePlay(Grid, NumCol, 2, ResGrid),
 	launch(ResGrid, Player1, Player2, Result, 1).

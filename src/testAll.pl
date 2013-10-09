@@ -1,4 +1,5 @@
 
+:- [main].
 :- [testGameCore].
 :- [testGameOver].
 
