@@ -2,4 +2,4 @@
 :- [gameCore].
 :- [gamePrint].
 :- [gameOver].
-:- [launcher].
+:- [gameLauncher].
