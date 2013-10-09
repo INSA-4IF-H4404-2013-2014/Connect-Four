@@ -55,6 +55,14 @@ gameGridGet(Grid, ColumnId, LineId, Result) :-
     listFetch(Grid, ColumnId, Column) -> listFetch(Column, LineId, Result).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET PAWN IN THE GRID
+% Returns the value of a Pawn at the specified line and column
+% gameGridGet(Grid, ColumnId, LineId, ResultContent).
+
+gameColumnHeight(Grid, ColumnId, Result) :-
+    listFetch(Grid, ColumnId, Column) -> length(Column, Result).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET REMAINING PLAYS
 % Return the list of non-full columns' indexes
 % gameRemainingPlays(Grid, ColumnList).
