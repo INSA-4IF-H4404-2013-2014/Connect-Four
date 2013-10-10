@@ -43,6 +43,16 @@ testPrivateDrawMatchGrid2([
 	[1,1,1,2,2,2],
 	[2,2,2,1,1,1]
 ]).
+
+testPrivateWonPlayer([
+	[2,1,1,1,1],
+	[2,1,1,2,2],
+	[2,2,2,1,1],
+	[1,1,1,2,2,2],
+	[2,2,2,1,1],
+	[1,1,1,2,2,2],
+	[2,2,2,1,1,1]
+]).
 	
 testGridIsFull :-
     testPrivateFullGrid(X),
@@ -51,8 +61,15 @@ testGridIsFull :-
     not(gameGridIsFull(Y)),
     not(gameGridIsFull([[], [], [], [], [], [], []])).
 
-testGameOver :- 
-	testPrivateDrawMatchGrid1(M),
+testPrivateGamePlayerWonStarCheckColumn :-
+	testPrivateDrawMatchGrid2(M),
+	linesNumber(LN),
+	not(privateGamePlayerWonStarCheckColumn(M, 2, LN, LN, 1)),
+	testPrivateWonPlayer(M2),
+	privateGamePlayerWonStarCheckColumn(M2, 1, 5, 5, 1).
+
+testGameOver :-
+	testPrivateDrawMatchGrid2(M),
 	gameOver(M, 1, 0),
 	gameOver(M, 2, 0),
 	gameOver(M, 3, 0),
@@ -60,8 +77,11 @@ testGameOver :-
 	gameOver(M, 5, 0),
 	gameOver(M, 6, 0),
 	gameOver(M, 7, 0),
-	not(gameOver(M, 45, 0)).
+	not(gameOver(M, 45, 0)),
+	testPrivateDrawMatchGrid1(M2),
+	gameOver(M2, 5, 0).
 	
 testAllGameOver :-
     test(testGridIsFull),
+	test(testPrivateGamePlayerWonStarCheckColumn),
 	test(testGameOver).
