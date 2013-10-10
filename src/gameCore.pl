@@ -7,6 +7,13 @@ columnsNumber(7).
 linesNumber(6).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET THE OTHER PLAYER ID
+% Return the other player id
+% gameOtherPlayer(PlayerId, OtherPlayerId).
+gameOtherPlayer(1, 2).
+gameOtherPlayer(2, 1).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FETCH AN ELEMENT
 % listFetch(list,index,element) <=> element = list[index]
 
