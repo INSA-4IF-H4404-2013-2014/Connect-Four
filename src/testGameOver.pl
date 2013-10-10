@@ -53,6 +53,17 @@ testPrivateWonPlayer([
 	[1,1,1,2,2,2],
 	[2,2,2,1,1,1]
 ]).
+
+%This can be reused for all directions
+testPrivateNotWon1([
+	[2,2,2],
+	[1,2,1],
+	[1,1],
+	[1],
+	[2,1],
+	[2,2,1],
+	[]
+]).
 	
 testGridIsFull :-
     testPrivateFullGrid(X),
@@ -66,7 +77,9 @@ testPrivateGamePlayerWonStarCheckColumn :-
 	linesNumber(LN),
 	not(privateGamePlayerWonStarCheckColumn(M, 2, LN, LN, 1)),
 	testPrivateWonPlayer(M2),
-	privateGamePlayerWonStarCheckColumn(M2, 1, 5, 5, 1).
+	privateGamePlayerWonStarCheckColumn(M2, 1, 5, 5, 1),
+	testPrivateNotWon1(M3),
+	not(privateGamePlayerWonStarCheckColumn(M3, 1, 3, 3, 2)).
 
 testGameOver :-
 	testPrivateDrawMatchGrid2(M),

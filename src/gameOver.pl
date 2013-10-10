@@ -14,7 +14,7 @@ privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, CurrentColumn, TopLi
 % Check if there is 4 pawns of the same color in one column
 privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
 	Delta is (TopLine - CurrentLine),
-	Delta >= 3 ;
+	Delta >= 4 ;
 	gameGridGet(Matrix, LastColumnPlayed, CurrentLine, Player),
 	CurrentLine2 is (CurrentLine - 1),
 	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine2, Player).
