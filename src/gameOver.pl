@@ -6,10 +6,10 @@ gameGridIsFull([]).
 gameGridIsFull([T|M]) :- length(T,N), linesNumber(LN), N == LN, gameGridIsFull(M).
 
 % Check if there is 4 pawns of the same color in one diagonal
-privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :- fail.
+%privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :- fail.
 
 % Check if there is 4 pawns of the same color in one line
-privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, CurrentColumn, TopLine, Player) :- fail.
+%privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, CurrentColumn, TopLine, Player) :- fail.
 
 % Check if there is 4 pawns of the same color in one column
 privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
@@ -20,8 +20,8 @@ privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLi
 	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine2, Player).
 
 % Check if a player won (P is the player, M the grid)
-gamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :- privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, TopLine, Player).
-gamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :- privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, LastColumnPlayed, TopLine, Player).
+%gamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :- privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, TopLine, Player).
+%gamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :- privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, LastColumnPlayed, TopLine, Player).
 gamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :- privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, TopLine, Player).
 
 
