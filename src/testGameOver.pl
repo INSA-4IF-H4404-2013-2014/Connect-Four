@@ -1,7 +1,7 @@
 
 :- [testUtil].
 :- [gameOver].
-
+:- [gamePrint].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
@@ -74,7 +74,35 @@ testPrivateWonColumnNotWonOthers([
 	[1,1,2],
 	[2,2,2]
 ]).
-	
+
+testPrivateWonDiagonal1([
+	[],
+	[1],
+	[2,1,2,1],
+	[2,2,1],
+	[2,1,2],
+	[1],
+	[]
+]).
+
+privatePrintAllGameOverTestGrids :-
+	testPrivateFullGrid(M),
+	testPrivateAlmostFullGrid(M2),
+	testPrivateDrawMatchGrid1(M3),
+	testPrivateDrawMatchGrid2(M4),
+	testPrivateWonPlayer(M5),
+	testPrivateNotWon1(M6),
+	testPrivateWonColumnNotWonOthers(M7),
+	testPrivateWonDiagonal1(M8),
+	gamePrintGrid(M),write('\n'),
+	gamePrintGrid(M2),write('\n'),
+	gamePrintGrid(M3),write('\n'),
+	gamePrintGrid(M4),write('\n'),
+	gamePrintGrid(M5),write('\n'),
+	gamePrintGrid(M6),write('\n'),
+	gamePrintGrid(M7),write('\n'),
+	gamePrintGrid(M8).
+
 testGridIsFull :-
     testPrivateFullGrid(X),
     testPrivateAlmostFullGrid(Y),
@@ -99,7 +127,25 @@ testPrivateGamePlayerWonStarCheckColumn :-
 	not(privateGamePlayerWonStarCheckColumn(M4, 4, 4, 4, 2)),
 	privateGamePlayerWonStarCheckColumn(M4, 4, 4, 4, 1).
 
-testGameOver :-
+testPrivateGamePlayerWonStarCheckDiagonal :-
+	testPrivateDrawMatchGrid1(M),
+	testPrivateWonPlayer(M2),
+	testPrivateNotWon1(M3),
+	testPrivateWonColumnNotWonOthers(M4),
+	testPrivateWonDiagonal1(M5),
+	not(privateGamePlayerWonStarCheckDiagonal(M, 3, 3, 1)),
+	not(privateGamePlayerWonStarCheckDiagonal(M, 3, 3, 2)),
+	not(privateGamePlayerWonStarCheckDiagonal(M, 4, 4, 1)),
+	not(privateGamePlayerWonStarCheckDiagonal(M, 4, 4, 2)),
+	not(privateGamePlayerWonStarCheckDiagonal(M2, 3, 4, 1)),
+	not(privateGamePlayerWonStarCheckDiagonal(M2, 3, 4, 2)),
+	not(privateGamePlayerWonStarCheckDiagonal(M3, 4, 1, 1)),
+	not(privateGamePlayerWonStarCheckDiagonal(M3, 4, 1, 2)),
+	not(privateGamePlayerWonStarCheckDiagonal(M4, 4, 4, 2)),
+	not(privateGamePlayerWonStarCheckDiagonal(M4, 4, 4, 2)),
+	privateGamePlayerWonStarCheckDiagonal(M5, 3, 4, 1).
+
+testGameOverDrawMatch :-
 	testPrivateDrawMatchGrid2(M),
 	gameOver(M, 1, 0),
 	gameOver(M, 2, 0),
@@ -115,4 +161,5 @@ testGameOver :-
 testAllGameOver :-
     test(testGridIsFull),
 	test(testPrivateGamePlayerWonStarCheckColumn),
-	test(testGameOver).
+	test(testPrivateGamePlayerWonStarCheckDiagonal),
+	test(testGameOverDrawMatch).
