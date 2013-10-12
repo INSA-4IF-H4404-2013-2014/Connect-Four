@@ -6,13 +6,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
 testPrivateFullGrid([
-    [1,1,1,2,1,1],
-    [1,1,1,1,2,1],
-    [1,2,1,1,1,1],
-    [1,1,1,1,1,1],
-    [1,1,1,1,1,2],
-    [1,1,1,1,1,1],
-    [1,1,1,1,1,1]]).
+    [2,2,2,1,2,2],
+    [2,2,2,2,1,2],
+    [2,1,2,2,2,2],
+    [2,2,2,2,2,2],
+    [2,2,2,2,2,1],
+    [2,2,2,2,2,2],
+    [2,2,2,2,2,2]]).
 
 testPrivateAlmostFullGrid([
     [1,1,1,2,1,1],
@@ -232,9 +232,20 @@ testGameOverDrawMatch :-
 	testPrivateDrawMatchGrid1(M2),
 	gameOver(M2, 5, 0).
 
+testGameOver :-
+	test(testGameOverDrawMatch),
+	testPrivateFullGrid(M),
+	testPrivateAlmostFullGrid(M2),
+	gameOver(M, 1, 2),
+	gameOver(M, 2, 2),
+	gameOver(M, 3, 2),
+	gameOver(M, 4, 2),
+	gameOver(M2, 3, 1),
+	not(gameOver(M2, 3, 2)).
+
 testAllGameOver :-
     test(testGridIsFull),
 	test(testPrivateGamePlayerWonStarCheckColumn),
 	test(testPrivateGamePlayerWonStarCheckDiagonal),
 	test(testPrivateGamePlayerWonStarCheckLine),
-	test(testGameOverDrawMatch).
+	test(testGameOver).

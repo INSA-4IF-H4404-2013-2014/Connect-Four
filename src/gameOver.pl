@@ -9,7 +9,7 @@ gameGridIsFull([T|M]) :- length(T,N), linesNumber(LN), N == LN, gameGridIsFull(M
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%% Check if there are 4 pawns of the same color in the 2 diagonals %%%%%%%%
+%%%%%%%% Checks if there are 4 pawns of the same color in the 2 diagonals %%%%%%%%
 privateGamePlayerWonStarCheckDiagonalRoutine(Matrix, ReferenceColumn, CurrentColumn, TopLine, CurrentLine, Player, Direction) :-
 	Delta is abs(ReferenceColumn - CurrentColumn),
 	Delta >= 4 ;
@@ -35,7 +35,7 @@ privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, Player)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%% Check if there are 4 pawns of the same color in the one line %%%%%%%%%%
+%%%%%%%%% Checks if there are 4 pawns of the same color in the one line %%%%%%%%%%
 privateGamePlayerWonStarCheckLineRoutine(Matrix, ReferenceColumn, CurrentColumn, TopLine, Player, Direction) :-
 	Delta is abs(ReferenceColumn - CurrentColumn),
 	Delta >= 4 ;
@@ -59,7 +59,7 @@ privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, TopLine, Player) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%% Check if there are 4 pawns of the same color in one column %%%%%%%%%%%
+%%%%%%%%%% Checks if there are 4 pawns of the same color in one column %%%%%%%%%%%
 privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
 	Delta is (TopLine - CurrentLine),
 	Delta >= 4 ;
@@ -71,12 +71,10 @@ privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% Check if a player won %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Checks if a player won %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, Player).
-%privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
-	%privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, LastColumnPlayed, TopLine, Player).
-privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
+	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, Player) ;
+	privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, TopLine, Player) ;
 	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, TopLine, Player).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -84,6 +82,12 @@ privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% Checks if the game is over %%%%%%%%%%%%%%%%%%%%%%%%%%
+% Returns true if game is over:
+%	"Player" variable will get
+%		- 0 for draw match,
+%		- 1 if player1 won,
+%		- 2 if player2 won.
+% Returns false if game is not over yet.
 gameOver(Matrix, LastColumPlayed, Player) :- 
 	gameColumnHeight(Matrix, LastColumnPlayed, TopLine),
 	gameGridGet(Matrix, LastColumPlayed, TopLine, Player),
