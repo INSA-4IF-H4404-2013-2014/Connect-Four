@@ -10,22 +10,26 @@ gameGridIsFull([T|M]) :- length(T,N), linesNumber(LN), N == LN, gameGridIsFull(M
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Check if there is 4 pawns of the same color in the 4 sub-diagonals %%%%%%
-privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn, TopLine, CurrentLine, Player, ColumnDirection, LineDirection) :-
-	Delta is abs(LastColumnPlayed - CurrentColumn),
+privateGamePlayerWonStarCheckDiagonalRoutine(Matrix, ReferenceColumn, CurrentColumn, TopLine, CurrentLine, Player, Direction) :-
+	Delta is abs(ReferenceColumn - CurrentColumn),
 	Delta >= 4 ;
 	gameGridGet(Matrix, CurrentColumn, CurrentLine, Player),
-	CurrentColumn2 is (CurrentColumn + ColumnDirection),
-	CurrentLine2 is (CurrentLine + LineDirection),
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn2, TopLine, CurrentLine2, Player, ColumnDirection, LineDirection).
+	CurrentColumn2 is (CurrentColumn + Direction),
+	CurrentLine2 is (CurrentLine - 1),
+	privateGamePlayerWonStarCheckDiagonalRoutine(Matrix, ReferenceColumn, CurrentColumn2, TopLine, CurrentLine2, Player, Direction).
 
-privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn, TopLine, CurrentLine, Player) :-
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn, TopLine, CurrentLine, Player, -1, -1) ;
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn, TopLine, CurrentLine, Player, 1, 1) ;
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn, TopLine, CurrentLine, Player, -1, 1) ;
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, CurrentColumn, TopLine, CurrentLine, Player, 1, -1).
+privateGamePlayerWonStarCheckDiagonal(Matrix, LastPlayedColumn, CurrentColumn, TopLine, CurrentLine, Player, Direction) :-
+	gameGridGet(Matrix, CurrentColumn, CurrentLine, Player),
+	CurrentColumn2 is (CurrentColumn - Direction),
+	CurrentLine2 is (CurrentLine + 1),
+	(
+		privateGamePlayerWonStarCheckDiagonal(Matrix, LastPlayedColumn, CurrentColumn2, TopLine, CurrentLine2, Player, Direction) ;
+		privateGamePlayerWonStarCheckDiagonalRoutine(Matrix, CurrentColumn, CurrentColumn, CurrentLine, CurrentLine, Player, Direction)
+	).
 
 privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, Player) :-
-	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, LastColumnPlayed, TopLine, TopLine, Player).
+	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, LastColumnPlayed, TopLine, TopLine, Player, 1) ;
+	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, LastColumnPlayed, TopLine, TopLine, Player, -1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
