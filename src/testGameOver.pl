@@ -95,6 +95,33 @@ testPrivateWonDiagonal2([
 	[]
 ]).
 
+testPrivateWonDiagonal3([
+	[2,1,2,1],
+	[1,2,1],
+	[2,1],
+	[1],
+	[2,1],
+	[1,2,1],
+	[2,1,2,1]
+]).
+
+testPrivateWonLine1([
+	[2,2,2,1],
+	[1,2,2,1],
+	[1,1,2,1],
+	[2,2,1,1]
+]).
+
+testPrivateWonLine2([
+	[2,1],
+	[2,1],
+	[2,1],
+	[2,1],
+	[2,1],
+	[2,1],
+	[2,1]
+]).
+
 privatePrintAllGameOverTestGrids :-
 	testPrivateFullGrid(M),
 	testPrivateAlmostFullGrid(M2),
@@ -105,6 +132,9 @@ privatePrintAllGameOverTestGrids :-
 	testPrivateWonColumnNotWonOthers(M7),
 	testPrivateWonDiagonal1(M8),
 	testPrivateWonDiagonal2(M9),
+	testPrivateWonDiagonal3(M10),
+	testPrivateWonLine1(M11),
+	testPrivateWonLine2(M12),
 	gamePrintGrid(M),write('\n'),
 	gamePrintGrid(M2),write('\n'),
 	gamePrintGrid(M3),write('\n'),
@@ -113,7 +143,10 @@ privatePrintAllGameOverTestGrids :-
 	gamePrintGrid(M6),write('\n'),
 	gamePrintGrid(M7),write('\n'),
 	gamePrintGrid(M8),write('\n'),
-	gamePrintGrid(M9).
+	gamePrintGrid(M9),write('\n'),
+	gamePrintGrid(M10),write('\n'),
+	gamePrintGrid(M11),write('\n'),
+	gamePrintGrid(M12).
 
 testGridIsFull :-
     testPrivateFullGrid(X),
@@ -146,6 +179,7 @@ testPrivateGamePlayerWonStarCheckDiagonal :-
 	testPrivateWonColumnNotWonOthers(M4),
 	testPrivateWonDiagonal1(M5),
 	testPrivateWonDiagonal2(M6),
+	testPrivateWonDiagonal3(M7),
 	not(privateGamePlayerWonStarCheckDiagonal(M, 3, 3, 1)),
 	not(privateGamePlayerWonStarCheckDiagonal(M, 3, 3, 2)),
 	not(privateGamePlayerWonStarCheckDiagonal(M, 4, 4, 1)),
@@ -154,12 +188,36 @@ testPrivateGamePlayerWonStarCheckDiagonal :-
 	not(privateGamePlayerWonStarCheckDiagonal(M2, 3, 4, 2)),
 	not(privateGamePlayerWonStarCheckDiagonal(M3, 4, 1, 1)),
 	not(privateGamePlayerWonStarCheckDiagonal(M3, 4, 1, 2)),
-	not(privateGamePlayerWonStarCheckDiagonal(M4, 4, 4, 2)),
+	not(privateGamePlayerWonStarCheckDiagonal(M4, 4, 4, 1)),
 	not(privateGamePlayerWonStarCheckDiagonal(M4, 4, 4, 2)),
 	privateGamePlayerWonStarCheckDiagonal(M5, 3, 4, 1),
 	privateGamePlayerWonStarCheckDiagonal(M5, 4, 3, 1),
 	privateGamePlayerWonStarCheckDiagonal(M6, 4, 3, 1),
-	privateGamePlayerWonStarCheckDiagonal(M6, 5, 4, 1).
+	privateGamePlayerWonStarCheckDiagonal(M6, 5, 4, 1),
+	privateGamePlayerWonStarCheckDiagonal(M7, 1, 4, 1),
+	privateGamePlayerWonStarCheckDiagonal(M7, 7, 4, 1).
+
+testPrivateGamePlayerWonStarCheckLine :-
+	testPrivateDrawMatchGrid1(M),
+	testPrivateNotWon1(M3),
+	testPrivateWonColumnNotWonOthers(M4),
+	testPrivateWonLine1(M5),
+	testPrivateWonLine2(M6),
+	not(privateGamePlayerWonStarCheckLine(M, 7, 1, 1)),
+	not(privateGamePlayerWonStarCheckLine(M, 7, 1, 2)),
+	not(privateGamePlayerWonStarCheckLine(M, 5, 1, 1)),
+	not(privateGamePlayerWonStarCheckLine(M, 5, 1, 2)),
+	not(privateGamePlayerWonStarCheckLine(M3, 4, 1, 1)),
+	not(privateGamePlayerWonStarCheckLine(M3, 4, 1, 2)),
+	not(privateGamePlayerWonStarCheckLine(M4, 5, 3, 1)),
+	not(privateGamePlayerWonStarCheckLine(M4, 5, 3, 2)),
+	privateGamePlayerWonStarCheckLine(M5, 2, 4, 1),
+	not(privateGamePlayerWonStarCheckLine(M5, 2, 4, 2)),
+	privateGamePlayerWonStarCheckLine(M5, 1, 4, 1),
+	privateGamePlayerWonStarCheckLine(M5, 3, 4, 1),
+	privateGamePlayerWonStarCheckLine(M5, 4, 4, 1),
+	privateGamePlayerWonStarCheckLine(M6, 1, 2, 1),
+	privateGamePlayerWonStarCheckLine(M6, 7, 2, 1).
 
 testGameOverDrawMatch :-
 	testPrivateDrawMatchGrid2(M),
@@ -173,9 +231,10 @@ testGameOverDrawMatch :-
 	not(gameOver(M, 45, 0)),
 	testPrivateDrawMatchGrid1(M2),
 	gameOver(M2, 5, 0).
-	
+
 testAllGameOver :-
     test(testGridIsFull),
 	test(testPrivateGamePlayerWonStarCheckColumn),
 	test(testPrivateGamePlayerWonStarCheckDiagonal),
+	test(testPrivateGamePlayerWonStarCheckLine),
 	test(testGameOverDrawMatch).
