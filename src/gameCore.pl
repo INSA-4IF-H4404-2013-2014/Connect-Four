@@ -98,3 +98,17 @@ gameIsValidePlay(Grid, ColumnId) :-
     listFetch(Grid, ColumnId, Column) ->
         length(Column, ColumnHeight),
         not(linesNumber(ColumnHeight)).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REVERSE A GRID
+% Return exatcly the same grid, but pawns' values are switched 1 <-> 2
+% gameReverseGrid(Grid, Result).
+privateGameReverseColumn([], []).
+privateGameReverseColumn([X|ColumnA], [Y|ColumnB]) :-
+    gameOtherPlayer(X, Y) ->
+        privateGameReverseColumn(ColumnA, ColumnB).
+
+gameReverseGrid([], []).
+gameReverseGrid([ColumnA|GridA], [ColumnB|GridB]) :-
+    privateGameReverseColumn(ColumnA, ColumnB) ->
+        gameReverseGrid(GridA, GridB).
