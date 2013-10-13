@@ -25,8 +25,6 @@ iaTest2(_, 2).
 % Result is the ID of the winner (0 if draw)
 % =============================================
 
-test(Result) :- gameNewGrid(Matrix), gamePlay(Matrix, 1, 1, NewMatrix), gameGridGet(NewMatrix, 1, 2, Result).
-
 % Initialize a matrix full of 0 and start launch(Grid, Player1, Player2, Result, CurrentPlayer)
 launch(Player1, Player2, Result) :- gameNewGrid(Grid), launch(Grid, _, Player1, Player2, Result, 1).
 
