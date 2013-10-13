@@ -50,9 +50,13 @@ testGameIsValidePlay :-
     gameIsValidePlay(R5, 1),
     not(gameIsValidePlay(R6, 1)).
 
+testGameReverseGrid :-
+    gameReverseGrid([[], [1], [2,1,2]], [[], [2], [1,2,1]]).
+
 testAllGameCore :-
     test(testListFetch),
     test(testGameGridGet),
     test(testGameRemainingPlays),
     test(testGameColunmHeight),
-    test(testGameIsValidePlay).
+    test(testGameIsValidePlay),
+    test(testGameReverseGrid).
