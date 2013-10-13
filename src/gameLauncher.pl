@@ -71,4 +71,3 @@ privateLaunch(Grid, Player1, Player2, Result, _, 2) :-
 	writeTrace(game, NewNum),
 	writeTrace(game, '\n'),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 1).
-

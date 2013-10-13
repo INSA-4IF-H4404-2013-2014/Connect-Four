@@ -18,7 +18,9 @@ testGameGridGet :-
     not(gameGridGet(R, 1, 1, _)),
     gameGridGet(R1, 1, 1, 17),
     not(gameGridGet(R1, 3, 3, _)),
-    gameGridGet(R2, 1, 2, 23).
+    gameGridGet(R2, 1, 1, 17),
+    gameGridGet(R2, 1, 2, 23),
+    not(gameGridGet(R1, 3, 0, _)).
 
 testGameRemainingPlays :-
     gameNewGrid(R0),
@@ -37,6 +39,8 @@ testGameColunmHeight :-
     gameColumnHeight(R0, 2, 0),
     gameColumnHeight(R0, 1, 0),
     gameColumnHeight(R1, 1, 1),
+    not(gameColumnHeight(R1, 1, 0)),
+    not(gameColumnHeight(R1, 1, 2)),
     not(gameColumnHeight(R1, 17, 1)).
 
 testGameIsValidePlay :-
