@@ -97,9 +97,11 @@ privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
 %		- 1 if player1 won,
 %		- 2 if player2 won.
 % Returns false if game is not over yet.
+% the "LastColumnPlayed" parameter is used to simplify the search
+% the matrix should contains the lastColumnPlayed move
 gameOver(Matrix, LastColumnPlayed, Player) :-
 	gameColumnHeight(Matrix, LastColumnPlayed, TopLine),
 	gameGridGet(Matrix, LastColumnPlayed, TopLine, Player),
 	privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player).
-gameOver(Matrix, LastColumPlayed, 0) :- gameGridGet(Matrix, LastColumPlayed, 1, _), gameGridIsFull(Matrix).
+gameOver(Matrix, LastColumnPlayed, 0) :- gameGridGet(Matrix, LastColumnPlayed, 1, _), gameGridIsFull(Matrix).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
