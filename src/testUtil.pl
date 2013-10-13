@@ -11,6 +11,9 @@ tracing('none').
 % tracing('game').
 %----------------------------
 
+testUtilBegin :-
+    write('TEST BEGINING\n'), !.
+
 test(TestPredicate) :-
     (call(TestPredicate) ->
         (write(TestPredicate), write(': OK\n')), true ;
@@ -21,4 +24,3 @@ writeTrace(Cond, Text) :-
 	tracing(Cond) ->
 	write(Text);
 	true.
-    
