@@ -18,5 +18,6 @@ testSimpleGameInv :- launch(iaTest2, iaTest1, 1).
 testSameIAInfinite :- not(launch(iaTest4, iaTest4, _)).
 
 testAllLauncher :- 
-	%test(testSimpleGame),
+	test(testSimpleGame),
+	test(testSimpleGameInv),
 	test(testSameIAInfinite).

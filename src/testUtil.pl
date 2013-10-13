@@ -19,5 +19,6 @@ test(TestPredicate) :-
 
 writeTrace(Cond, Text) :-
 	tracing(Cond) ->
-	write(Text).
+	write(Text);
+	true.
     
