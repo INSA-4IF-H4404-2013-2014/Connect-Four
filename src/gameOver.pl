@@ -97,9 +97,9 @@ privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
 %		- 1 if player1 won,
 %		- 2 if player2 won.
 % Returns false if game is not over yet.
-gameOver(Matrix, LastColumPlayed, Player) :- 
+gameOver(Matrix, LastColumnPlayed, Player) :-
 	gameColumnHeight(Matrix, LastColumnPlayed, TopLine),
-	gameGridGet(Matrix, LastColumPlayed, TopLine, Player),
+	gameGridGet(Matrix, LastColumnPlayed, TopLine, Player),
 	privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player).
 gameOver(Matrix, LastColumPlayed, 0) :- gameGridGet(Matrix, LastColumPlayed, 1, _), gameGridIsFull(Matrix).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
