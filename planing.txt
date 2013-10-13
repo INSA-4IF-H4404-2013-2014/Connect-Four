@@ -11,12 +11,12 @@ Mechanism de jeux:
     - Remi
     - Guillaume
 
-
-—————— tache restante bloquante :
-
 Test gagnant et test fin de partie
     - Louise
     - Martin
+
+
+—————— tache restante et bloquante (deadline : Samedi 12 octobre, minui) :
 
 Automatisation des parties
     - Aline
@@ -31,14 +31,14 @@ contrendu LaTeX des exercices :
 
 IA1: (exploration de l'arbre des possibilitees)
     - Bob
-    - Louise
+    - Remi
 
 IA2: (random)
     - Aline
     - Martin
 
 IA3: (moteur d'inferrence)
-    - Remi
+    - Louise
     - Guillaume
 
 IA4: (a definir ...)

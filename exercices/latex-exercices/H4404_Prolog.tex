@@ -1,0 +1,59 @@
+%ifdef TWOSIDE
+	%\documentclass[a4paper,12pt,final,twoside,openright]{book}
+%elif ONESIDE
+	\documentclass[a4paper,12pt,final,oneside]{book}
+%endif
+
+\usepackage{rapport}
+
+\newcommand{\reporttitle}{Prolog}
+\newcommand{\enseignants}{Jean~François~\textsc{Boulicaut}\\ Mehdi~\textsc{Kaytoue}}
+\newcommand{\reportauthor}{Guillaume~\textsc{Abadie}\\ Nicolas~\textsc{Buisson}\\ Louise~\textsc{Crépet}\\ Rémi~\textsc{Domingues}\\ Aline~\textsc{Martin}\\ Martin~\textsc{Wetterwald}}
+\newcommand{\hexanome}{H4404}
+\newcommand{\reportsubject}{Livrable de projet}
+\newcommand{\stagetopic}{Puissance 4}
+\newcommand{\dateperiod}{du 1\up{er} au 15 octobre 2013}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\setlength{\parskip}{1ex} % Espace entre les paragraphes
+
+\hypersetup{
+	pdftitle={\reporttitle},%
+		pdfauthor={\reportauthor},%
+		pdfsubject={\reportsubject},%
+		pdfkeywords={INSA Lyon} {Prolog} {Puissance 4}
+}
+
+\title{\reporttitle}
+\author{\reportauthor}
+%\setcounter{tocdepth}{4}
+\begin{document}
+	\renewcommand{\chaptername}{} %\renewcommand{\thechapter}{}
+
+	\pagestyle{empty}
+	\pagenumbering{Roman}
+	\include{title}
+	%ifdef TWOSIDE
+		%\cleardoublepage
+	%endif
+
+	%\include{title2}
+
+	%ifdef 
+		%  \newpage
+		%	\null
+		%	\vfill
+	%endif
+
+	\sloppy          % Justification moins stricte : des mots ne dépasseront pas des paragraphes
+
+
+
+	\mainmatter
+	\pagestyle{headings}
+
+	\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\chaptername\ \thechapter.\ #1}}{}}
+	\renewcommand{\sectionmark}[1]{\markright{\thesection{} #1}}
+
+	\include{exercices}
+	\include{puissance4}
+\end{document}

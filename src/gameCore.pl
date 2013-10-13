@@ -7,6 +7,13 @@ columnsNumber(7).
 linesNumber(6).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET THE OTHER PLAYER ID
+% Return the other player id
+% gameOtherPlayer(PlayerId, OtherPlayerId).
+gameOtherPlayer(1, 2).
+gameOtherPlayer(2, 1).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FETCH AN ELEMENT
 % listFetch(list,index,element) <=> element = list[index]
 
@@ -55,6 +62,14 @@ gameGridGet(Grid, ColumnId, LineId, Result) :-
     listFetch(Grid, ColumnId, Column) -> listFetch(Column, LineId, Result).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET A COLUMN HEIGTH
+% Returns the number of pawns in the given column
+% gameColumnHeight(Grid, ColumnId, Result).
+
+gameColumnHeight(Grid, ColumnId, Result) :-
+    listFetch(Grid, ColumnId, Column) -> length(Column, Result).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET REMAINING PLAYS
 % Return the list of non-full columns' indexes
 % gameRemainingPlays(Grid, ColumnList).
@@ -83,3 +98,17 @@ gameIsValidePlay(Grid, ColumnId) :-
     listFetch(Grid, ColumnId, Column) ->
         length(Column, ColumnHeight),
         not(linesNumber(ColumnHeight)).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REVERSE A GRID
+% Return exatcly the same grid, but pawns' values are switched 1 <-> 2
+% gameReverseGrid(Grid, Result).
+privateGameReverseColumn([], []).
+privateGameReverseColumn([X|ColumnA], [Y|ColumnB]) :-
+    gameOtherPlayer(X, Y) ->
+        privateGameReverseColumn(ColumnA, ColumnB).
+
+gameReverseGrid([], []).
+gameReverseGrid([ColumnA|GridA], [ColumnB|GridB]) :-
+    privateGameReverseColumn(ColumnA, ColumnB) ->
+        gameReverseGrid(GridA, GridB).
