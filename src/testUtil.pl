@@ -12,7 +12,7 @@ tracing('none').
 %----------------------------
 
 testUtilBegin :-
-    write('TEST BEGINING\n'), !.
+    write('TEST BEGINNING\n'), !.
 
 test(TestPredicate) :-
     (call(TestPredicate) ->
