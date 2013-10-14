@@ -1,10 +1,5 @@
 #!/bin/bash
-GITROOTDIR=`git rev-parse --show-toplevel`
-SOURCECODEDIR=$GITROOTDIR
-SOURCECODEDIR+=/src
-if [ "`pwd`" != $SOURCECODEDIR ]; then
-	cd "$SOURCECODEDIR"
-fi
+cd "$(dirname "$0")"
 
 LOADFILE='swipl-load.gitlocal'
 EXECFILE='swipl-exec.gitlocal'
@@ -34,7 +29,7 @@ fi
 grep -q ": Failed" $EXECFILE > /dev/null 2>&1
 if [ $? -eq 0 ]; then
 	FAILED=1
-	BUFFER+="Some unit tests have \033[1;31mFAILLED\033[m.\n"
+	BUFFER+="Some unit tests have \033[1;31mFAILED\033[m.\n"
 	cat $EXECFILE
 fi
 
