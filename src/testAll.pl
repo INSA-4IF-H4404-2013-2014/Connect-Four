@@ -4,6 +4,8 @@
 :- [testGameOver].
 :- [testLauncher].
 :- [testIaRandom].
+:- [testSurvival].
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
 
