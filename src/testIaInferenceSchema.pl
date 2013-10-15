@@ -33,7 +33,12 @@ testPrivateIaInferenceSchemaDistance :-
     not(privateIaInferenceSchemaDistance(G1, 1, 6, 1, S1, _)),
     not(privateIaInferenceSchemaDistance(G1, 1, 7, 1, S1, _)).
 
-testPrivateIaInferenceSchemaDistance :-
+testPrivateIaInferenceSchemaNearestPos :-
+    privateIaInferenceSchemaNearestPos([1,0,3], [2,0,2], [2,0,2]),
+    privateIaInferenceSchemaNearestPos([1,0,-1], [2,0,2], [2,0,2]),
+    privateIaInferenceSchemaNearestPos([1,0,3], [2,0,-1], [1,0,3]).
+
+testIaInferenceSchemaDistance :-
     testGridCaseEasy(G1),
     testGridCaseEasySchema(S1),
     iaInferenceSchemaDistance(G1, 1, S1, _).
@@ -41,4 +46,5 @@ testPrivateIaInferenceSchemaDistance :-
 testAllIaInferenceSchema :-
     test(testPrivateIaInferenceSchemaElementDistance0),
     test(testPrivateIaInferenceSchemaElementDistance1),
-    test(testPrivateIaInferenceSchemaDistance).
+    test(testPrivateIaInferenceSchemaDistance),
+    test(testIaInferenceSchemaDistance).

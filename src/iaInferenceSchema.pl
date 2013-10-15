@@ -71,10 +71,16 @@ privateIaInferenceSchemaDistance(Grid, PlayerId, OffsetX, OffsetY, [Element|SubS
         )
     ).
 
-privateIaInferenceMinDistance(X, Y, R) :-
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET THE NEAREST SCHEMA POSITION
+
+privateIaInferenceSchemaNearestPos(X, R, R) :- listFetch(X, 3, Distance), Distance < 0.
+privateIaInferenceSchemaNearestPos(R, Y, R) :- listFetch(Y, 3, Distance), Distance < 0.
+privateIaInferenceSchemaNearestPos(X, Y, R) :-
     listFetch(X, 3, Distance0),
     listFetch(Y, 3, Distance1),
-    ((Distance0 > Distance1, Distance1 >= 0) -> (R = Y) ; (R = X)).
+    Distance0 >= 0, Distance1 >= 0,
+    ((Distance0 < Distance1) -> (R = X) ; (R = Y)).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET A SCHEMA META DISTANCE
@@ -87,7 +93,7 @@ privateIaInferenceSchemaDistanceByY(Grid, PlayerId, OffsetX, OffsetY, Schema, Mo
     -> (
         OffsetY1 is OffsetY - 1,
         privateIaInferenceSchemaDistanceByY(Grid, PlayerId, OffsetX, OffsetY1, Schema, SubsDistance) ->
-        privateIaInferenceMinDistance([OffsetX, OffsetY, CurDistance], SubsDistance, MovesDistance)
+        privateIaInferenceSchemaNearestPos([OffsetX, OffsetY, CurDistance], SubsDistance, MovesDistance)
     );(
         OffsetY1 is OffsetY - 1,
         privateIaInferenceSchemaDistanceByY(Grid, PlayerId, OffsetX, OffsetY1, Schema, MovesDistance)
@@ -101,7 +107,7 @@ privateIaInferenceSchemaDistanceByX(Grid, PlayerId, OffsetX, Schema, MovesDistan
     ) -> (
         OffsetX1 is OffsetX - 1,
         privateIaInferenceSchemaDistanceByX(Grid, PlayerId, OffsetX1, Schema, SubsDistance) ->
-        privateIaInferenceMinDistance(CurDistance, SubsDistance, MovesDistance)
+        privateIaInferenceSchemaNearestPos(CurDistance, SubsDistance, MovesDistance)
     );(
         OffsetX1 is OffsetX - 1,
         privateIaInferenceSchemaDistanceByX(Grid, PlayerId, OffsetX1, Schema, MovesDistance)
