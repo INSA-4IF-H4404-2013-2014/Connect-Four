@@ -4,6 +4,7 @@
 %----------------------------
 % constant which indicates what is to trace
 tracing('none').
+tracing('iarandom').
 %----------------------------
 
 %----------------------------
