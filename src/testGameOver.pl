@@ -1,5 +1,4 @@
-
-:- [testUtil].
+:- [testUtils].
 :- [gameOver].
 :- [gamePrint].
 

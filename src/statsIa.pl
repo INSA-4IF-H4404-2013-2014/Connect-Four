@@ -1,7 +1,7 @@
 :- [gameCore].
 :- [iaRandom].
 :- [gameLauncher].
-:- [traceUtil].
+:- [traceUtils].
 
 %Please add here all IAs to be tested. Minimum is 2 IAs.
 statsIaIaList([

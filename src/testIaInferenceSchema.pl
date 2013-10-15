@@ -1,6 +1,5 @@
-
 :- [testGridCases].
-:- [testUtil].
+:- [testUtils].
 :- [iaInferenceSchema].
 
 
