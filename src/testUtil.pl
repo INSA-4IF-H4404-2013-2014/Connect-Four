@@ -14,7 +14,11 @@ tracing('none').
 % constant which indicates if printing a textual interface for player s ia
 % tracing('txtInt').
 
+% Should iaRandom unit test tracing be activated?
 %tracing('iarandom').
+
+%Should iaStats-module's statistics be displayed?
+%tracing('iaStats').
 %----------------------------
 
 test(TestPredicate) :-

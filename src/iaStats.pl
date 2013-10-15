@@ -2,13 +2,16 @@
 :- [iaRandom].
 :- [gameLauncher].
 
-%Please add here all IAs
+%Please add here all IAs to be tested. Minimum is 2 IAs.
 iaStatsIaList([
-	iaRandom,
 	iaRandom,
 	iaRandom,
 	iaRandom
 ]).
+
+
+%Please indicate here the number of matchs per round you want
+iaStatsNumberOfMatchsPerRound(100).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,36 +28,44 @@ privateIaStatsGenEmptyResultsGrid(Ligne, Col, [Y|Matrix]) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-privateIaStatsOneMatchLoop2(_, _, 101).
-privateIaStatsOneMatchLoop2(Ia1, Ia2, MatchInstanceNumber) :-
-%	write('Match instance '), write(MatchInstanceNumber), write('\n'),
-	launch(Ia1, Ia2, _),
-	NewMatchInstanceNumber is (MatchInstanceNumber + 1),
-	privateIaStatsOneMatchLoop2(Ia1, Ia2, NewMatchInstanceNumber).
 
-privateIaStatsOneMatchLoop(Ia1, Ia2) :-
-	privateIaStatsOneMatchLoop2(Ia1, Ia2, 1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+privateIaStatsOneRoundLoop2(_, _, 0).
+privateIaStatsOneRoundLoop2(Ia1, Ia2, MatchNumber) :-
+	NewMatchNumber is (MatchNumber - 1),
+	privateIaStatsOneRoundLoop2(Ia1, Ia2, NewMatchNumber),
+	writeTrace(iaStats, 'Match number '), writeTrace(iaStats, MatchNumber), writeTrace(iaStats, '\n'),
+	launch(Ia1, Ia2, _).
+
+privateIaStatsOneRoundLoop(Ia1, Ia2) :-
+	iaStatsNumberOfMatchsPerRound(NumberOfMatchsPerRound),
+	privateIaStatsOneRoundLoop2(Ia1, Ia2, NumberOfMatchsPerRound).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 
-privateIaStatsLaunchMatch2(_, []).
-privateIaStatsLaunchMatch2(Ia1, [Ia2|Others]) :-
-%	write('Match1: '),
-%	write(Ia1), write(' VS '), write(Ia2), write('\n'),
-	privateIaStatsOneMatchLoop(Ia1, Ia2),
-	privateIaStatsLaunchMatch2(Ia1, Others).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+privateIaStatsRoundsDispatcher2(_, []).
+privateIaStatsRoundsDispatcher2(Ia1, [Ia2|Others]) :-
+	writeTrace(iaStats, 'Round: '),
+	writeTrace(iaStats, Ia1), writeTrace(iaStats, ' VS '), writeTrace(iaStats, Ia2), writeTrace(iaStats, '\n'),
+	privateIaStatsOneRoundLoop(Ia1, Ia2),
+	privateIaStatsRoundsDispatcher2(Ia1, Others).
 
-privateIaStatsLaunchMatch1([]).
-privateIaStatsLaunchMatch1([Ia1|Others]) :-
-	privateIaStatsLaunchMatch2(Ia1, Others),
-	privateIaStatsLaunchMatch1(Others).
+privateIaStatsRoundsDispatcher([]).
+privateIaStatsRoundsDispatcher([Ia1|Others]) :-
+	privateIaStatsRoundsDispatcher2(Ia1, Others),
+	privateIaStatsRoundsDispatcher(Others).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%% Lauches all the IA matches and prints stats %%%%%%%%%%%%%%%%%%%
+% I will return false if iaStatsIaList has less than 2 elements.
 iaStats :-
 	iaStatsIaList(IaList),
-	privateIaStatsLaunchMatch1(IaList).
+	length(IaList, L), L>=2,
+	privateIaStatsRoundsDispatcher(IaList).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
