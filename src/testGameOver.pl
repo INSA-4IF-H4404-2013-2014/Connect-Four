@@ -260,7 +260,18 @@ testGameOver :-
 
 testAllGameOver :-
     test(testGridIsFull),
-	test(testPrivateGamePlayerWonStarCheckColumn),
-	test(testPrivateGamePlayerWonStarCheckDiagonal),
-	test(testPrivateGamePlayerWonStarCheckLine),
-	test(testGameOver).
+	(numberOfAlignedPawnsToWin(X), X == 4) ->
+	(
+		test(testPrivateGamePlayerWonStarCheckColumn),
+		test(testPrivateGamePlayerWonStarCheckDiagonal),
+		test(testPrivateGamePlayerWonStarCheckLine),
+		test(testGameOver)
+	) ;
+	(
+		write('INFO: Some gameOver tests have been disabled due to numberOfAlignedPawnsToWin/1 value not equal to 4.\n'),
+		write('INFO: To fully test the gameOver module, please set numberOfAlignedPawnsToWin/1 back to 4.\n'),
+		write('testPrivateGamePlayerWonStarCheckColumn: SKIPPED\n'),
+		write('testPrivateGamePlayerWonStarCheckDiagonal: SKIPPED\n'),
+		write('testPrivateGamePlayerWonStarCheckLine: SKIPPED\n'),
+		write('testGameOver: SKIPPED\n')
+	).
