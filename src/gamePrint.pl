@@ -2,19 +2,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRINT A GRID
 % Print a grid
 % gamePrintGrid(Grid)
-privateGamePrintSymbols(1,x).
-privateGamePrintSymbols(2,o).
+gamePrintSymbols(1,x).
+gamePrintSymbols(2,o).
 
 privateGamePrintGrid([], _).
 
 privateGamePrintGrid([Column|Grid], LineId) :-
     (listFetch(Column, LineId, Result) ->
-        privateGamePrintSymbols(Result, S), write(S), write(' ') ;
+        gamePrintSymbols(Result, S), write(S), write(' ') ;
         write('  ')
     ) ->
     privateGamePrintGrid(Grid, LineId).
 
-gamePrintGrid(_, 0) :- nl.
+gamePrintGrid(_, 0) :- write('| 1 2 3 4 5 6 7'),
+    nl.
 
 gamePrintGrid(Grid, LineId) :-
     write('| ') ->
