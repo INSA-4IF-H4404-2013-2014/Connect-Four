@@ -36,13 +36,11 @@ launch(Player1, Player2, Result) :-
 	gameNewGrid(Grid), 
 	call(Player1, Grid, 1, NumCol),
 	gamePlay(Grid, NumCol, 1, ResGrid),
-	writeTrace(game, ' p1 : '),
-	writeTrace(game, NumCol),
-	writeTrace(game, '\n'),
+	gridTrace(game, ResGrid),
 	privateLaunch(ResGrid, Player1, Player2, Result, NumCol, 2),
 	writeTrace(game, 'Res : '),
 	writeTrace(game, Result),
-	writeTrace(game, '\n').
+	writeTrace(game, '\n'), !.
 
 % Check if the game is over before a new play
 privateLaunch(Grid, _, _, Result, NumCol, _) :-	gameOver(Grid, NumCol, Result), !.
@@ -54,9 +52,7 @@ privateLaunch(Grid, Player1, Player2, Result, _, 1) :-
 	call(Player1, Grid, 1, NewNum),
 	gameIsValidePlay(Grid, NewNum),
 	gamePlay(Grid, NewNum, 1, ResGrid),
-	writeTrace(game, ' p1 : '),
-	writeTrace(game, NewNum),
-	writeTrace(game, '\n'),
+	gridTrace(game, ResGrid),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 2).
 
 % Same as precedent call with Player2 playing
@@ -64,7 +60,5 @@ privateLaunch(Grid, Player1, Player2, Result, _, 2) :-
 	call(Player2, Grid, 2, NewNum),
 	gameIsValidePlay(Grid, NewNum),
 	gamePlay(Grid, NewNum, 2, ResGrid),
-	writeTrace(game, ' p2 : '),
-	writeTrace(game, NewNum),
-	writeTrace(game, '\n'),
+	gridTrace(game, ResGrid),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 1).
