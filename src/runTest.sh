@@ -33,15 +33,18 @@ if [ $? -eq 0 ]; then
 	cat $EXECFILE
 fi
 
-rm -f $LOADFILE $EXECFILE
+rm -f $LOADFILE
 
 if [ $FAILED -eq 0 ]; then
 	if [ "$ARG1" != "-q" ]; then
+		cat $EXECFILE
 		echo -e "\033[1;32mAll tests \033[0m\033[1m\033[42mPASSED\033[0m\033[1;32m!\033[0m"
 	fi
+	rm -f $EXECFILE
 	exit 0
 fi
 
+rm -f $EXECFILE
 echo -ne "\n$BUFFER"
 echo -e "\033[1m\033[41mPlease fix them before committing.\033[m"
 
