@@ -3,7 +3,7 @@
 
 %----------------------------
 % constant which indicates what is to trace (by default 'none' but can add the other )
-% tracing('none').
+tracing('none').
 
 % constant which indicates if tracing what happend when playing
 % tracing('game').
