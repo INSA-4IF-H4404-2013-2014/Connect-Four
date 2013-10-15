@@ -12,16 +12,16 @@ iaStatsIaList([
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateIaStatsGenEmptyResultsGrid(0,[]).
-
-privateIaStatsGenEmptyResultsGrid(Col, [[]|Matrix]) :-
+privateIaStatsGenEmptyResultsGrid1(0,[]).
+privateIaStatsGenEmptyResultsGrid1(Col, [[0,0,0]|Matrix]) :-
     Col1 is Col-1,
-    privateIaStatsGenEmptyResultsGrid(Col1, Matrix).
+    privateIaStatsGenEmptyResultsGrid1(Col1, Matrix).
 
-privateIaStatsGenEmptyResultsGrid(ResultsGrid) :-
-	iaStatsIaList(IaList),
-	length(IaList, NumberOfIa),
-    privateIaStatsGenEmptyResultsGrid(NumberOfIa, ResultsGrid), !.
+privateIaStatsGenEmptyResultsGrid(_,0,[]).
+privateIaStatsGenEmptyResultsGrid(Ligne, Col, [Y|Matrix]) :-
+    Col1 is Col-1,
+    privateIaStatsGenEmptyResultsGrid(Ligne, Col1, Matrix),
+    privateIaStatsGenEmptyResultsGrid1(Ligne, Y).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
