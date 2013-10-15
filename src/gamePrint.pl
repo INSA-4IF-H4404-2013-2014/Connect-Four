@@ -14,7 +14,7 @@ privateGamePrintGrid([Column|Grid], LineId) :-
     ) ->
     privateGamePrintGrid(Grid, LineId).
 
-gamePrintGrid(_, 0).
+gamePrintGrid(_, 0) :- nl.
 
 gamePrintGrid(Grid, LineId) :-
     write('| ') ->

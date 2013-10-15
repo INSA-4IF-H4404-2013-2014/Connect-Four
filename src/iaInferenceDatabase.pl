@@ -5,7 +5,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DATABASE
-% 0 : occupied but don't care the player id
+% free
 % 1 : the winner
 % 2 : the looser
 :- dynamic iaInferenceDB/1.
@@ -15,11 +15,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HOW IS
+% test a player status (winner of looser)
 % iaInferencePlayerStatus(WinnerId, PlayerId, PlayerStatus).
 iaInferencePlayerStatus(X, X, 1).
 iaInferencePlayerStatus(X, Y, 2) :- gameOtherPlayer(X, Y).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LEARN PREDICATE
-
-%iaInferenceAnalysis(Grid, LastWinnerMove, Shem).
