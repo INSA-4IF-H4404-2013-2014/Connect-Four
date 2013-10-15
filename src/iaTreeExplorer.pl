@@ -14,10 +14,13 @@ maxDepth(4).
 %=> Replace _ by 1 in order to stop only if we can immediatly win (else use the two Plays law)
 % If we are not at the depth 1, we have to check if the other player has won, then backtrack
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateIaTreeExplorer(Grid, Id, NumCol, _, _, Id) :-
-		gameOver(Grid, NumCol, Id).
+privateIaTreeExplorer(Grid, Id, NumCol, _, _, Plays, Id) :-
+		gameOver(Grid, NumCol, Id),
+		length(Plays, L),
+		listFetch(Plays, L, LastPlay),
+		NumCol is LastPlay.
 		
-privateIaTreeExplorer(Grid, _, NumCol, _, _, IdToPlay) :-
+privateIaTreeExplorer(Grid, _, NumCol, _, _, _, IdToPlay) :-
 		gameOver(Grid, NumCol, IdToPlay), fail.
 
 
@@ -25,7 +28,7 @@ privateIaTreeExplorer(Grid, _, NumCol, _, _, IdToPlay) :-
 %If the maximal depth has been reached, we play random => IMPROVEMENT : Play where
 %the maximal aligned pawn number is the highest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateIaTreeExplorer(Grid, Id, NumCol, maxDepth, _, _) :-
+privateIaTreeExplorer(Grid, Id, NumCol, _, maxDepth, _, _) :-
 		iaRandom(Grid, Id, NumCol).
 
 
@@ -33,20 +36,23 @@ privateIaTreeExplorer(Grid, Id, NumCol, maxDepth, _, _) :-
 %Next improvement : if two Plays on the same level allow us to win, that's the only play we choose !
 %(instead of accepting the first winning play)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateIaTreeExplorer(Grid, Id, columnsNumber + 1, Depth, Plays, _) :-
-		Depth1 is Depth + 1, privateIaTreeExplorer(Grid, Id, 1, Depth1, Plays).
+privateIaTreeExplorer(Grid, Id, NumCol, _, Depth, Plays, IdToPlay) :-
+		length(Plays, L),
+		listFetch(Plays, L, columnsNumber + 1),
+		Depth1 is Depth + 1, privateIaTreeExplorer(Grid, Id, NumCol, 1, Depth1, Plays, IdToPlay).
 		
-privateIaTreeExplorer(Grid, Id, NumCol, Depth, Plays, IdToPlay) :-
-		NumCol1 is NumCol + 1,
-		gamePlay(Grid, NumCol, IdToPlay, Result),
-		((Id == IdToPlay, append(Plays, [NumCol], Plays2)) ; (Id \= IdToPlay)), 
-		privateIaTreeExplorer(Result, Id, NumCol1, Depth, Plays2).
+privateIaTreeExplorer(Grid, Id, NumCol, NextCol, Depth, Plays, IdToPlay) :-
+		gamePlay(Grid, NextCol, IdToPlay, Result),
+		((Id == IdToPlay, append(Plays, [NextCol], Plays2)) ; (Id \= IdToPlay)), 
+		NextCol1 is NextCol + 1,
+		privateIaTreeExplorer(Result, Id, NumCol, NextCol1, Depth, Plays2, IdToPlay).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% IA call%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% iaTreeExplorer(Grid, Id, NumCol) :-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		privateIaTreeExplorer(Grid, Id, NumCol, 1, [], Id).
+% IA call
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+iaTreeExplorer(Grid, Id, NumCol) :-
+		privateIaTreeExplorer(Grid, Id, NumCol, 1, 1, [], Id).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% launch(iaTreeExplorer, iaTest1, R).
