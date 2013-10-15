@@ -16,9 +16,5 @@ testIaInferencePlayerStatus :-
     not(iaInferencePlayerStatus(2, 1, 1)),
     not(iaInferencePlayerStatus(1, 2, 1)).
 
-%testIaInferenceAnalysis :-
-%    iaInferenceAnalysis([[],[],[],[1,1,1,1],[2,2,2],[],[]], 3, [[1,1,1,1]]).
-
-
 testAllIaInferenceDatabase :-
     test(testIaInferencePlayerStatus).
