@@ -18,7 +18,7 @@ tracing('none').
 %tracing('iarandom').
 
 %Should iaStats-module's statistics be displayed?
-%tracing('iaStats').
+%tracing('statsIa').
 %----------------------------
 
 test(TestPredicate) :-
