@@ -23,3 +23,21 @@ testCaseGridPlayer1Win1(R) :-
     testCaseGridPlayer1IsWining1(R0),
     gamePlay(R0, 6, 2, R1),
     gamePlay(R1, 5, 1, R).
+
+testGridCaseEasy([
+    [],
+    [],
+    [1],
+    [1],
+    [1],
+    [],
+    []
+]).
+
+testGridCaseEasySchema([
+    [0, 0, 0],
+    [1, 0, 1],
+    [2, 0, 1],
+    [3, 0, 1],
+    [4, 0, 0]
+]).
