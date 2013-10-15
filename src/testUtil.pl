@@ -8,7 +8,7 @@ tracing('none').
 
 %----------------------------
 % constant which indicates if tracing what happend when playing
-% tracing('game').
+ tracing('game').
 %----------------------------
 
 test(TestPredicate) :-
@@ -21,4 +21,9 @@ writeTrace(Cond, Text) :-
 	tracing(Cond) ->
 	write(Text);
 	true.
-    
+
+
+grilleTrace(Cond, Grid) :-
+	traing(Cond) -> 
+	gamePrintGrid(Grid);
+	true.
