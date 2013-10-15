@@ -23,7 +23,7 @@ writeTrace(Cond, Text) :-
 	true.
 
 
-grilleTrace(Cond, Grid) :-
+gridTrace(Cond, Grid) :-
 	traing(Cond) -> 
 	gamePrintGrid(Grid);
 	true.
