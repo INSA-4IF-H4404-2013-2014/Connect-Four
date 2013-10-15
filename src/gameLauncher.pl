@@ -1,7 +1,7 @@
 
 :- [gameCore].
 :- [gameOver].
-:- [testUtil].
+:- [traceUtil].
 
 %%%%%%%%%%%%
 % Launch predicate

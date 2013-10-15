@@ -1,4 +1,5 @@
 :- [testUtil].
+:- [traceUtil].
 :- [iaRandom].
 :- [gamePrint].
 

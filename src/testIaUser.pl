@@ -1,5 +1,4 @@
-
-
+:- [traceUtil].
 :- [gameLauncher].
 :- [iaUser].
 

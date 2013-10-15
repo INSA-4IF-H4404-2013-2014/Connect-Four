@@ -1,4 +1,5 @@
 :- [gamePrint].
+:- [traceUtil].
 
 %
 % launch the iaUser which ask a move to the user until this move is valid.
