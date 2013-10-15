@@ -6,8 +6,24 @@
 iaStatsIaList([
 	iaRandom,
 	iaRandom,
+	iaRandom,
 	iaRandom
 ]).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+privateIaStatsGenEmptyResultsGrid(0,[]).
+
+privateIaStatsGenEmptyResultsGrid(Col, [[]|Matrix]) :-
+    Col1 is Col-1,
+    privateIaStatsGenEmptyResultsGrid(Col1, Matrix).
+
+privateIaStatsGenEmptyResultsGrid(ResultsGrid) :-
+	iaStatsIaList(IaList),
+	length(IaList, NumberOfIa),
+    privateIaStatsGenEmptyResultsGrid(NumberOfIa, ResultsGrid), !.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 privateIaStatsOneMatchLoop2(_, _, 101).
 privateIaStatsOneMatchLoop2(Ia1, Ia2, MatchInstanceNumber) :-
