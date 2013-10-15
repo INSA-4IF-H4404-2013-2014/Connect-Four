@@ -4,12 +4,12 @@
 %----------------------------
 % constant which indicates what is to trace
 tracing('none').
-tracing('iarandom').
 %----------------------------
 
 %----------------------------
 % constant which indicates if tracing what happend when playing
- tracing('game').
+%tracing('game').
+%tracing('iarandom').
 %----------------------------
 
 test(TestPredicate) :-
