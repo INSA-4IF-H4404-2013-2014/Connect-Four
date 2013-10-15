@@ -4,6 +4,19 @@
 :- [iaInferenceSchema].
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST CASES
+
+testPrivateIaInferenceWonPlayer([
+    [2,1,1,1,1],
+    [2,1,1,2,2],
+    [2,2,2,1,1],
+    [1,1,1,2,2,2],
+    [2,2,2,1,1],
+    [1,1,1,2,2,2],
+    [2,2,2,1,1,1]
+]).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
 testPrivateIaInferenceSchemaElementDistance0 :-
@@ -40,8 +53,12 @@ testPrivateIaInferenceSchemaNearestPos :-
 
 testIaInferenceSchemaDistance :-
     testGridCaseEasy(G1),
+    gamePlay(G1, 2, 2, G2),
+    testPrivateIaInferenceWonPlayer(G3),
     testGridCaseEasySchema(S1),
-    iaInferenceSchemaDistance(G1, 1, S1, _).
+    iaInferenceSchemaDistance(G1, 1, S1, [2, 1, 0]),
+    iaInferenceSchemaDistance(G2, 1, S1, [1, 2, 4]),
+    not(iaInferenceSchemaDistance(G3, 1, S1, _)).
 
 testAllIaInferenceSchema :-
     test(testPrivateIaInferenceSchemaElementDistance0),
