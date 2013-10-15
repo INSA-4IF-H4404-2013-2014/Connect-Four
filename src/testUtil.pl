@@ -24,6 +24,6 @@ writeTrace(Cond, Text) :-
 
 
 gridTrace(Cond, Grid) :-
-	traing(Cond) -> 
+	tracing(Cond) -> 
 	gamePrintGrid(Grid);
 	true.
