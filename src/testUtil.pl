@@ -9,7 +9,7 @@ tracing('iarandom').
 
 %----------------------------
 % constant which indicates if tracing what happend when playing
-% tracing('game').
+ tracing('game').
 %----------------------------
 
 test(TestPredicate) :-
@@ -22,4 +22,9 @@ writeTrace(Cond, Text) :-
 	tracing(Cond) ->
 	write(Text);
 	true.
-    
+
+
+gridTrace(Cond, Grid) :-
+	tracing(Cond) -> 
+	gamePrintGrid(Grid);
+	true.
