@@ -20,6 +20,13 @@ testPrivateIaInferenceSchemaElementDistance1 :-
     privateIaInferenceSchemaElementDistance(G1, 2, 2, 1, 1, -1),
     privateIaInferenceSchemaElementDistance(G1, 1, 2, 2, 1, 1).
 
+testPrivateIaInferenceTestSchemaElement :-
+    testCaseGridPlayer1Win1(G1),
+    privateIaInferenceTestSchemaElement(G1, _, 1, 1, 0),
+    not(privateIaInferenceTestSchemaElement(G1, _, 7, 2, 0)),
+    privateIaInferenceTestSchemaElement(G1, 1, 2, 1, 1),
+    not(privateIaInferenceTestSchemaElement(G1, 2, 2, 1, 1)).
+
 testAllIaInferenceSchema :-
     test(testPrivateIaInferenceSchemaElementDistance0),
     test(testPrivateIaInferenceSchemaElementDistance1).
