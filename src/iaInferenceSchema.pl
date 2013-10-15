@@ -18,7 +18,7 @@
 %   - 1 : winner pawns
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET SCHEMA DISTANCE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET SCHEMA ELEMENT DISTANCE
 % privateIaInferenceSchemaElementDistance(Grid, PlayerId, ColumnId, LineId, MatchType, AbstractDistance)
 
 privateIaInferenceSchemaElementDistance(Grid, _, X, Y, 0, AbstractDistance) :-
@@ -40,3 +40,9 @@ privateIaInferenceSchemaElementDistance(Grid, _, X, Y, 1, AbstractDistance) :-
     (
         AbstractDistance is (Y - ColumnHeight)
     ).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST A SCHEMA ELEMENT
+privateIaInferenceTestSchemaElement(Grid, PlayerId, ColumnId, LineId, MatchType) :-
+    privateIaInferenceSchemaElementDistance(Grid, PlayerId, ColumnId, LineId, MatchType, X) ->
+    X >= 0.
