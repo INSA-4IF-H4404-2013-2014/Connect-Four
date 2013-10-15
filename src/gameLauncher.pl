@@ -35,12 +35,16 @@
 launch(Player1, Player2, Result) :-
 	gameNewGrid(Grid), 
 	call(Player1, Grid, 1, NumCol),
-	gamePlay(Grid, NumCol, 1, ResGrid),
-	gridTrace(game, ResGrid),
+	(NumCol==0; gameIsValidePlay(Grid, NumCol) ,
+		gamePlay(Grid, NumCol, 1, ResGrid),
+		gridTrace(game, ResGrid)),
 	privateLaunch(ResGrid, Player1, Player2, Result, NumCol, 2),
 	writeTrace(game, 'Res : '),
 	writeTrace(game, Result),
 	writeTrace(game, '\n'), !.
+
+% Check if someone has abandonned
+privateLaunch(_, _, _, Result, 0, Result).
 
 % Check if the game is over before a new play
 privateLaunch(Grid, _, _, Result, NumCol, _) :-	gameOver(Grid, NumCol, Result), !.
@@ -50,15 +54,16 @@ privateLaunch(Grid, _, _, Result, NumCol, _) :-	gameOver(Grid, NumCol, Result), 
 % Calls privateLaunch for Player2
 privateLaunch(Grid, Player1, Player2, Result, _, 1) :-
 	call(Player1, Grid, 1, NewNum),
-	gameIsValidePlay(Grid, NewNum),
-	gamePlay(Grid, NewNum, 1, ResGrid),
-	gridTrace(game, ResGrid),
+	(NewNum==0; gameIsValidePlay(Grid, NewNum),
+		gamePlay(Grid, NewNum, 1, ResGrid),
+		gridTrace(game, ResGrid)),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 2).
 
 % Same as precedent call with Player2 playing
 privateLaunch(Grid, Player1, Player2, Result, _, 2) :-
 	call(Player2, Grid, 2, NewNum),
-	gameIsValidePlay(Grid, NewNum),
-	gamePlay(Grid, NewNum, 2, ResGrid),
-	gridTrace(game, ResGrid),
+	(NewNum==0;gameIsValidePlay(Grid, NewNum),
+		gamePlay(Grid, NewNum, 2, ResGrid),
+		gridTrace(game, ResGrid)),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 1).
+
