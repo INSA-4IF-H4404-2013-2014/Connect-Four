@@ -4,6 +4,7 @@
 :- [testGameOver].
 :- [testLauncher].
 :- [testIaRandom].
+:- [testIaInferenceSchema].
 :- [testIaInferenceDatabase].
 
 
@@ -14,4 +15,5 @@ testAll :-
     testAllGameOver,
     testAllLauncher,
 	testAllIaRandom,
+    testAllIaInferenceSchema,
     testAllIaInferenceDatabase.
