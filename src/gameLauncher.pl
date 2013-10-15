@@ -1,7 +1,4 @@
 
-%% TODO : delete write()
-%% TODO : get real AIs and gameOver
-
 :- [gameCore].
 :- [gameOver].
 :- [testUtil].
@@ -48,7 +45,7 @@ launch(Player1, Player2, Result) :-
 	writeTrace(game, '\n').
 
 % Check if the game is over before a new play
-privateLaunch(Grid, _, _, Result, NumCol, _) :-	gameOver(Grid, NumCol, Result).
+privateLaunch(Grid, _, _, Result, NumCol, _) :-	gameOver(Grid, NumCol, Result), !.
 
 % Let the Player1 choose the column in which he wants to play
 % Put the pawn in the right column
