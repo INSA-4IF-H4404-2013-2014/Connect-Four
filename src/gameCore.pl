@@ -5,6 +5,7 @@
 
 columnsNumber(7).
 linesNumber(6).
+numberOfAlignedPawnsToWin(4).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET THE OTHER PLAYER ID

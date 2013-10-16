@@ -3,12 +3,17 @@
 :- [testGameCore].
 :- [testGameOver].
 :- [testLauncher].
+:- [testIaRandom].
+:- [testIaInferenceSchema].
+:- [testIaInferenceDatabase].
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
-
-
 
 testAll :-
     testAllGameCore,
     testAllGameOver,
-    testAllLauncher.
+    testAllLauncher,
+	testAllIaRandom,
+    testAllIaInferenceSchema,
+    testAllIaInferenceDatabase.
