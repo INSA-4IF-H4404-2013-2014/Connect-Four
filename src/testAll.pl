@@ -2,7 +2,7 @@
 :- [main].
 :- [testGameCore].
 :- [testGameOver].
-:- [testLauncher].
+:- [testGameLauncher].
 :- [testIaRandom].
 :- [testIaInferenceSchema].
 :- [testIaInferenceCleverMove].
@@ -14,7 +14,7 @@
 testAll :-
     testAllGameCore,
     testAllGameOver,
-    testAllLauncher,
+    testAllGameLauncher,
 	testAllIaRandom,
     testAllIaInferenceSchema,
     testAllIaInferenceCleverMove,
