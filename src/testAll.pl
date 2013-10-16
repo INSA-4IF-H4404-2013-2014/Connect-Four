@@ -5,6 +5,7 @@
 :- [testLauncher].
 :- [testIaRandom].
 :- [testIaInferenceSchema].
+:- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
 
 
@@ -16,4 +17,5 @@ testAll :-
     testAllLauncher,
 	testAllIaRandom,
     testAllIaInferenceSchema,
+    testAllIaInferenceCleverMove,
     testAllIaInferenceDatabase.
