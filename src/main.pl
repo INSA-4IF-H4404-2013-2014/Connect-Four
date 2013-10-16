@@ -5,3 +5,4 @@
 :- [gameLauncher].
 :- [iaRandom].
 :- [iaUser].
+:- [iaInference].

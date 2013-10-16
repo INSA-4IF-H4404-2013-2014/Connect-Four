@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% KNOWNLEDGE DATABASE
 
 :- dynamic iaInferenceDB/1.
-
+% findall(X, iaInferenceDB(X), L).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET THE KNOWNLEDGE DATABASE
 % reset the knownledge database for unit tests
