@@ -3,3 +3,5 @@
 :- [gamePrint].
 :- [gameOver].
 :- [gameLauncher].
+:- [iaRandom].
+:- [iaUser].
