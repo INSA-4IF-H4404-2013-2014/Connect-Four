@@ -23,5 +23,5 @@ testAll :-
     testAllIaSchemaProcessing,
     testAllIaInferenceCleverMove,
     testAllIaInferenceDatabase,
-	testAllStatsPlayer.
-	%testAllSurvival.
+	testAllStatsPlayer,
+	testAllSurvival.

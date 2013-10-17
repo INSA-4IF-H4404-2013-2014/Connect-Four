@@ -12,10 +12,24 @@ gameOtherCanWin(Grid, Player, Column) :-
 	(gameIsValidePlay(Grid, Column) ->
 	(	
 		gamePlay(Grid, Column, OtherPlayer, GridResult),
-		gamePrintGrid(GridResult),
 		gameOver(GridResult, Column, OtherPlayer)
-	)), !.
+	)).
 
-gameSurvive(Grid, Player, Column, 7) :- gameOtherCanWin(Grid, Player, 7), Column is 7.
-gameSurvive(Grid, Player, Column, Pos) :- (gameOtherCanWin(Grid, Player, Pos), Column is Pos) ; (NextColumn is Pos +1, gameSurvive(Grid, Player, Column, NextColumn)).
-gameSurvive(Grid, Player, Column) :- gameSurvive(Grid, Player, Column, 1), !.
+gameSurvive(_, _, [], 0).
+
+gameSurvive(Grid, Player, ListColumns, Pos) :- 
+	not(gameOtherCanWin(Grid, Player, Pos)),
+	NextColumn is Pos - 1,
+	gameSurvive(Grid, Player, ListColumns, NextColumn).
+
+gameSurvive(Grid, Player, [Pos|ListColumns], Pos) :- 
+	gameOtherCanWin(Grid, Player, Pos),
+	NextColumn is Pos - 1,
+	gameSurvive(Grid, Player, ListColumns, NextColumn).
+	
+gameSurvive(Grid, Player, ListColumns) :-
+	gameSurvive(Grid, Player, ListColumns, 7) ->
+	(
+		length(ListColumns, Length),
+		Length > 0
+	).
