@@ -58,10 +58,15 @@ testGameIsValidePlay :-
 testGameReverseGrid :-
     gameReverseGrid([[], [1], [2,1,2]], [[], [2], [1,2,1]]).
 
+testGamePlaySequence :-
+    gameNewGrid(G0),
+    gamePlaySequence(G0, [1, 1, 1], 1, [[1, 1, 1],[],[],[],[],[],[]]).
+
 testAllGameCore :-
     test(testListFetch),
     test(testGameGridGet),
     test(testGameRemainingPlays),
     test(testGameColunmHeight),
     test(testGameIsValidePlay),
-    test(testGameReverseGrid).
+    test(testGameReverseGrid),
+    test(testGamePlaySequence).

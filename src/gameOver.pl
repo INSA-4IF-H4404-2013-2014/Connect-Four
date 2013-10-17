@@ -62,23 +62,26 @@ privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, TopLine, Player) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% Checks if there are 4 pawns of the same color in one column %%%%%%%%%%%
-privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
+privateGamePlayerWonStarCheckColumnRoutine(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
 	numberOfAlignedPawnsToWin(AlignedPawnsToWin),
 	Delta is abs(TopLine - CurrentLine),
 	Delta >= AlignedPawnsToWin ;
 	gameGridGet(Matrix, LastColumnPlayed, CurrentLine, Player),
 	CurrentLine2 is (CurrentLine - 1),
-	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine2, Player).
+	privateGamePlayerWonStarCheckColumnRoutine(Matrix, LastColumnPlayed, TopLine, CurrentLine2, Player).
 
 privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, Player) :-
-	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, TopLine, Player).
+	privateGamePlayerWonStarCheckColumnRoutine(Matrix, LastColumnPlayed, TopLine, TopLine, Player);
+	TopLine1 is TopLine + 1,
+	gameGridGet(Matrix, LastColumnPlayed, TopLine1, Player),
+	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine1, Player).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% Checks if a player won %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Checks if a pawn is aligned %%%%%%%%%%%%%%%%%%%%%%%
+gameIsAligned(Matrix, LastColumnPlayed, TopLine, Player) :-
 	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, Player) ;
 	privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, TopLine, Player) ;
 	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, Player).
@@ -99,6 +102,6 @@ privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
 gameOver(Matrix, LastColumnPlayed, Player) :-
 	gameColumnHeight(Matrix, LastColumnPlayed, TopLine),
 	gameGridGet(Matrix, LastColumnPlayed, TopLine, Player),
-	privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player).
+	gameIsAligned(Matrix, LastColumnPlayed, TopLine, Player).
 gameOver(Matrix, LastColumnPlayed, 0) :- gameGridGet(Matrix, LastColumnPlayed, 1, _), gameGridIsFull(Matrix).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

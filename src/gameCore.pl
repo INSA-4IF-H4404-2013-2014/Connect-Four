@@ -113,3 +113,14 @@ gameReverseGrid([], []).
 gameReverseGrid([ColumnA|GridA], [ColumnB|GridB]) :-
     privateGameReverseColumn(ColumnA, ColumnB) ->
         gameReverseGrid(GridA, GridB).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INSERT SEVERALS PAWN IN THE GRID
+% Insert severals a pawn in the grid at the specified column
+% gamePlaySequence(Grid, ColumnSequence, PlayerId, GridResult).
+
+gamePlaySequence(Grid, [], _, Grid).
+
+gamePlaySequence(Grid, [ColumnId|ColumnSequence], PlayerId, GridResult) :-
+    gamePlay(Grid, ColumnId, PlayerId, NewGrid) ->
+    gamePlaySequence(NewGrid, ColumnSequence, PlayerId, GridResult).

@@ -25,10 +25,10 @@
 % =============================================
 
 % =============================================
-% an IA has the form of ia( Grid, NumPlay, NumCol)
+% a Player has the form of player( Grid, NumPlay, NumCol)
 % where Grid is the current grid
-% NumPlay is the number of the ia (player 1 or player 2)
-% NumCol is the number of column where the ia want to play next
+% NumPlay is the number of the player (1 or 2)
+% NumCol is the number of column where the player wants to play next
 % =============================================
 
 % Initialize a matrix full of 0 and start privateLaunch/6
@@ -37,6 +37,10 @@ launch(Player1, Player2, Result) :-
 	call(Player1, Grid, 1, NumCol),
 	(NumCol==0; gameIsValidePlay(Grid, NumCol) ,
 		gamePlay(Grid, NumCol, 1, ResGrid),
+		writeTrace(game, Player1),
+		writeTrace(game, ' has played '),
+		writeTrace(game, NumCol),
+		writeTrace(game, '\n'),
 		gridTrace(game, ResGrid)),
 	privateLaunch(ResGrid, Player1, Player2, Result, NumCol, 2),
 	writeTrace(game, 'Res : '),
@@ -56,6 +60,10 @@ privateLaunch(Grid, Player1, Player2, Result, _, 1) :-
 	call(Player1, Grid, 1, NewNum),
 	(NewNum==0; gameIsValidePlay(Grid, NewNum),
 		gamePlay(Grid, NewNum, 1, ResGrid),
+		writeTrace(game, Player1),
+		writeTrace(game, ' has played '),
+		writeTrace(game, NewNum),
+		writeTrace(game, '\n'),
 		gridTrace(game, ResGrid)),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 2).
 
@@ -64,6 +72,10 @@ privateLaunch(Grid, Player1, Player2, Result, _, 2) :-
 	call(Player2, Grid, 2, NewNum),
 	(NewNum==0;gameIsValidePlay(Grid, NewNum),
 		gamePlay(Grid, NewNum, 2, ResGrid),
+		writeTrace(game, Player2),
+		writeTrace(game, ' has played '),
+		writeTrace(game, NewNum),
+		writeTrace(game, '\n'),
 		gridTrace(game, ResGrid)),
 	privateLaunch(ResGrid, Player1, Player2, Result, NewNum, 1).
 

@@ -1,16 +1,16 @@
 :- [traceUtils].
 :- [gameLauncher].
-:- [iaUser].
+:- [playerUser].
 
 
-testOneUser :- launch(iaTest1, iaUser, R),
+testOneUser :- launch(playerTest1, playerUser, R),
 	writeTrace(game,"R ="),
 	writeTrace(game, R).
 
-testTwoUser :- launch(iaUser, iaUser, R),
+testTwoUser :- launch(playerUser, playerUser, R),
 	writeTrace(game,"R ="),
 	writeTrace(game, R).
 
-testReVSRa :- launch(iaRandom, iaUser, R),
+testReVSRa :- launch(playerRandom, playerUser, R),
 	writeTrace(game,"R ="),
 	writeTrace(game, R).
