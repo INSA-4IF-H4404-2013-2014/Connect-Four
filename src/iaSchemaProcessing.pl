@@ -109,6 +109,21 @@ iaSchemaPrune(Schema, RSchema) :-
     privateIaSchemaPrune(Schema, RSchema, MinX, MinY).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FLIP HORIZONTALY A SCHEMA
+% flip horizontaly a schema
+
+privateIaSchemaHorizontalFlip([], [], _).
+
+privateIaSchemaHorizontalFlip([[X, Y, MatchType]|Schema], [[NewX, Y, MatchType]|NewSchema], Width) :-
+    NewX is Width - X,
+    privateIaSchemaHorizontalFlip(Schema, NewSchema, Width).
+
+iaSchemaHorizontalFlip(Schema, FlipedSchema) :-
+    iaSchemaMaximalCoordinate(Schema, 1, Width),
+    privateIaSchemaHorizontalFlip(Schema, RSchema, Width)
+    -> sort(RSchema, FlipedSchema).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXTRACT SCHEMA FROM GRID
 % extract a schema from a grid
 

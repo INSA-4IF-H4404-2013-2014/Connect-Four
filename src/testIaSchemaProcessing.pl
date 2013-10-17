@@ -35,6 +35,16 @@ testIaPrivateCaseGridIsWiningSchema([
     [5, 2, 1]
 ]).
 
+testIaPrivateCaseGridIsWiningSchemaFliped([
+    [0, 2, 1],
+    [1, 2, 0],
+    [2, 2, 1],
+    [2, 3, 0],
+    [3, 2, 1],
+    [4, 1, 1],
+    [5, 0, 1]
+]).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
@@ -69,6 +79,11 @@ testIaSchemaPrune :-
     iaSchemaPrune(S1, S1),
     not(iaSchemaPrune(S0, S0)).
 
+testIaSchemaHorizontalFlip :-
+    testIaPrivateCaseGridIsWiningSchema(S0),
+    testIaPrivateCaseGridIsWiningSchemaFliped(S1),
+    iaSchemaHorizontalFlip(S0, S1).
+
 testIaSchemaExtraction :-
     testIaPrivateCaseGridIsWining(G0),
     testIaPrivateCaseGridIsWiningSchema(S1),
@@ -81,4 +96,5 @@ testAllIaSchemaProcessing :-
     test(testIaSchemaMinimalCoordinate),
     test(testIaSchemaMaximalCoordinate),
     test(testIaSchemaPrune),
+    test(testIaSchemaHorizontalFlip),
     test(testIaSchemaExtraction).
