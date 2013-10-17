@@ -10,9 +10,6 @@ tracing(none).
 
 % Should iaRandom unit test tracing be activated?
 %tracing(iarandom).
-
-%Should iaStats-module's statistics be displayed?
-%tracing(statsIa).
 %----------------------------
 
 writeTrace(Cond, Text) :-
