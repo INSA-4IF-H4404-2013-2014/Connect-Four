@@ -175,14 +175,17 @@ testPrivateGamePlayerWonStarCheckColumn :-
 	testPrivateWonColumnNotWonOthers(M4),
 	testPrivateWonColumn1(M5),
 	linesNumber(LN),
-	not(privateGamePlayerWonStarCheckColumn(M, 2, LN, LN, 1)),
-	privateGamePlayerWonStarCheckColumn(M2, 1, 5, 5, 1),
+	not(privateGamePlayerWonStarCheckColumnRoutine(M, 2, LN, LN, 1)),
+	privateGamePlayerWonStarCheckColumnRoutine(M2, 1, 5, 5, 1),
 	not(privateGamePlayerWonStarCheckColumn(M3, 1, 3, 2)),
 	not(privateGamePlayerWonStarCheckColumn(M4, 1, 3, 2)),
 	not(privateGamePlayerWonStarCheckColumn(M4, 7, 3, 1)),
 	not(privateGamePlayerWonStarCheckColumn(M4, 7, 3, 2)),
 	not(privateGamePlayerWonStarCheckColumn(M4, 4, 4, 2)),
 	privateGamePlayerWonStarCheckColumn(M4, 4, 4, 1),
+	privateGamePlayerWonStarCheckColumn(M4, 4, 3, 1),
+	privateGamePlayerWonStarCheckColumn(M4, 4, 2, 1),
+	privateGamePlayerWonStarCheckColumn(M4, 4, 1, 1),
 	privateGamePlayerWonStarCheckColumn(M5, 2, 4, 1).
 
 testPrivateGamePlayerWonStarCheckDiagonal :-

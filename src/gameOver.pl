@@ -62,16 +62,19 @@ privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, TopLine, Player) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% Checks if there are 4 pawns of the same color in one column %%%%%%%%%%%
-privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
+privateGamePlayerWonStarCheckColumnRoutine(Matrix, LastColumnPlayed, TopLine, CurrentLine, Player) :-
 	numberOfAlignedPawnsToWin(AlignedPawnsToWin),
 	Delta is abs(TopLine - CurrentLine),
 	Delta >= AlignedPawnsToWin ;
 	gameGridGet(Matrix, LastColumnPlayed, CurrentLine, Player),
 	CurrentLine2 is (CurrentLine - 1),
-	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, CurrentLine2, Player).
+	privateGamePlayerWonStarCheckColumnRoutine(Matrix, LastColumnPlayed, TopLine, CurrentLine2, Player).
 
 privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, Player) :-
-	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, TopLine, Player).
+	privateGamePlayerWonStarCheckColumnRoutine(Matrix, LastColumnPlayed, TopLine, TopLine, Player);
+	TopLine1 is TopLine + 1,
+	gameGridGet(Matrix, LastColumnPlayed, TopLine1, Player),
+	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine1, Player).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
