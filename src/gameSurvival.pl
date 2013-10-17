@@ -28,7 +28,8 @@ gameSurvive(Grid, Player, [Pos|ListColumns], Pos) :-
 	gameSurvive(Grid, Player, ListColumns, NextColumn).
 	
 gameSurvive(Grid, Player, ListColumns) :-
-	gameSurvive(Grid, Player, ListColumns, 7) ->
+	columnsNumber(ColNum),
+	gameSurvive(Grid, Player, ListColumns, ColNum) ->
 	(
 		length(ListColumns, Length),
 		Length > 0
