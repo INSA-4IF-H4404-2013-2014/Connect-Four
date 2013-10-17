@@ -5,6 +5,7 @@
 :- [testGameLauncher].
 :- [testPlayerRandom].
 :- [testIaInferenceSchema].
+:- [testIaSchemaProcessing].
 :- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
 
@@ -17,5 +18,6 @@ testAll :-
     testAllGameLauncher,
 	testAllPlayerRandom,
     testAllIaInferenceSchema,
+    testAllIaSchemaProcessing,
     testAllIaInferenceCleverMove,
     testAllIaInferenceDatabase.
