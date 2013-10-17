@@ -62,7 +62,7 @@ testGridPlayer1WinNextTurn([
     [2,1,1]
 ]).
 
-testOtherCanWin :-
+testGameOtherCanWin :-
 	testFullGrid(M1),
 	not(gameOtherCanWin(M1, 1, _)),
 	testEmptyGrid(M2),
@@ -72,7 +72,7 @@ testOtherCanWin :-
 	testGridPlayer2WinNextTurn(M4),
 	gameOtherCanWin(M4, 2, 4).
 
-testSurvival :- 
+testGameSurvival :-
 	testFullGrid(M1),
 	not(gameSurvive(M1, 1, _)),
 	testEmptyGrid(M2),
@@ -86,11 +86,11 @@ testSurvival :-
 	testAlmostFullGrid(M6),
 	gameSurvive(M6, 1, _),
 	not(gameSurvive(M6, 2, _)).
-	
-testAllSurvival :-
-	test(testOtherCanWin),
-	test(testSurvival).
-	
-	
-	
-	
+
+testAllGameSurvival :-
+	test(testGameOtherCanWin),
+	test(testGameSurvival).
+
+
+
+
