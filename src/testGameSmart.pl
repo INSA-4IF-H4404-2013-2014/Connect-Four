@@ -1,6 +1,6 @@
-:- [gameSurvival].
+
+:- [gameSmart].
 :- [testUtils].
-:- [gamePrint].
 
 %Return false (can't happen)
 testFullGrid([
@@ -92,10 +92,6 @@ testGameWinningMoves :-
 	gameWinningMoves(M6, 2, _),
 	not(gameWinningMoves(M6, 1, _)).
 
-testAllGameSurvival :-
+testAllGameSmart :-
 	test(testGameCanWin),
 	test(testGameWinningMoves).
-
-
-
-

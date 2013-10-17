@@ -3,13 +3,13 @@
 :- [testGameCore].
 :- [testGameOver].
 :- [testGameLauncher].
+:- [testGameSmart].
 :- [testPlayerRandom].
 :- [testIaInferenceSchema].
 :- [testIaSchemaProcessing].
 :- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
 :- [testStatsPlayer].
-:- [testGameSurvival].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
@@ -18,7 +18,7 @@ testAll :-
     testAllGameCore,
     testAllGameOver,
     testAllGameLauncher,
-	testAllGameSurvival,
+	testAllGameSmart,
 	testAllPlayerRandom,
     testAllIaInferenceSchema,
     testAllIaSchemaProcessing,
