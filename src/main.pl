@@ -7,3 +7,4 @@
 :- [playerHuman].
 :- [iaInference].
 :- [iaPopulateKnowledge].
+:- [statsPlayer].

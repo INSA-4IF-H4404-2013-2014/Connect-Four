@@ -9,18 +9,30 @@ statsPlayerFightingPlayerDB(playerRandom, 2).
 statsPlayerFightingPlayerDB(playerRandom, 3).
 statsPlayerFightingPlayerDB(playerRandom, 4).
 
-%Please indicate here the number of matchs per round you want.
-statsPlayerNumberOfMatchsPerRound(100).
+%Please indicate here the default number of matchs per round you want.
+statsPlayerDefaultMatchsPerRound(100).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%% Lauches all the matches and prints stats %%%%%%%%%%%%%%%%%%%%
 statsPlayer :-
-	privateStatsPlayerPopulateStatsDB,
-	write('\n'),
-	privateStatsPlayerPrintInfos,
-	write('\n'),
-	privateStatsPlayerPrintTournamentResults.
+	statsPlayerDefaultMatchsPerRound(MatchsPerRound),
+	statsPlayer(MatchsPerRound).
+
+statsPlayer(MatchsPerRound) :-
+	statsPlayer(MatchsPerRound, 1).
+
+statsPlayer(MatchsPerRound, Print) :-
+	privateStatsPlayerPopulateStatsDB(MatchsPerRound, Print),
+	(
+		(Print == 1) ->
+		(
+			write('\n'),
+			privateStatsPlayerPrintInfos(MatchsPerRound),
+			write('\n'),
+			privateStatsPlayerPrintTournamentResults
+		) ; true
+	).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -30,26 +42,29 @@ statsPlayer :-
 :- dynamic statsPlayerTournamentResultsDB/4.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateStatsPlayerPopulateStatsDB :-
+privateStatsPlayerPopulateStatsDB(MatchsPerRound, Print) :-
 	retractall(statsPlayerTournamentResultsDB(_,_,_,_)),
 	forall((statsPlayerFightingPlayerDB(P1, P1Id), statsPlayerFightingPlayerDB(P2, P2Id)),
 	(
-		write('Computing Round: '),
-		write(P1), write(' ('), write(P1Id), write(') \\VS/ '),
-		write(P2), write(' ('), write(P2Id), write(')...\n'),
-		privateStatsPlayerOneRoundLoop(P1Id, P2Id)
+		(
+			(Print == 1) ->
+			(
+				write('Computing Round: '),
+				write(P1), write(' ('), write(P1Id), write(') \\VS/ '),
+				write(P2), write(' ('), write(P2Id), write(')...\n')
+			) ; true
+		), privateStatsPlayerOneRoundLoop(MatchsPerRound, P1Id, P2Id)
 	)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateStatsPlayerPrintInfos :-
+privateStatsPlayerPrintInfos(MatchsPerRound) :-
 	privateStatsPlayerNumberOfTruePredicates(statsPlayerFightingPlayerDB(_,_), NumberOfFightingPlayers),
-	statsPlayerNumberOfMatchsPerRound(NumberOfMatchsPerRound),
 	TotalRounds is (NumberOfFightingPlayers*NumberOfFightingPlayers),
-	TotalMatchs is (NumberOfMatchsPerRound*TotalRounds),
+	TotalMatchs is (MatchsPerRound*TotalRounds),
 	write('Total fighting players: '), write(NumberOfFightingPlayers), write('\n'),
-	write('Matchs per round: '), write(NumberOfMatchsPerRound), write('\n'),
+	write('Matchs per round: '), write(MatchsPerRound), write('\n'),
 	write('Total Rounds: '), write(TotalRounds), write('\n'),
 	write('Total Matchs: '), write(TotalMatchs), write('\n').
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,14 +107,13 @@ privateStatsPlayerPrintTournamentResults :-
 
 %%%%%%%% Launches one loop of matchs (a round) and records the results %%%%%%%%%
 % The number of matchs in a round is controlled by
-%		statsPlayerNumberOfMatchsPerRound(X).
+%		statsPlayerDefaultMatchsPerRound(X).
 %
 % A round means two given Players playing against each other lots of times.
 %
-privateStatsPlayerOneRoundLoop(P1Id, P2Id) :-
+privateStatsPlayerOneRoundLoop(MatchsPerRound, P1Id, P2Id) :-
 	statsPlayerFightingPlayerDB(P1, P1Id), statsPlayerFightingPlayerDB(P2, P2Id),
-	statsPlayerNumberOfMatchsPerRound(NumberOfMatchsPerRound),
-	privateStatsPlayerOneRoundLoop2(P1, P2, NumberOfMatchsPerRound, NbWon1, NbWon2, NbDraw),
+	privateStatsPlayerOneRoundLoop2(P1, P2, MatchsPerRound, NbWon1, NbWon2, NbDraw),
 	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 0, NbDraw)),
 	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 1, NbWon1)),
 	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 2, NbWon2)), !.
