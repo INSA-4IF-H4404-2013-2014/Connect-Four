@@ -9,6 +9,7 @@
 :- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
 :- [testStatsPlayer].
+:- [testGameSurvival].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
@@ -17,6 +18,7 @@ testAll :-
     testAllGameCore,
     testAllGameOver,
     testAllGameLauncher,
+	testAllGameSurvival,
 	testAllPlayerRandom,
     testAllIaInferenceSchema,
     testAllIaSchemaProcessing,
