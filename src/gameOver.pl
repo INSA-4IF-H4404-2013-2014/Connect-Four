@@ -80,8 +80,8 @@ privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, Player) :
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% Checks if a player won %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Checks if a pawn is aligned %%%%%%%%%%%%%%%%%%%%%%%
+gameIsAligned(Matrix, LastColumnPlayed, TopLine, Player) :-
 	privateGamePlayerWonStarCheckDiagonal(Matrix, LastColumnPlayed, TopLine, Player) ;
 	privateGamePlayerWonStarCheckLine(Matrix, LastColumnPlayed, TopLine, Player) ;
 	privateGamePlayerWonStarCheckColumn(Matrix, LastColumnPlayed, TopLine, Player).
@@ -102,6 +102,6 @@ privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player) :-
 gameOver(Matrix, LastColumnPlayed, Player) :-
 	gameColumnHeight(Matrix, LastColumnPlayed, TopLine),
 	gameGridGet(Matrix, LastColumnPlayed, TopLine, Player),
-	privateGamePlayerWon(Matrix, LastColumnPlayed, TopLine, Player).
+	gameIsAligned(Matrix, LastColumnPlayed, TopLine, Player).
 gameOver(Matrix, LastColumnPlayed, 0) :- gameGridGet(Matrix, LastColumnPlayed, 1, _), gameGridIsFull(Matrix).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
