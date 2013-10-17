@@ -91,3 +91,12 @@ iaSchemaPrune(Schema, RSchema) :-
     iaSchemaMinimalCoordinate(Schema, 1, MinX),
     iaSchemaMinimalCoordinate(Schema, 2, MinY),
     privateIaSchemaPrune(Schema, RSchema, MinX, MinY).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXTRACT SCHEMA FROM GRID
+% extract a schema from a grid
+
+iaSchemaExtraction(Grid, KillerMoves, PlayerId, Schema) :-
+    iaSchemaPopulate(Grid, KillerMoves, PlayerId, AbsoluteSchema) ->
+    iaSchemaPrune(AbsoluteSchema, Schema).
+

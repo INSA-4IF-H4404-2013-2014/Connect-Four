@@ -65,9 +65,15 @@ testIaSchemaPrune :-
     iaSchemaPrune(S1, S1),
     not(iaSchemaPrune(S0, S0)).
 
+testIaSchemaExtraction :-
+    testIaPrivateCaseGridIsWining(G0),
+    testIaPrivateCaseGridIsWiningSchema(S1),
+    iaSchemaExtraction(G0, [5,6], 1, S1).
+
 testAllIaSchemaProcessing :-
     test(testIaSchemaCreate),
     test(testIaSchemaInsertPawn),
     test(testIaSchemaPopulate),
     test(testIaSchemaMinimalCoordinate),
-    test(testIaSchemaPrune).
+    test(testIaSchemaPrune),
+    test(testIaSchemaExtraction).
