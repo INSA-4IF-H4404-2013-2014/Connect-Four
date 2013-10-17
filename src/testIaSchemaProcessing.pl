@@ -15,7 +15,7 @@ testIaPrivateCaseGridIsWining([
     [2,1,1]
 ]).
 
-testIaPrivateCaseGridIsWiningSchema([
+testIaPrivateCaseGridIsWiningSchemaAbs([
     [2, 1, 1],
     [3, 2, 1],
     [4, 3, 1],
@@ -23,6 +23,16 @@ testIaPrivateCaseGridIsWiningSchema([
     [5, 4, 0],
     [6, 3, 0],
     [7, 3, 1]
+]).
+
+testIaPrivateCaseGridIsWiningSchema([
+    [0, 0, 1],
+    [1, 1, 1],
+    [2, 2, 1],
+    [3, 2, 1],
+    [3, 3, 0],
+    [4, 2, 0],
+    [5, 2, 1]
 ]).
 
 
@@ -41,15 +51,23 @@ testIaSchemaInsertPawn :-
 
 testIaSchemaPopulate :-
     testIaPrivateCaseGridIsWining(G0),
-    testIaPrivateCaseGridIsWiningSchema(S0),
+    testIaPrivateCaseGridIsWiningSchemaAbs(S0),
     iaSchemaPopulate(G0, [5,6], 1, S0).
 
 testIaSchemaMinimalCoordinate :-
     iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 3),
     iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 2).
 
+testIaSchemaPrune :-
+    testIaPrivateCaseGridIsWiningSchemaAbs(S0),
+    testIaPrivateCaseGridIsWiningSchema(S1),
+    iaSchemaPrune(S0, S1),
+    iaSchemaPrune(S1, S1),
+    not(iaSchemaPrune(S0, S0)).
+
 testAllIaSchemaProcessing :-
     test(testIaSchemaCreate),
     test(testIaSchemaInsertPawn),
     test(testIaSchemaPopulate),
-    test(testIaSchemaMinimalCoordinate).
+    test(testIaSchemaMinimalCoordinate),
+    test(testIaSchemaPrune).

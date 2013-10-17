@@ -75,3 +75,19 @@ iaSchemaMinimalCoordinate([Element|Schema], CoordId, Value) :-
         (Value = ComparedValue);
         (Value = RValue)
     ).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PRUNE SCHEMA
+% prune a schema from absolute coordinates to relative coordinates
+
+privateIaSchemaPrune([], [], _, _).
+
+privateIaSchemaPrune([[AbsX, AbsY, MatchType]|Schema], [[X, Y, MatchType]|RSchema], MinX, MinY) :-
+    X is AbsX - MinX,
+    Y is AbsY - MinY,
+    privateIaSchemaPrune(Schema, RSchema, MinX, MinY).
+
+iaSchemaPrune(Schema, RSchema) :-
+    iaSchemaMinimalCoordinate(Schema, 1, MinX),
+    iaSchemaMinimalCoordinate(Schema, 2, MinY),
+    privateIaSchemaPrune(Schema, RSchema, MinX, MinY).
