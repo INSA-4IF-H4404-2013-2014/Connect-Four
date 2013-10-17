@@ -63,7 +63,7 @@ iaSchemaPopulate(Grid, KillerMoves, PlayerId, SortedSchema) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET MINIMAL COORDINATE
-% get the minimal coordinate
+% get the minimal coordinate in a schema
 
 iaSchemaMinimalCoordinate([], _, 0).
 
@@ -72,6 +72,22 @@ iaSchemaMinimalCoordinate([Element|Schema], CoordId, Value) :-
     iaSchemaMinimalCoordinate(Schema, CoordId, RValue),
     (
         (ComparedValue < RValue ; RValue == 0) ->
+        (Value = ComparedValue);
+        (Value = RValue)
+    ).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET MAXIMAL COORDINATE
+% get the maximal coordinate in a schema
+
+iaSchemaMaximalCoordinate([], _, 0).
+
+iaSchemaMaximalCoordinate([Element|Schema], CoordId, Value) :-
+    listFetch(Element, CoordId, ComparedValue),
+    iaSchemaMaximalCoordinate(Schema, CoordId, RValue),
+    (
+        (ComparedValue > RValue) ->
         (Value = ComparedValue);
         (Value = RValue)
     ).
@@ -99,4 +115,3 @@ iaSchemaPrune(Schema, RSchema) :-
 iaSchemaExtraction(Grid, KillerMoves, PlayerId, Schema) :-
     iaSchemaPopulate(Grid, KillerMoves, PlayerId, AbsoluteSchema) ->
     iaSchemaPrune(AbsoluteSchema, Schema).
-

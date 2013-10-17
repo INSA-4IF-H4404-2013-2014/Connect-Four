@@ -58,6 +58,10 @@ testIaSchemaMinimalCoordinate :-
     iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 3),
     iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 2).
 
+testIaSchemaMaximalCoordinate :-
+    iaSchemaMaximalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 4),
+    iaSchemaMaximalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 5).
+
 testIaSchemaPrune :-
     testIaPrivateCaseGridIsWiningSchemaAbs(S0),
     testIaPrivateCaseGridIsWiningSchema(S1),
@@ -75,5 +79,6 @@ testAllIaSchemaProcessing :-
     test(testIaSchemaInsertPawn),
     test(testIaSchemaPopulate),
     test(testIaSchemaMinimalCoordinate),
+    test(testIaSchemaMaximalCoordinate),
     test(testIaSchemaPrune),
     test(testIaSchemaExtraction).
