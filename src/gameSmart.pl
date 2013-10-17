@@ -38,8 +38,20 @@ gameWinningMoves(Grid, PlayerId, ListColumns) :-
 	).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%% RETURN A IMPLICITE MOVE TO NOT LET THE OTHER PLAYER WIN
+%%%%%%%%%%%%%%%%%%%%%%%%% RETURN A LIST OFS MOVE TO NOT LET THE OTHER PLAYER WIN
 
 gameSurviveMoves(Grid, PlayerId, ListColumns) :-
-    gameOtherPlay(PlayerId, OtherPlayerId),
+    gameOtherPlayer(PlayerId, OtherPlayerId),
     gameWinningMoves(Grid, OtherPlayerId, ListColumns).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMPUTE AN OBVIOUS MOVE
+
+gameObviousMove(Grid, PlayerId, ColumnId) :-
+    gameWinningMoves(Grid, PlayerId, WinningMoves) ->
+    (
+        listFetch(WinningMoves, 1, ColumnId)
+    ) ; (
+        gameSurviveMoves(Grid, PlayerId, SurvieMoves) ->
+        listFetch(SurvieMoves, 1, ColumnId)
+    ), !.
