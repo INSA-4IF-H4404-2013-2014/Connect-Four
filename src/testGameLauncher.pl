@@ -4,19 +4,19 @@
 %%%%%%%%%%%%
 % Test datas
 %%%%%%%%%%%%
-iaTest1(_, _, 1).
-iaTest2(_, _, 2).
-iaTest4(_, _, 4).
+playerTest1(_, _, 1).
+playerTest2(_, _, 2).
+playerTest4(_, _, 4).
 %%%%%%%%%%%%
 
 
-testSimpleGame :- launch(iaTest1, iaTest2, 1).
+testSimpleGame :- launch(playerTest1, playerTest2, 1).
 
-testSimpleGameInv :- launch(iaTest2, iaTest1, 1).
+testSimpleGameInv :- launch(playerTest2, playerTest1, 1).
 
-testSameIAInfinite :- not(launch(iaTest4, iaTest4, _)).
+testSamePlayerInfinite :- not(launch(playerTest4, playerTest4, _)).
 
 testAllGameLauncher :-
 	test(testSimpleGame),
 	test(testSimpleGameInv),
-	test(testSameIAInfinite).
+	test(testSamePlayerInfinite).

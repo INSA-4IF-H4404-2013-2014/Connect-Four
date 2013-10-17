@@ -8,8 +8,8 @@ tracing(none).
 % constant which indicates if tracing what happend when playing
 %tracing(game).
 
-% Should iaRandom unit test tracing be activated?
-%tracing(iarandom).
+% Should playerRandom unit test tracing be activated?
+%tracing(playerrandom).
 %----------------------------
 
 writeTrace(Cond, Text) :-

@@ -25,10 +25,10 @@
 % =============================================
 
 % =============================================
-% an IA has the form of ia( Grid, NumPlay, NumCol)
+% a Player has the form of player( Grid, NumPlay, NumCol)
 % where Grid is the current grid
-% NumPlay is the number of the ia (player 1 or player 2)
-% NumCol is the number of column where the ia want to play next
+% NumPlay is the number of the player (1 or 2)
+% NumCol is the number of column where the player wants to play next
 % =============================================
 
 % Initialize a matrix full of 0 and start privateLaunch/6

@@ -3,6 +3,6 @@
 :- [gamePrint].
 :- [gameOver].
 :- [gameLauncher].
-:- [iaRandom].
-:- [iaUser].
+:- [playerRandom].
+:- [playerHuman].
 :- [iaInference].

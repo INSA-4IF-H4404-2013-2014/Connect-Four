@@ -1,5 +1,5 @@
 
-:- [iaRandom].
+:- [playerRandom].
 :- [iaInferenceSchema].
 :- [iaInferenceCleverMove].
 :- [iaInferenceDatabase].
@@ -13,5 +13,5 @@ iaInference(Grid, PlayerId, ColumnId) :-
     (
         isInferenceCleverMove(Grid, PlayerId, Schema, PosX, PosY, ColumnId, _)
     ); (
-        iaRandom(Grid, PlayerId, ColumnId)
+        playerRandom(Grid, PlayerId, ColumnId)
     ).

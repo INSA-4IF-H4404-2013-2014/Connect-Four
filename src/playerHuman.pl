@@ -2,11 +2,11 @@
 :- [gamePrint].
 
 %
-% launch the iaUser which ask a move to the user until this move is valid.
+% launch the playerHuman which ask a move to the user until this move is valid.
 %
 
 
-iaUser(Grid, Num , Char) :-
+playerHuman(Grid, Num , Char) :-
     gamePrintGrid(Grid),
 	gamePrintSymbols(Num, Symb),
 	write('\n ---interface--- p'),
@@ -23,6 +23,6 @@ iaUser(Grid, Num , Char) :-
 	(Char==0; gameIsValidePlay(Grid, Char)), !.
 
 
-iaUser(Grid, Num , C) :-
+playerHuman(Grid, Num , C) :-
 	write('\n ---interface--- choice not valid'),
-	iaUser(Grid, Num , C) .
+	playerHuman(Grid, Num , C) .
