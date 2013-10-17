@@ -44,7 +44,12 @@ testIaSchemaPopulate :-
     testIaPrivateCaseGridIsWiningSchema(S0),
     iaSchemaPopulate(G0, [5,6], 1, S0).
 
+testIaSchemaMinimalCoordinate :-
+    iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 3),
+    iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 2).
+
 testAllIaSchemaProcessing :-
     test(testIaSchemaCreate),
     test(testIaSchemaInsertPawn),
-    test(testIaSchemaPopulate).
+    test(testIaSchemaPopulate),
+    test(testIaSchemaMinimalCoordinate).

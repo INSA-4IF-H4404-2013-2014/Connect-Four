@@ -60,3 +60,18 @@ iaSchemaPopulate(Grid, KillerMoves, PlayerId, SortedSchema) :-
         privateIaSchemaPopulateByX(DominationGrid, PlayerId, NewSchema, RSchema, ColumnCount)
     ),
     sort(RSchema, SortedSchema), !.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET MINIMAL COORDINATE
+% get the minimal coordinate
+
+iaSchemaMinimalCoordinate([], _, 0).
+
+iaSchemaMinimalCoordinate([Element|Schema], CoordId, Value) :-
+    listFetch(Element, CoordId, ComparedValue),
+    iaSchemaMinimalCoordinate(Schema, CoordId, RValue),
+    (
+        (ComparedValue < RValue ; RValue == 0) ->
+        (Value = ComparedValue);
+        (Value = RValue)
+    ).
