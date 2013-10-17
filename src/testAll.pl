@@ -8,6 +8,7 @@
 :- [testIaSchemaProcessing].
 :- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
+:- [testStatsPlayer].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
@@ -20,4 +21,5 @@ testAll :-
     testAllIaInferenceSchema,
     testAllIaSchemaProcessing,
     testAllIaInferenceCleverMove,
-    testAllIaInferenceDatabase.
+    testAllIaInferenceDatabase,
+	testAllStatsPlayer.

@@ -6,3 +6,5 @@
 :- [playerRandom].
 :- [playerHuman].
 :- [iaInference].
+:- [iaPopulateKnowledge].
+:- [statsPlayer].
