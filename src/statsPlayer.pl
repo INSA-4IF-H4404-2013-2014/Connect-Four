@@ -20,11 +20,19 @@ statsPlayer :-
 	statsPlayer(MatchsPerRound).
 
 statsPlayer(MatchsPerRound) :-
-	privateStatsPlayerPopulateStatsDB(MatchsPerRound),
-	write('\n'),
-	privateStatsPlayerPrintInfos(MatchsPerRound),
-	write('\n'),
-	privateStatsPlayerPrintTournamentResults.
+	statsPlayer(MatchsPerRound, 1).
+
+statsPlayer(MatchsPerRound, Print) :-
+	privateStatsPlayerPopulateStatsDB(MatchsPerRound, Print),
+	(
+		(Print == 1) ->
+		(
+			write('\n'),
+			privateStatsPlayerPrintInfos(MatchsPerRound),
+			write('\n'),
+			privateStatsPlayerPrintTournamentResults
+		) ; true
+	).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -34,14 +42,18 @@ statsPlayer(MatchsPerRound) :-
 :- dynamic statsPlayerTournamentResultsDB/4.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-privateStatsPlayerPopulateStatsDB(MatchsPerRound) :-
+privateStatsPlayerPopulateStatsDB(MatchsPerRound, Print) :-
 	retractall(statsPlayerTournamentResultsDB(_,_,_,_)),
 	forall((statsPlayerFightingPlayerDB(P1, P1Id), statsPlayerFightingPlayerDB(P2, P2Id)),
 	(
-		write('Computing Round: '),
-		write(P1), write(' ('), write(P1Id), write(') \\VS/ '),
-		write(P2), write(' ('), write(P2Id), write(')...\n'),
-		privateStatsPlayerOneRoundLoop(MatchsPerRound, P1Id, P2Id)
+		(
+			(Print == 1) ->
+			(
+				write('Computing Round: '),
+				write(P1), write(' ('), write(P1Id), write(') \\VS/ '),
+				write(P2), write(' ('), write(P2Id), write(')...\n')
+			) ; true
+		), privateStatsPlayerOneRoundLoop(MatchsPerRound, P1Id, P2Id)
 	)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
