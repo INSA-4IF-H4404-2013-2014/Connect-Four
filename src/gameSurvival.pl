@@ -1,4 +1,4 @@
-:- [gameCore].
+
 :- [gameOver].
 
 % Survival predicat
