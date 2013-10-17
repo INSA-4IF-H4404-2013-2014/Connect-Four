@@ -51,11 +51,12 @@ privateIaSchemaPopulateByX(Grid, PlayerId, Schema, RSchema, X) :-
     privateIaSchemaPopulateByX(Grid, PlayerId, NewSchema, RSchema, X1).
 
 
-iaSchemaPopulate(Grid, KillerMoves, PlayerId, RSchema) :-
+iaSchemaPopulate(Grid, KillerMoves, PlayerId, SortedSchema) :-
     (
         gamePlaySequence(Grid, KillerMoves, PlayerId, DominationGrid),
         iaSchemaCreate(Grid, KillerMoves, NewSchema)
     ) -> (
         columnsNumber(ColumnCount),
         privateIaSchemaPopulateByX(DominationGrid, PlayerId, NewSchema, RSchema, ColumnCount)
-    ), !.
+    ),
+    sort(RSchema, SortedSchema), !.
