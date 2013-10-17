@@ -7,6 +7,7 @@
 :- [testIaInferenceSchema].
 :- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
+:- [testStatsPlayer].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
@@ -18,4 +19,5 @@ testAll :-
 	testAllPlayerRandom,
     testAllIaInferenceSchema,
     testAllIaInferenceCleverMove,
-    testAllIaInferenceDatabase.
+    testAllIaInferenceDatabase,
+	testAllStatsPlayer.
