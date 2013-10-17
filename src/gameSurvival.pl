@@ -1,36 +1,45 @@
 
 :- [gameOver].
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST IF CAN WIN BY PLAYING IN A COLUMN
+
+gameCanWin(Grid, PlayerId, ColumnId) :-
+    gameIsValidePlay(Grid, ColumnId) ->
+    (
+        gamePlay(Grid, ColumnId, PlayerId, GridResult),
+        gameOver(GridResult, ColumnId, PlayerId)
+    ).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN SURVIVAL MOVES TO DO IF NECESSARY
 % Survival predicat
 % Return true if one player can block the other
 % Test if 3 enemy's pawns are aligned, and try to play
 % Player is playing, we test if OtherPlayer can win next turn
 
+gameWinningMoves(_, _, [], 0).
 
-gameOtherCanWin(Grid, Player, Column) :-
-	gameOtherPlayer(Player, OtherPlayer),
-	(gameIsValidePlay(Grid, Column) ->
-	(	
-		gamePlay(Grid, Column, OtherPlayer, GridResult),
-		gameOver(GridResult, Column, OtherPlayer)
-	)).
-
-gameSurvive(_, _, [], 0).
-
-gameSurvive(Grid, Player, ListColumns, Pos) :- 
-	not(gameOtherCanWin(Grid, Player, Pos)),
+gameWinningMoves(Grid, PlayerId, ListColumns, Pos) :-
+	not(gameCanWin(Grid, PlayerId, Pos)),
 	NextColumn is Pos - 1,
-	gameSurvive(Grid, Player, ListColumns, NextColumn).
+	gameWinningMoves(Grid, PlayerId, ListColumns, NextColumn).
 
-gameSurvive(Grid, Player, [Pos|ListColumns], Pos) :- 
-	gameOtherCanWin(Grid, Player, Pos),
+gameWinningMoves(Grid, PlayerId, [Pos|ListColumns], Pos) :-
+	gameCanWin(Grid, PlayerId, Pos),
 	NextColumn is Pos - 1,
-	gameSurvive(Grid, Player, ListColumns, NextColumn).
+	gameWinningMoves(Grid, PlayerId, ListColumns, NextColumn).
 	
-gameSurvive(Grid, Player, ListColumns) :-
+gameWinningMoves(Grid, PlayerId, ListColumns) :-
 	columnsNumber(ColNum),
-	gameSurvive(Grid, Player, ListColumns, ColNum) ->
+	gameWinningMoves(Grid, PlayerId, ListColumns, ColNum) ->
 	(
 		length(ListColumns, Length),
 		Length > 0
 	).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% RETURN A IMPLICITE MOVE TO NOT LET THE OTHER PLAYER WIN
+
+gameSurviveMoves(Grid, PlayerId, ListColumns) :-
+    gameOtherPlay(PlayerId, OtherPlayerId),
+    gameWinningMoves(Grid, OtherPlayerId, ListColumns).
