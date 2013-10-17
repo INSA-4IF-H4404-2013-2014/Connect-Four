@@ -7,8 +7,15 @@
 % Player is playing, we test if OtherPlayer can win next turn
 
 
-otherCanWin(Grid, Player, Column) :- gameOtherPlayer(Player, OtherPlayer), gamePlay(Grid, Column, OtherPlayer, GridResult), gameOver(GridResult, Column, OtherPlayer).
+gameOtherCanWin(Grid, Player, Column) :-
+	gameOtherPlayer(Player, OtherPlayer),
+	(gameIsValidePlay(Grid, Column) ->
+	(	
+		gamePlay(Grid, Column, OtherPlayer, GridResult),
+		gamePrintGrid(GridResult),
+		gameOver(GridResult, Column, OtherPlayer)
+	)), !.
 
-survive(Grid, Player, Column, 7) :- otherCanWin(Grid, Player, 7), Column is 7.
-survive(Grid, Player, Column, Pos) :- (otherCanWin(Grid, Player, Pos), Column is Pos) ; (NextColumn is Pos +1, survive(Grid, Player, Column, NextColumn)).
-survive(Grid, Player, Column) :- survive(Grid, Player, Column, 1), !.
+gameSurvive(Grid, Player, Column, 7) :- gameOtherCanWin(Grid, Player, 7), Column is 7.
+gameSurvive(Grid, Player, Column, Pos) :- (gameOtherCanWin(Grid, Player, Pos), Column is Pos) ; (NextColumn is Pos +1, gameSurvive(Grid, Player, Column, NextColumn)).
+gameSurvive(Grid, Player, Column) :- gameSurvive(Grid, Player, Column, 1), !.
