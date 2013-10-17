@@ -1,5 +1,4 @@
-
-:- [testUtil].
+:- [testUtils].
 :- [gameCore].
 
 
@@ -52,10 +51,16 @@ testGameIsValidePlay :-
     gamePlay(R4, 1, 1, R5),
     gamePlay(R5, 1, 1, R6),
     gameIsValidePlay(R5, 1),
-    not(gameIsValidePlay(R6, 1)).
+    gameIsValidePlay(R5, 2),
+    not(gameIsValidePlay(R6, 1)),
+    gameIsValidePlay(R6, 2).
 
 testGameReverseGrid :-
     gameReverseGrid([[], [1], [2,1,2]], [[], [2], [1,2,1]]).
+
+testGamePlaySequence :-
+    gameNewGrid(G0),
+    gamePlaySequence(G0, [1, 1, 1], 1, [[1, 1, 1],[],[],[],[],[],[]]).
 
 testAllGameCore :-
     test(testListFetch),
@@ -63,4 +68,5 @@ testAllGameCore :-
     test(testGameRemainingPlays),
     test(testGameColunmHeight),
     test(testGameIsValidePlay),
-    test(testGameReverseGrid).
+    test(testGameReverseGrid),
+    test(testGamePlaySequence).
