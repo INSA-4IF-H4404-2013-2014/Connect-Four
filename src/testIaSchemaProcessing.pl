@@ -82,7 +82,9 @@ testIaSchemaPrune :-
 testIaSchemaHorizontalFlip :-
     testIaPrivateCaseGridIsWiningSchema(S0),
     testIaPrivateCaseGridIsWiningSchemaFliped(S1),
-    iaSchemaHorizontalFlip(S0, S1).
+    iaSchemaHorizontalFlip(S0, S1),
+    iaSchemaHorizontalFlip(S0, S2),
+    iaSchemaHorizontalFlip(S2, S0).
 
 testIaSchemaExtraction :-
     testIaPrivateCaseGridIsWining(G0),
