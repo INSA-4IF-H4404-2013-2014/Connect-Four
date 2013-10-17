@@ -9,6 +9,7 @@
 :- [testIaInferenceCleverMove].
 :- [testIaInferenceDatabase].
 :- [testStatsPlayer].
+:- [testSurvival].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS
@@ -23,3 +24,4 @@ testAll :-
     testAllIaInferenceCleverMove,
     testAllIaInferenceDatabase,
 	testAllStatsPlayer.
+	%testAllSurvival.
