@@ -36,5 +36,5 @@ iaInferenceResetDatabase :-
 iaInferenceConsultDatabase(Grid, PlayerId, Schema, PosX, PosY, MoveRemaining) :-
     iaInferenceDB(Schema) ->
     (
-        iaInferenceSchemaDistance(Grid, PlayerId, Schema, [PosX, PosY, MoveRemaining])
+        aiSchemaDistance(Grid, PlayerId, Schema, [PosX, PosY, MoveRemaining])
     ).

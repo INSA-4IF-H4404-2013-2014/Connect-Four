@@ -10,7 +10,7 @@ privateIaInferenceCleverMove(_, _, [_,_,0], _, _, SubColumnId, MetaDistance, Sub
 privateIaInferenceCleverMove(Grid, PlayerId, [RX, RY, 1], PosX, PosY, SubColumnId, SubMetaDistance, ColumnId, MetaDistance) :-
     X is PosX + RX,
     Y is PosY + RY,
-    privateIaInferenceSchemaElementDistance(Grid, PlayerId, X, Y, 1, CurentDistance) ->
+    privateAiSchemaElementDistance(Grid, PlayerId, X, Y, 1, CurentDistance) ->
     ((
         CurentDistance > 0,
         (CurentDistance < SubMetaDistance ; SubColumnId == 0)
