@@ -1,9 +1,9 @@
 
 :- [gameSmart].
 :- [playerRandom].
-:- [iaInferenceSchema].
-:- [iaInferenceCleverMove].
-:- [iaInferenceDatabase].
+:- [aiSchemaMatching].
+:- [aiSchemaSmartMove].
+:- [aiKnowledge].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDES

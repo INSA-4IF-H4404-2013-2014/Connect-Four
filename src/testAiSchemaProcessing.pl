@@ -1,6 +1,6 @@
 
 :- [testUtils].
-:- [iaSchemaProcessing].
+:- [aiSchemaProcessing].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
@@ -91,7 +91,7 @@ testIaSchemaExtraction :-
     testIaPrivateCaseGridIsWiningSchema(S1),
     iaSchemaExtraction(G0, [5,6], 1, S1).
 
-testAllIaSchemaProcessing :-
+testAllAiSchemaProcessing :-
     test(testIaSchemaCreate),
     test(testIaSchemaInsertPawn),
     test(testIaSchemaPopulate),

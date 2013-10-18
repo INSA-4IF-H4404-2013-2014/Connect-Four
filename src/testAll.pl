@@ -5,10 +5,10 @@
 :- [testGameProcess].
 :- [testGameSmart].
 :- [testPlayerRandom].
-:- [testIaInferenceSchema].
-:- [testIaSchemaProcessing].
-:- [testIaInferenceCleverMove].
-:- [testIaInferenceDatabase].
+:- [testAiSchemaMatching].
+:- [testAiSchemaProcessing].
+:- [testAiSchemaSmartMove].
+:- [testAiKnowledge].
 :- [testStatsPlayer].
 
 
@@ -20,8 +20,8 @@ testAll :-
     testAllGameProcess,
 	testAllGameSmart,
 	testAllPlayerRandom,
-    testAllIaInferenceSchema,
-    testAllIaSchemaProcessing,
-    testAllIaInferenceCleverMove,
-    testAllIaInferenceDatabase,
+    testAllAiSchemaMatching,
+    testAllAiSchemaProcessing,
+    testAllAiSchemaSmartMove,
+    testAllAiKnowledge,
 	testAllStatsPlayer.

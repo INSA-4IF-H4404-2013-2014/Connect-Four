@@ -1,5 +1,5 @@
 :- [gameProcess].
-:- [iaInference].
+:- [aiInference].
 
 
 

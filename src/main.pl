@@ -5,6 +5,6 @@
 :- [gameProcess].
 :- [playerRandom].
 :- [playerHuman].
-:- [iaInference].
-:- [iaPopulateKnowledge].
+:- [aiInference].
+:- [aiKnowledgePopulate].
 :- [statsPlayer].

@@ -1,6 +1,6 @@
 :- [testGridCases].
 :- [testUtils].
-:- [iaInferenceSchema].
+:- [aiSchemaMatching].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST CASES
@@ -59,7 +59,7 @@ testIaInferenceSchemaDistance :-
     iaInferenceSchemaDistance(G2, 1, S1, [1, 2, 4]),
     not(iaInferenceSchemaDistance(G3, 1, S1, _)).
 
-testAllIaInferenceSchema :-
+testAllAiSchemaMatching :-
     test(testPrivateIaInferenceSchemaElementDistance0),
     test(testPrivateIaInferenceSchemaElementDistance1),
     test(testPrivateIaInferenceSchemaDistance),

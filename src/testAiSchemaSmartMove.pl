@@ -1,6 +1,6 @@
 :- [testGridCases].
 :- [testUtils].
-:- [iaInferenceCleverMove].
+:- [aiSchemaSmartMove].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST CASES
@@ -23,7 +23,7 @@ testIsInferenceCleverMove :-
     testGridCaseEasySchema(S1),
     isInferenceCleverMove(G, 1, S1, 1, 1, 4, 1).
 
-testAllIaInferenceCleverMove :-
+testAllAiSchemaSmartMove :-
     test(testPrivateIaInferenceCleverMove0),
     test(testPrivateIaInferenceCleverMove1),
     test(testIsInferenceCleverMove).

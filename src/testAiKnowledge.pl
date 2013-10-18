@@ -1,6 +1,6 @@
 :- [testGridCases].
 :- [testUtils].
-:- [iaInferenceDatabase].
+:- [aiKnowledge].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
@@ -13,5 +13,5 @@ testIaInferenceConsultDatabase :-
     iaInferenceConsultDatabase(G1, 1, _, _, _, 3),
     iaInferenceConsultDatabase(G2, 1, _, _, _, 6).
 
-testAllIaInferenceDatabase :-
+testAllAiKnowledge :-
     test(testIaInferenceConsultDatabase).

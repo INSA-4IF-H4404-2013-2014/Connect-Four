@@ -1,5 +1,5 @@
 
-:- [iaInferenceSchema].
+:- [aiSchemaMatching].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EVALUATE DISTANCE OF ONE SCHEMA ELEMENT
