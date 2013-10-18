@@ -24,8 +24,8 @@ privateAiSchemaSmartMove(Grid, PlayerId, [RX, RY, 1], PosX, PosY, SubColumnId, S
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THE CLEVEREST MOVE TO DO WITH A SCHEMA
-iaSchemaSmartMove(_, _, [], _, _, 0, 0).
+aiSchemaSmartMove(_, _, [], _, _, 0, 0).
 
-iaSchemaSmartMove(Grid, PlayerId, [Element|Schema], PosX, PosY, ColumnId, MetaDistance) :-
-    iaSchemaSmartMove(Grid, PlayerId, Schema, PosX, PosY, SubColumnId, SubMetaDistance),
+aiSchemaSmartMove(Grid, PlayerId, [Element|Schema], PosX, PosY, ColumnId, MetaDistance) :-
+    aiSchemaSmartMove(Grid, PlayerId, Schema, PosX, PosY, SubColumnId, SubMetaDistance),
     privateAiSchemaSmartMove(Grid, PlayerId, Element, PosX, PosY, SubColumnId, SubMetaDistance, ColumnId, MetaDistance).

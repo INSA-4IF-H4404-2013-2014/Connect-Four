@@ -18,12 +18,12 @@ testPrivateAiSchemaSmartMove1 :-
     privateAiSchemaSmartMove(G, 1, [1, 0, 1], 1, 1, 1, 4, 2, 1),
     privateAiSchemaSmartMove(G, 1, [1, 0, 1], 1, 1, 4, 1, 4, 1).
 
-testIsInferenceCleverMove :-
+testAiInferenceCleverMove :-
     gameNewGrid(G),
     testGridCaseEasySchema(S1),
-    iaSchemaSmartMove(G, 1, S1, 1, 1, 4, 1).
+    aiSchemaSmartMove(G, 1, S1, 1, 1, 4, 1).
 
 testAllAiSchemaSmartMove :-
     test(testPrivateAiSchemaSmartMove0),
     test(testPrivateAiSchemaSmartMove1),
-    test(testIsInferenceCleverMove).
+    test(testAiInferenceCleverMove).
