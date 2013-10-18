@@ -3,11 +3,11 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EVALUATE DISTANCE OF ONE SCHEMA ELEMENT
-% privateIaInferenceCleverMove(Grid, PlayerId, ColumnId, LineId, MatchType, MovesDistance)
+% privateAiSchemaSmartMove(Grid, PlayerId, ColumnId, LineId, MatchType, MovesDistance)
 
-privateIaInferenceCleverMove(_, _, [_,_,0], _, _, SubColumnId, MetaDistance, SubColumnId, MetaDistance).
+privateAiSchemaSmartMove(_, _, [_,_,0], _, _, SubColumnId, MetaDistance, SubColumnId, MetaDistance).
 
-privateIaInferenceCleverMove(Grid, PlayerId, [RX, RY, 1], PosX, PosY, SubColumnId, SubMetaDistance, ColumnId, MetaDistance) :-
+privateAiSchemaSmartMove(Grid, PlayerId, [RX, RY, 1], PosX, PosY, SubColumnId, SubMetaDistance, ColumnId, MetaDistance) :-
     X is PosX + RX,
     Y is PosY + RY,
     privateAiSchemaElementDistance(Grid, PlayerId, X, Y, 1, CurentDistance) ->
@@ -24,8 +24,8 @@ privateIaInferenceCleverMove(Grid, PlayerId, [RX, RY, 1], PosX, PosY, SubColumnI
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THE CLEVEREST MOVE TO DO WITH A SCHEMA
-isInferenceCleverMove(_, _, [], _, _, 0, 0).
+iaSchemaSmartMove(_, _, [], _, _, 0, 0).
 
-isInferenceCleverMove(Grid, PlayerId, [Element|Schema], PosX, PosY, ColumnId, MetaDistance) :-
-    isInferenceCleverMove(Grid, PlayerId, Schema, PosX, PosY, SubColumnId, SubMetaDistance),
-    privateIaInferenceCleverMove(Grid, PlayerId, Element, PosX, PosY, SubColumnId, SubMetaDistance, ColumnId, MetaDistance).
+iaSchemaSmartMove(Grid, PlayerId, [Element|Schema], PosX, PosY, ColumnId, MetaDistance) :-
+    iaSchemaSmartMove(Grid, PlayerId, Schema, PosX, PosY, SubColumnId, SubMetaDistance),
+    privateAiSchemaSmartMove(Grid, PlayerId, Element, PosX, PosY, SubColumnId, SubMetaDistance, ColumnId, MetaDistance).
