@@ -81,8 +81,13 @@ privateIaSmartMove(_, _, 0, 0, 0, 0).
 
 privateIaSmartMove(Grid, PlayerId, ColumnId, RBestDistance, RWorstDistance, RColumnId) :-
     not(ColumnId = 0),
-    not(gameIsValidePlay(Grid, ColumnId)) ->
     (
+        gameIsValidePlay(Grid, ColumnId) -> (
+            gameIsSuicideMove(Grid, PlayerId, ColumnId)
+        ); (
+            true
+        )
+    ) -> (
         ColumnId1 is ColumnId - 1,
         privateIaSmartMove(Grid, PlayerId, ColumnId1, RBestDistance, RWorstDistance, RColumnId)
     ).
@@ -91,6 +96,7 @@ privateIaSmartMove(Grid, PlayerId, ColumnId, RBestDistance, RWorstDistance, RCol
     not(ColumnId = 0),
     gameIsValidePlay(Grid, ColumnId) ->
     (
+        not(gameIsSuicideMove(Grid, PlayerId, ColumnId)),
         gameOtherPlayer(PlayerId, OtherPlayerId),
         gamePlay(Grid, ColumnId, PlayerId, TestGrid),
 
