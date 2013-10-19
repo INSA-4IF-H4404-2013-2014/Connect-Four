@@ -1,10 +1,6 @@
 
 :- [gameCore].
 
-privateBigger([X],X).
-privateBigger([X|Xs],X):- privateBigger(Xs,Y), X >=Y.
-privateBigger([X|Xs],N):- privateBigger(Xs,N), N > X.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TEST SCHEMA
 % Schema structure :
