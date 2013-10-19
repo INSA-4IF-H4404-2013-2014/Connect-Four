@@ -25,6 +25,19 @@ aiSmartChoose(BestDistance0, WorstDistance0, ColumnId0,
         RColumnId = ColumnId0
     );
 
+    ((WorstDistance1 < BestDistance1), not(WorstDistance0 < BestDistance0)) -> (
+        % we take over the other player with solution 0
+        RBestDistance = BestDistance0,
+        RWorstDistance = WorstDistance0,
+        RColumnId = ColumnId0
+    );
+    (not(WorstDistance1 < BestDistance1), (WorstDistance0 < BestDistance0)) -> (
+        % we do not let the other player to take over us with solution 0
+        RBestDistance = BestDistance1,
+        RWorstDistance = WorstDistance1,
+        RColumnId = ColumnId1
+    );
+
     % Compare with a mark firstly
     (Mark is (BestDistance1 - BestDistance0 + WorstDistance0 - WorstDistance1)) ->
     (
@@ -51,7 +64,9 @@ aiSmartChoose(BestDistance0, WorstDistance0, ColumnId0,
             RColumnId = ColumnId1
         );
 
-        % Default
+        % BestDistance0 == BestDistance1
+        % => WorstDistance0 == WorstDistance1
+        % => we keep the previous move
         (
             RBestDistance = BestDistance1,
             RWorstDistance = WorstDistance1,
