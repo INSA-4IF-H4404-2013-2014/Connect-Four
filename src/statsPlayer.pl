@@ -35,6 +35,37 @@ statsPlayer(MatchsPerRound, Print) :-
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CSV export %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First you need to run statsPlayer to populate the results DB.
+statsPlayerCsvExport(FileName) :-
+	open(FileName, write, OS),
+	(
+		forall(statsPlayerFightingPlayerDB(X,Y),
+			(write(OS, ',"'), write(OS, X), write(OS, '",,'))), write(OS, '\n'),
+		forall(statsPlayerFightingPlayerDB(X,Y),
+			write(OS, ',"p1","p2","draw"')), write(OS, '\n'),
+
+		forall(statsPlayerFightingPlayerDB(X1,X2),
+		(
+			%For each line
+			write(OS, '"'), write(OS, X1), write(OS, '"'),
+			forall(statsPlayerFightingPlayerDB(_,Y2),
+			(
+				%For each column
+				forall(statsPlayerTournamentResultsDB(X2,Y2,_,R),
+				(
+					%For each result
+					write(OS, ','), write(OS, R)
+				))
+			)),
+			write(OS, '\n')
+		)),	false ; close(OS)
+	).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 
 
 :- dynamic statsPlayerTournamentResultsDB/4.
