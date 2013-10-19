@@ -1,5 +1,6 @@
+
 :- [gameProcess].
-:- [aiInference].
+:- [aiPlayer].
 
 
 
@@ -10,7 +11,7 @@
 % ===============================
 privateIaPopulateKnowledge(Player, MatchCount, ActualMatch, 1) :-
 	not(ActualMatch = MatchCount),
-	gameProcess(Player, iaInference, _),
+	gameProcess(Player, aiPlayer, _),
 	ActualMatch1 is ActualMatch + 1,
 	privateIaPopulateKnowledge(Player, MatchCount, ActualMatch1, 2).
 
@@ -19,7 +20,7 @@ privateIaPopulateKnowledge(Player, MatchCount, ActualMatch, 1) :-
 % ===============================	
 privateIaPopulateKnowledge(Player, MatchCount, ActualMatch, 2) :-
 	not(ActualMatch = MatchCount),
-	gameProcess(iaInference, Player, _),
+	gameProcess(aiPlayer, Player, _),
 	ActualMatch1 is ActualMatch + 1,
 	privateIaPopulateKnowledge(Player, MatchCount, ActualMatch1, 1).
 

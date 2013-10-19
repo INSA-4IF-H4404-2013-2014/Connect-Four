@@ -8,7 +8,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDES
 
-aiInference(Grid, PlayerId, ColumnId) :-
+aiPlayer(Grid, PlayerId, ColumnId) :-
     gameWinningMoves(Grid, PlayerId, ObviousMove)
     -> (
         [ColumnId|_] = ObviousMove
