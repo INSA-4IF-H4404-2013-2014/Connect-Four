@@ -5,7 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EVALUATE THE SMARTEST MOVE TO DO
 
 aiSmartNearestDistance(Grid, PlayerId, Distance) :-
-    aiKnowledgeNearestSchema(Grid, PlayerId, _, _, _, Distance)
+    aiKnowledgeNearestSchema(Grid, PlayerId, _, Distance)
     -> (
         true
     ); (
