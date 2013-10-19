@@ -112,9 +112,10 @@ privateStatsPlayerPrintTournamentResults :-
 privateStatsPlayerOneRoundLoop(MatchsPerRound, P1Id, P2Id) :-
 	statsPlayerFightingPlayerDB(P1, P1Id), statsPlayerFightingPlayerDB(P2, P2Id),
 	privateStatsPlayerOneRoundLoop2(P1, P2, MatchsPerRound, NbWon1, NbWon2, NbDraw),
-	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 0, NbDraw)),
-	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 1, NbWon1)),
-	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 2, NbWon2)), !.
+	%Don't change the order of the assert, cause I rely on it to display the stats table.
+	assert(statsPlayerTournamentResultsDB(P1Id, P2Id, 1, NbWon1)),
+	assert(statsPlayerTournamentResultsDB(P1Id, P2Id, 2, NbWon2)),
+	assert(statsPlayerTournamentResultsDB(P1Id, P2Id, 0, NbDraw)), !.
 
 privateStatsPlayerOneRoundLoop2(_, _, 0, 0, 0, 0).
 privateStatsPlayerOneRoundLoop2(P1, P2, MatchNumber, NbWon1, NbWon2, NbDraw) :-
