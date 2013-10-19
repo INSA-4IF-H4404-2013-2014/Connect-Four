@@ -9,6 +9,7 @@
 :- [testAiSchemaProcessing].
 :- [testAiSchemaSmartMove].
 :- [testAiKnowledge].
+:- [testAiPlayer].
 :- [testStatsPlayer].
 
 
@@ -24,4 +25,5 @@ testAll :-
     testAllAiSchemaProcessing,
     testAllAiSchemaSmartMove,
     testAllAiKnowledge,
+    testAiPlayer,
 	testAllStatsPlayer.
