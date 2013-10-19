@@ -8,7 +8,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDES
 
-iaInference(Grid, PlayerId, ColumnId) :-
+aiInference(Grid, PlayerId, ColumnId) :-
     gameWinningMoves(Grid, PlayerId, ObviousMove)
     -> (
         [ColumnId|_] = ObviousMove
@@ -17,13 +17,14 @@ iaInference(Grid, PlayerId, ColumnId) :-
     -> (
         (SurviveMoves > 1)
         -> (
-            % we failed => we have to understand why
-            listFetch(SurviveMoves, 1, ColumnId)
+            % we failed => we have to learn why
+            aiKnowledgeLearn(Grid, SurviveMoves, PlayerId),
+            SurviveMoves = [ColumnId|_]
         ); (
-            listFetch(SurviveMoves, 1, ColumnId)
+            SurviveMoves = [ColumnId]
         )
     );
-    iaInferenceConsultDatabase(Grid, PlayerId, Schema, PosX, PosY, _)
+    aiKnowledgeNearestSchema(Grid, PlayerId, Schema, PosX, PosY, _)
     -> (
         aiSchemaSmartMove(Grid, PlayerId, Schema, PosX, PosY, ColumnId, _)
     ); (
