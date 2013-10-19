@@ -5,7 +5,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
-testIaPrivateCaseGridIsWining([
+testAiPrivateCaseGridIsWining([
     [],
     [1],
     [1,1,2],
@@ -15,7 +15,7 @@ testIaPrivateCaseGridIsWining([
     [2,1,1]
 ]).
 
-testIaPrivateCaseGridIsWiningSchemaAbs([
+testAiPrivateCaseGridIsWiningSchemaAbs([
     [2, 1, 1],
     [3, 2, 1],
     [4, 3, 1],
@@ -25,7 +25,7 @@ testIaPrivateCaseGridIsWiningSchemaAbs([
     [7, 3, 1]
 ]).
 
-testIaPrivateCaseGridIsWiningSchema([
+testAiPrivateCaseGridIsWiningSchema([
     [0, 0, 1],
     [1, 1, 1],
     [2, 2, 1],
@@ -35,7 +35,7 @@ testIaPrivateCaseGridIsWiningSchema([
     [5, 2, 1]
 ]).
 
-testIaPrivateCaseGridIsWiningSchemaFliped([
+testAiPrivateCaseGridIsWiningSchemaFliped([
     [0, 2, 1],
     [1, 2, 0],
     [2, 2, 1],
@@ -48,55 +48,55 @@ testIaPrivateCaseGridIsWiningSchemaFliped([
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
-testIaSchemaCreate :-
-    testIaPrivateCaseGridIsWining(R),
-    iaSchemaCreate(R, [5,6], [[5,4,0],[6,3,0]]).
+testAiSchemaCreate :-
+    testAiPrivateCaseGridIsWining(R),
+    aiSchemaCreate(R, [5,6], [[5,4,0],[6,3,0]]).
 
-testIaSchemaInsertPawn :-
-    iaSchemaInsertPawn([], 3, 2, [[3, 2, 1]]),
-    iaSchemaInsertPawn([[3, 2, 1]], 3, 2, [[3, 2, 1]]),
-    iaSchemaInsertPawn([[3, 2, 0]], 3, 2, [[3, 2, 0]]),
-    iaSchemaInsertPawn([[3, 2, 1]], 2, 2, [[2, 2, 1], [3, 2, 1]]),
-    not(iaSchemaInsertPawn([[3, 2, 1]], 3, 2, [[3, 2, 1], [3, 2, 1]])).
+testAiSchemaInsertPawn :-
+    aiSchemaInsertPawn([], 3, 2, [[3, 2, 1]]),
+    aiSchemaInsertPawn([[3, 2, 1]], 3, 2, [[3, 2, 1]]),
+    aiSchemaInsertPawn([[3, 2, 0]], 3, 2, [[3, 2, 0]]),
+    aiSchemaInsertPawn([[3, 2, 1]], 2, 2, [[2, 2, 1], [3, 2, 1]]),
+    not(aiSchemaInsertPawn([[3, 2, 1]], 3, 2, [[3, 2, 1], [3, 2, 1]])).
 
-testIaSchemaPopulate :-
-    testIaPrivateCaseGridIsWining(G0),
-    testIaPrivateCaseGridIsWiningSchemaAbs(S0),
-    iaSchemaPopulate(G0, [5,6], 1, S0).
+testAiSchemaPopulate :-
+    testAiPrivateCaseGridIsWining(G0),
+    testAiPrivateCaseGridIsWiningSchemaAbs(S0),
+    aiSchemaPopulate(G0, [5,6], 1, S0).
 
-testIaSchemaMinimalCoordinate :-
-    iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 3),
-    iaSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 2).
+testAiSchemaMinimalCoordinate :-
+    aiSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 3),
+    aiSchemaMinimalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 2).
 
-testIaSchemaMaximalCoordinate :-
-    iaSchemaMaximalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 4),
-    iaSchemaMaximalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 5).
+testAiSchemaMaximalCoordinate :-
+    aiSchemaMaximalCoordinate([[3, 5, 1], [4, 2, 0]], 1, 4),
+    aiSchemaMaximalCoordinate([[3, 5, 1], [4, 2, 0]], 2, 5).
 
-testIaSchemaPrune :-
-    testIaPrivateCaseGridIsWiningSchemaAbs(S0),
-    testIaPrivateCaseGridIsWiningSchema(S1),
-    iaSchemaPrune(S0, S1),
-    iaSchemaPrune(S1, S1),
-    not(iaSchemaPrune(S0, S0)).
+testAiSchemaPrune :-
+    testAiPrivateCaseGridIsWiningSchemaAbs(S0),
+    testAiPrivateCaseGridIsWiningSchema(S1),
+    aiSchemaPrune(S0, S1),
+    aiSchemaPrune(S1, S1),
+    not(aiSchemaPrune(S0, S0)).
 
-testIaSchemaHorizontalFlip :-
-    testIaPrivateCaseGridIsWiningSchema(S0),
-    testIaPrivateCaseGridIsWiningSchemaFliped(S1),
-    iaSchemaHorizontalFlip(S0, S1),
-    iaSchemaHorizontalFlip(S0, S2),
-    iaSchemaHorizontalFlip(S2, S0).
+testAiSchemaHorizontalFlip :-
+    testAiPrivateCaseGridIsWiningSchema(S0),
+    testAiPrivateCaseGridIsWiningSchemaFliped(S1),
+    aiSchemaHorizontalFlip(S0, S1),
+    aiSchemaHorizontalFlip(S0, S2),
+    aiSchemaHorizontalFlip(S2, S0).
 
-testIaSchemaExtraction :-
-    testIaPrivateCaseGridIsWining(G0),
-    testIaPrivateCaseGridIsWiningSchema(S1),
-    iaSchemaExtraction(G0, [5,6], 1, S1).
+testAiSchemaExtraction :-
+    testAiPrivateCaseGridIsWining(G0),
+    testAiPrivateCaseGridIsWiningSchema(S1),
+    aiSchemaExtraction(G0, [5,6], 1, S1).
 
 testAllAiSchemaProcessing :-
-    test(testIaSchemaCreate),
-    test(testIaSchemaInsertPawn),
-    test(testIaSchemaPopulate),
-    test(testIaSchemaMinimalCoordinate),
-    test(testIaSchemaMaximalCoordinate),
-    test(testIaSchemaPrune),
-    test(testIaSchemaHorizontalFlip),
-    test(testIaSchemaExtraction).
+    test(testAiSchemaCreate),
+    test(testAiSchemaInsertPawn),
+    test(testAiSchemaPopulate),
+    test(testAiSchemaMinimalCoordinate),
+    test(testAiSchemaMaximalCoordinate),
+    test(testAiSchemaPrune),
+    test(testAiSchemaHorizontalFlip),
+    test(testAiSchemaExtraction).

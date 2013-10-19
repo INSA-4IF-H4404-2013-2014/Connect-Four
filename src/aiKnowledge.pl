@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET THE KNOWNLEDGE DATABASE
 % reset the knownledge database for unit tests
 
-iaInferenceResetDatabase :-
+aiInferenceResetDatabase :-
     retractall(aiKnowledge(_)) ->
     assert(aiKnowledge([
         [0, 0, 0],
@@ -29,7 +29,7 @@ iaInferenceResetDatabase :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LEARN THE FIRST SHEMA
 % N W W W M
-:- iaInferenceResetDatabase.
+:- aiInferenceResetDatabase.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIST ALL KNOWN SCHEMAS
@@ -43,13 +43,14 @@ aiKnowledgeAll(ShemaList) :-
 % Save the schema
 
 aiKnowledgeSaveSchema(Schema) :-
-    iaSchemaHorizontalFlip(Schema, FlipedSchema),
+    aiSchemaHorizontalFlip(Schema, FlipedSchema),
     (aiKnowledge(Schema); aiKnowledge(FlipedSchema))
     -> (
         % the schema or its fliped version is already known
         true
     ); (
-        assert(aiKnowledge(Schema))
+        assert(aiKnowledge(Schema)),
+        writeTrace(game, Schema)
     ).
 
 
