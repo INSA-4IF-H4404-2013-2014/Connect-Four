@@ -25,5 +25,5 @@ testAll :-
     testAllAiSchemaProcessing,
     testAllAiSchemaSmartMove,
     testAllAiKnowledge,
-    testAiPlayer,
+    testAllAiPlayer,
 	testAllStatsPlayer.

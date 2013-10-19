@@ -50,7 +50,8 @@ aiKnowledgeSaveSchema(Schema) :-
         true
     ); (
         assert(aiKnowledge(Schema)),
-        writeTrace(game, Schema)
+        writeTrace(aiLearning, Schema),
+        writeTrace(aiLearning, '\n')
     ).
 
 
