@@ -14,7 +14,7 @@ testSimpleGame :- gameProcess(playerTest1, playerTest2, 1).
 
 testSimpleGameInv :- gameProcess(playerTest2, playerTest1, 1).
 
-testSamePlayerInfinite :- not(gameProcess(playerTest4, playerTest4, _)).
+testSamePlayerInfinite :- gameProcess(playerTest4, playerTest4, 2).
 
 testAllGameProcess :-
 	test(testSimpleGame),
