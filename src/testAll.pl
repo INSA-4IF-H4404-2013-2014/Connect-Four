@@ -7,7 +7,6 @@
 :- [testPlayerRandom].
 :- [testAiSchemaMatching].
 :- [testAiSchemaProcessing].
-:- [testAiSchemaSmartMove].
 :- [testAiKnowledge].
 :- [testAiSmart].
 :- [testAiPlayer].
@@ -24,7 +23,6 @@ testAll :-
 	testAllPlayerRandom,
     testAllAiSchemaMatching,
     testAllAiSchemaProcessing,
-    testAllAiSchemaSmartMove,
     testAllAiKnowledge,
     testAllAiSmart,
     testAllAiPlayer,
