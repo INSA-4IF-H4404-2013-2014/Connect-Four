@@ -16,42 +16,77 @@ aiSmartNearestDistance(Grid, PlayerId, Distance) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHOSE BEST MOVE BETWEEN TWO
 
 aiSmartChoose(BestDistance0, WorstDistance0, ColumnId0,
-              BestDistance1, WorstDistance1, _,
-              BestDistance0, WorstDistance0, ColumnId0) :-
-    (BestDistance0 < BestDistance1) ;
-    (WorstDistance0 > WorstDistance1).
-
-
-aiSmartChoose(BestDistance0, WorstDistance0, _,
               BestDistance1, WorstDistance1, ColumnId1,
-              BestDistance1, WorstDistance1, ColumnId1) :-
-    not(
-        (BestDistance0 < BestDistance1) ;
-        (WorstDistance0 > WorstDistance1)
+              RBestDistance, RWorstDistance, RColumnId) :-
+
+    (ColumnId1 == 0) -> (
+        RBestDistance = BestDistance0,
+        RWorstDistance = WorstDistance0,
+        RColumnId = ColumnId0
+    );
+
+    % Compare with a mark firstly
+    (Mark is (BestDistance1 - BestDistance0 + WorstDistance0 - WorstDistance1)) ->
+    (
+        (Mark > 0) -> ( % using 0 is better
+            RBestDistance = BestDistance0,
+            RWorstDistance = WorstDistance0,
+            RColumnId = ColumnId0
+        );
+        (Mark < 0) -> ( % using 0 is worst -> we keep 1
+            RBestDistance = BestDistance1,
+            RWorstDistance = WorstDistance1,
+            RColumnId = ColumnId1
+        );
+
+        % Compare how can win before
+        (BestDistance0 < BestDistance1) -> ( % we can win before with 0
+            RBestDistance = BestDistance0,
+            RWorstDistance = WorstDistance0,
+            RColumnId = ColumnId0
+        );
+        (BestDistance1 < BestDistance0) -> ( % we can win before with 1
+            RBestDistance = BestDistance1,
+            RWorstDistance = WorstDistance1,
+            RColumnId = ColumnId1
+        );
+
+        % Default
+        (
+            RBestDistance = BestDistance1,
+            RWorstDistance = WorstDistance1,
+            RColumnId = ColumnId1
+        )
     ).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EVALUATE THE SMARTEST MOVE TO DO
 
-privateIaSmartMove(Grid, PlayerId, 0, RBestDistance, RWorstDistance, 0) :-
-    gameOtherPlayer(PlayerId, OtherPlayerId),
-    aiSmartNearestDistance(Grid, PlayerId, RBestDistance),
-    aiSmartNearestDistance(Grid, OtherPlayerId, RWorstDistance).
+privateIaSmartMove(_, _, 0, 0, 0, 0).
 
 privateIaSmartMove(Grid, PlayerId, ColumnId, RBestDistance, RWorstDistance, RColumnId) :-
-    not(gameIsValidePlay(Grid, ColumnId, PlayerId)),
-    ColumnId1 is ColumnId - 1,
-    privateIaSmartMove(Grid, PlayerId, ColumnId1, RBestDistance, RWorstDistance, RColumnId).
+    not(ColumnId = 0),
+    not(gameIsValidePlay(Grid, ColumnId)) ->
+    (
+        ColumnId1 is ColumnId - 1,
+        privateIaSmartMove(Grid, PlayerId, ColumnId1, RBestDistance, RWorstDistance, RColumnId)
+    ).
 
 privateIaSmartMove(Grid, PlayerId, ColumnId, RBestDistance, RWorstDistance, RColumnId) :-
-    gameIsValidePlay(Grid, ColumnId, PlayerId),
-    gameOtherPlayer(PlayerId, OtherPlayerId),
-    gamePlay(Grid, ColumnId, PlayerId, TestGrid),
-    aiSmartNearestDistance(TestGrid, PlayerId, NewBestDistance),
-    aiSmartNearestDistance(TestGrid, OtherPlayerId, NewWorstDistance),
-    ColumnId1 is ColumnId - 1,
-    privateIaSmartMove(Grid, PlayerId, ColumnId1, BestDistance, WorstDistance, SmartColumnId),
-    aiSmartChoose(BestDistance, WorstDistance, SmartColumnId, NewBestDistance, NewWorstDistance, ColumnId, RBestDistance, RWorstDistance, RColumnId).
+    not(ColumnId = 0),
+    gameIsValidePlay(Grid, ColumnId) ->
+    (
+        gameOtherPlayer(PlayerId, OtherPlayerId),
+        gamePlay(Grid, ColumnId, PlayerId, TestGrid),
+
+        aiSmartNearestDistance(TestGrid, PlayerId, NewBestDistance),
+        aiSmartNearestDistance(TestGrid, OtherPlayerId, NewWorstDistance),
+
+        ColumnId1 is ColumnId - 1,
+        privateIaSmartMove(Grid, PlayerId, ColumnId1, SubBestDistance, SubWorstDistance, SubColumnId),
+
+        aiSmartChoose(NewBestDistance, NewWorstDistance, ColumnId, SubBestDistance, SubWorstDistance, SubColumnId, RBestDistance, RWorstDistance, RColumnId)
+    ).
 
 aiSmartMove(Grid, PlayerId, ColumnId) :-
     columnsNumber(ColumnCount),
