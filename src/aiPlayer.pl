@@ -15,10 +15,13 @@ aiPlayer(Grid, PlayerId, ColumnId) :-
     );
     gameSurviveMoves(Grid, PlayerId, SurviveMoves)
     -> (
-        (SurviveMoves > 1)
-        -> (
+        (
+            length(SurviveMoves, SurviveMoveCount),
+            SurviveMoveCount > 1
+        ) -> (
             % we failed => we have to learn why
-            aiKnowledgeLearn(Grid, SurviveMoves, PlayerId),
+            gameOtherPlayer(PlayerId, OtherPlayerId),
+            aiKnowledgeLearn(Grid, SurviveMoves, OtherPlayerId),
             SurviveMoves = [ColumnId|_]
         ); (
             SurviveMoves = [ColumnId]

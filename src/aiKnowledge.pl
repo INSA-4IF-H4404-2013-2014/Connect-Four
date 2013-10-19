@@ -59,6 +59,7 @@ aiKnowledgeSaveSchema(Schema) :-
 % this predicated extracte the associated schema, and saves it into the
 % knowledge database.
 % Fails only if iaSchemaExtraction/4 fails.
+% <PlayerId> Player id of the winner.
 
 aiKnowledgeLearn(Grid, KillerMoves, PlayerId) :-
     aiSchemaExtraction(Grid, KillerMoves, PlayerId, Schema)
