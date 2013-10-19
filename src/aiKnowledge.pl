@@ -1,6 +1,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDES
 
+:- [traceUtils].
 :- [aiSchemaMatching].
 :- [aiSchemaProcessing].
 
@@ -15,7 +16,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET THE KNOWNLEDGE DATABASE
 % reset the knownledge database for unit tests
 
-aiInferenceResetDatabase :-
+aiKnowledgeReset :-
     retractall(aiKnowledge(_)) ->
     assert(aiKnowledge([
         [0, 0, 0],
@@ -27,9 +28,8 @@ aiInferenceResetDatabase :-
     !.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LEARN THE FIRST SHEMA
-% N W W W M
-:- aiInferenceResetDatabase.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET KNOWNLEDGE DATABASE
+:- aiKnowledgeReset.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIST ALL KNOWN SCHEMAS
