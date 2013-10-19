@@ -3,6 +3,7 @@
 *.o
 *.a
 *.xcworkspace
+*.gitlocal
 
 #VIM backup files
 *~
