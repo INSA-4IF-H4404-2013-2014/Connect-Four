@@ -5,9 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%% SETTINGS - EDIT ACCORDINGLY %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Please add here all players to be tested, and give them a primary key.
 statsPlayerFightingPlayerDB(playerRandom, 1).
-statsPlayerFightingPlayerDB(playerRandom, 2).
-statsPlayerFightingPlayerDB(playerRandom, 3).
-statsPlayerFightingPlayerDB(playerRandom, 4).
+statsPlayerFightingPlayerDB(playerRandomSmart, 2).
 
 %Please indicate here the default number of matchs per round you want.
 statsPlayerDefaultMatchsPerRound(100).
