@@ -6,23 +6,34 @@
 %
 
 
-playerHuman(Grid, Num , Char) :-
+playerHuman(Grid, PlayerId, ColumnId) :-
     gamePrintGrid(Grid),
-	gamePrintSymbols(Num, Symb),
-	write('\n ---interface--- p'),
-	write(Num),
-	write(' ( '),
+	gamePrintSymbols(PlayerId, Symb),
+	write('---playeur--- ('),
 	write(Symb),
-	write(' ) which column ? '),
+	write(') which column ? '),
 	get_single_char(C),
-	Char is C-48,
-	write(' -> '),
-	write(Char),
-	write(' \n'),
-	integer(Char),	
-	(Char==0; gameIsValidePlay(Grid, Char)), !.
-
-
-playerHuman(Grid, Num , C) :-
-	write('\n ---interface--- choice not valid'),
-	playerHuman(Grid, Num , C) .
+	ColumnId is C - 48,
+    (
+        integer(ColumnId),
+        (
+            (ColumnId == 0);
+            gameIsValidePlay(Grid, ColumnId) ->
+            (
+                write(' -> '),
+                write(ColumnId),
+                write('\n'),
+                gamePlay(Grid, ColumnId, PlayerId, NewGrid),
+                gamePrintGrid(NewGrid)
+            )
+        )
+    ) -> (
+        write('\n')
+    );
+    (
+        write('\n'),
+        write('---playeur--- invalide input\n'),
+        write('    To play: press between 1 and 7\n'),
+        write('    To abandon: press 0\n'),
+        playerHuman(Grid, PlayerId, ColumnId)
+    ), !.
