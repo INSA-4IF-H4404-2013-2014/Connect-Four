@@ -2,9 +2,9 @@
 :- [gameCore].
 :- [gamePrint].
 :- [gameOver].
-:- [gameLauncher].
+:- [gameProcess].
 :- [playerRandom].
 :- [playerHuman].
-:- [iaInference].
-:- [iaPopulateKnowledge].
+:- [aiPlayer].
+:- [aiKnowledgePopulate].
 :- [statsPlayer].

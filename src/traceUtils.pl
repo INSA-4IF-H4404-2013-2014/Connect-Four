@@ -10,6 +10,9 @@ tracing(none).
 
 % Should playerRandom unit test tracing be activated?
 %tracing(playerrandom).
+
+% Should aiPlayer learning tracing be activated?
+%tracing(aiLearning).
 %----------------------------
 
 writeTrace(Cond, Text) :-

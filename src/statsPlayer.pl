@@ -1,6 +1,6 @@
 :- [gameCore].
 :- [playerRandom].
-:- [gameLauncher].
+:- [gameProcess].
 
 %%%%%%%%%%%%%%%%%%%%%%%% SETTINGS - EDIT ACCORDINGLY %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Please add here all players to be tested, and give them a primary key.
@@ -122,7 +122,7 @@ privateStatsPlayerOneRoundLoop2(_, _, 0, 0, 0, 0).
 privateStatsPlayerOneRoundLoop2(P1, P2, MatchNumber, NbWon1, NbWon2, NbDraw) :-
 	NewMatchNumber is (MatchNumber - 1),
 	privateStatsPlayerOneRoundLoop2(P1, P2, NewMatchNumber, NbWon1Bis, NbWon2Bis, NbDrawBis),
-	launch(P1, P2, MatchResult),
+	gameProcess(P1, P2, MatchResult),
 	privateStatsPlayerIncrementTool(MatchResult, NbWon1Bis, NbWon2Bis, NbDrawBis, NbWon1, NbWon2, NbDraw).
 
 privateStatsPlayerIncrementTool(0, NbWon1, NbWon2, NbDraw, NbWon1, NbWon2, NbDrawBis) :- NbDrawBis is (NbDraw + 1).

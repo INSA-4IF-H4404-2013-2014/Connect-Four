@@ -2,12 +2,14 @@
 :- [main].
 :- [testGameCore].
 :- [testGameOver].
-:- [testGameLauncher].
+:- [testGameProcess].
+:- [testGameSmart].
 :- [testPlayerRandom].
-:- [testIaInferenceSchema].
-:- [testIaSchemaProcessing].
-:- [testIaInferenceCleverMove].
-:- [testIaInferenceDatabase].
+:- [testAiSchemaMatching].
+:- [testAiSchemaProcessing].
+:- [testAiSchemaSmartMove].
+:- [testAiKnowledge].
+:- [testAiPlayer].
 :- [testStatsPlayer].
 
 
@@ -16,10 +18,12 @@
 testAll :-
     testAllGameCore,
     testAllGameOver,
-    testAllGameLauncher,
+    testAllGameProcess,
+	testAllGameSmart,
 	testAllPlayerRandom,
-    testAllIaInferenceSchema,
-    testAllIaSchemaProcessing,
-    testAllIaInferenceCleverMove,
-    testAllIaInferenceDatabase,
+    testAllAiSchemaMatching,
+    testAllAiSchemaProcessing,
+    testAllAiSchemaSmartMove,
+    testAllAiKnowledge,
+    testAllAiPlayer,
 	testAllStatsPlayer.
