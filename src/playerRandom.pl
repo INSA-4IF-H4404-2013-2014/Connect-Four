@@ -1,4 +1,5 @@
 :- [gameCore].
+:- [gameSmart].
 
 %%%%%%%%%%%%% Lauches the Player Random and get its move decision %%%%%%%%%%%%%%
 % Matrix is the game grid
@@ -16,3 +17,16 @@ playerRandom(Matrix, _, ColumnIndexWantedMove) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Lauches the Player Random Smart and get its move decision %%%%%%%%%%%%%%
+% Matrix is the game grid
+% PlayerId is the player number
+% ColumnId is the index of the column in which the AI wants to play
+
+% Play if the player has or winning move or can counter the opponent in the appropriate column
+playerRandomSmart(Matrix, PlayerId, ColumnId) :-
+	gameObviousMove(Matrix, PlayerId, ColumnId).
+
+% If no winning or counter move is available, play a random move
+playerRandomSmart(Matrix, PlayerId, ColumnId) :-
+	playerRandom(Matrix, PlayerId, ColumnId).
