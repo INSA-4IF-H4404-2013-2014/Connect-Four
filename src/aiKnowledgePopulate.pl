@@ -3,6 +3,7 @@
 :- [aiPlayer].
 
 
+privateIaPopulateKnowledge(_, MatchCount, MatchCount, _).
 
 % ===============================
 % Check if the ActualMatch number is not equal to the MatchAccount wanted.
