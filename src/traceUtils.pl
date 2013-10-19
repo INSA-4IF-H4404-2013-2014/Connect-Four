@@ -15,6 +15,16 @@ tracing(none).
 %tracing(aiLearning).
 %----------------------------
 
+debugWrite(_, []).
+
+debugWrite(Cond, [Text|List]) :-
+    tracing(Cond) -> (
+        write(Text),
+        debugWrite(Cond, List)
+    ); (
+        true
+    ).
+
 writeTrace(Cond, Text) :-
 	tracing(Cond) ->
 	write(Text);
