@@ -1,9 +1,8 @@
 
 :- [gameSmart].
 :- [playerRandom].
-:- [aiSchemaMatching].
-:- [aiSchemaSmartMove].
 :- [aiKnowledge].
+:- [aiSmart].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDES
@@ -27,9 +26,9 @@ aiPlayer(Grid, PlayerId, ColumnId) :-
             SurviveMoves = [ColumnId]
         )
     );
-    aiKnowledgeNearestSchema(Grid, PlayerId, Schema, PosX, PosY, _)
+    aiSmartMove(Grid, PlayerId, ColumnId)
     -> (
-        aiSchemaSmartMove(Grid, PlayerId, Schema, PosX, PosY, ColumnId, _)
+        true
     ); (
         playerRandom(Grid, PlayerId, ColumnId)
     ).
