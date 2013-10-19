@@ -10,7 +10,7 @@
 % are saved.
 
 :- dynamic aiKnowledge/1.
-% findall(X, iaInferenceDB(X), L).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET THE KNOWNLEDGE DATABASE
 % reset the knownledge database for unit tests
@@ -30,6 +30,13 @@ iaInferenceResetDatabase :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LEARN THE FIRST SHEMA
 % N W W W M
 :- iaInferenceResetDatabase.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIST ALL KNOWN SCHEMAS
+% aiKnowledgeAll(ShemaList).
+
+aiKnowledgeAll(ShemaList) :-
+    findall(X, aiKnowledge(X), ShemaList).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SAVE SCHEMA
