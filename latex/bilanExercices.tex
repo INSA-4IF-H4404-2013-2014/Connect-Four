@@ -61,6 +61,28 @@ false
 \end{lstlisting}
 
 
+\section{Reprouvabilitée multiple}
+
+Une propriétée sur une variable par exemple, peut etre definit par plusieur
+predicats. Par exemple~:
+\[
+    \left\{  
+    \begin{array}{c}
+        L \in [1, 2, 3]\\
+        L \in [3, 4, 2]\\
+    \end{array}
+    \right .
+\]
+
+Cela revient simplement a l'ecriture en Prolog :
+\begin{lstlisting}[language=Prolog]
+?- membre(L, [1, 2, 3]), membre(L, [3, 4, 2]).
+L = 2;
+L = 3;
+false
+\end{lstlisting}
+
+
 \section{Reprouvabilitée non-déterministe}
 
 La dangeureusitee de de la reprouvabilitée, est qu'il est possible qu'une
