@@ -9,9 +9,7 @@ dans des variables que l'on met à jour, car la programmation par prédicats per
 simplement de lier des propriétés entre des variables et/ou constantes.
 
 Considérons pour la suite, le prédicat~:
-\[
-	(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L
-\]
+\[(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L\]
 
 
 \section{Vérification de propriétés}
@@ -61,6 +59,28 @@ false
 \end{lstlisting}
 
 
+\section{Reprouvabilitée multiple}
+
+Une propriétée sur une variable par exemple, peut etre definit par plusieur
+predicats. Par exemple~:
+\[
+    \left\{  
+    \begin{array}{c}
+        L \in [1, 2, 3]\\
+        L \in [3, 4, 2]\\
+    \end{array}
+    \right .
+\]
+
+Cela revient simplement a l'ecriture en Prolog :
+\begin{lstlisting}[language=Prolog]
+?- membre(L, [1, 2, 3]), membre(L, [3, 4, 2]).
+L = 2;
+L = 3;
+false
+\end{lstlisting}
+
+
 \section{Reprouvabilitée non-déterministe}
 
 La dangeureusitee de de la reprouvabilitée, est qu'il est possible qu'une
@@ -102,7 +122,7 @@ L = [_G2213, _G2216, _G2219, _G2222, _G2225, 1|_G2229] ;
 Au paravant, nous fesions que utiliser des prédicats, mais bien entendu,
 l'objectif est de pouvoir coder les siens. Pour cela, interessons nous a la
 reecriture de
-\[(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L\]
+\[(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L\]
 
 \begin{lstlisting}[language=Prolog]
 membre(X, [X|_]).
