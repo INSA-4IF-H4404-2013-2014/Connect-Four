@@ -1,20 +1,26 @@
 
-\chapter{Bilan des exercices}
+\chapter{Bilan des éxercices}
 
-\section{Propriétés : variables liés par des predicats}
+\section{Predicats}
 
-La puissance de prolog vien du principe de reprouvabilite. Et les predicats ne
-representes alors que des proprieter sur des variables que l'on leurs passe en
-parametre. Considerons par exemple le code ci dessous :
+La particularite Prolog reside dans le fait qu'il n'y a plus d'iterations comme
+un language de programmation conventionnel. Tout n'est que predicat. Ainsi, la
+methode de programmation change de facon de penser. Fini le traitement de donnes
+dans des variable que l'on met jour, car la programmation predicat permet
+simplement de lier des proprietes entre des variables et/ou constantes.
 
-\begin{lstlisting}
-membre(X, [X|_]).
-membre(X, [_|L]) :- membre(X, L).
-\end{lstlisting}
+Considerons pour la suite, le predicat :
+\[(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L\]
+
+
+\section{Vérification de propriétés}
+
+La vérification de propriétés permet s'assurer que une (out plusieur) constantes
+verifies un ensemble de predicat. Considerons le code ci dessous :
 
 Alors on a à l'éxécution :
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Prolog]
 ?- membre(1, [1, 2, 3]).
 true
 
@@ -22,25 +28,31 @@ true
 false
 \end{lstlisting}
 
-En effet, a la premiere intérogation, on vérifie le prédicat 1 apartenant à
-[1, 2, 3]. La proprieté etre ces deux paramêtres est alors vérifié, renvoyant
-ainsi vrai.
+En effet, a la premiere intérogation, on vérifie le prédicat $1 \in [1, 2, 3]$
+ce qui est vrai, d'ou la reponse de Prolog 'vrai'. La proprieté etre ces deux
+paramêtres est alors vérifié, renvoyant ainsi vrai. Tandis que la seconde
+interogation $4 \in [1, 2, 3]$ est fausse car $4 \notin [1, 2, 3]$, d'ou la
+reponse 'false'.
 
 
 \section{Reprouvabilitée}
 
 La reprouvabilitees consiste maintenant de definir des propriete entre des
-variables/constantes. Par exemple :
+variables et/ou constantes. Par exemple :
+\begin{center}
+$X \in [1, 2, 3]$.
+\end{center}
 
-\begin{lstlisting}
-membre(L, [1, 2, 3]).
+ Ce qui en Prolog donne :
+\begin{lstlisting}[language=Prolog]
+?- membre(X, [1, 2, 3]).
 \end{lstlisting}
 
-On lis a ce moment que L compose la liste constante [1, 2, 3]. Ainsi a
-l'execution, Prolog peut alors evaluer les solutions de L grace a la propriete
-ainsi defini ci dessus.
+On lis a ce moment que $X$ compose la liste constante $[1, 2, 3]$. Ainsi a
+l'execution, Prolog peut evaluer les solutions de $L$ grace a cette proprietee
+ainsi définie :
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Prolog]
 ?- membre(L, [1, 2, 3]).
 L = 1;
 L = 2;
@@ -53,18 +65,27 @@ false
 
 La dangeureusitee de de la reprouvabilitée, est qu'il est possible qu'une
 infinitée de solutions vérifient une meme propriétée. Considerons par exemple
-le code suivant :
+le code suivant~:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Prolog]
 ?- membre(1, L).
 \end{lstlisting}
 
-Cette ecriture dit alors que 1 compose (la liste) L ce qui est equivalent a dire
-que la list L est composée de un (ou plusieurs) 1. Mais alors, combien de listes
-pourraient vérifié cette propriété ? Une infinité bien sur. Et pour preuve,
-voici l'execution de Prolog :
+Cette est equivalent à $1 \in L$. Mais alors, combien de listes
+pourraient vérifié cette propriété ?
 
-\begin{lstlisting}
+\textbf{Initialisation}~: Une liste telle que $[1, 2]$ vérifie cette propriété.
+
+\textbf{Hérédité}~: En notant $cat(A, B)$ la concatenation de deux listes $A$ et
+$B$,\\
+Soit une liste $L$ telle que $1 \in L$,\\
+Alors $\forall X \in \mathbb{N} / 1 \in cat([X], L)$
+
+\textbf{Conclusion}~: Il éxiste une infinité de solutions et Prolog va essayer
+de toutes les générer, causant une exception du au manque de mémoire de la
+machine.
+
+\begin{lstlisting}[language=Prolog]
 ?- membre(1, L).
 L = [1|_G2214] ;
 L = [_G2213, 1|_G2217] ;
@@ -73,4 +94,17 @@ L = [_G2213, _G2216, _G2219, 1|_G2223] ;
 L = [_G2213, _G2216, _G2219, _G2222, 1|_G2226] ;
 L = [_G2213, _G2216, _G2219, _G2222, _G2225, 1|_G2229] ;
 ...
+\end{lstlisting}
+
+
+\section{Programation de prédicats}
+
+Au paravant, nous fesions que utiliser des prédicats, mais bien entendu,
+l'objectif est de pouvoir coder les siens. Pour cela, interessons nous a la
+reecriture de
+\[(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L\]
+
+\begin{lstlisting}[language=Prolog]
+membre(X, [X|_]).
+membre(X, [_|L]) :- membre(X, L).
 \end{lstlisting}
