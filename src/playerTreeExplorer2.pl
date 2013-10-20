@@ -131,7 +131,7 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 		linesNumber(ColumnHeight) ->
 		gamePlay(Grid, NextCol, CurrentPlayer, GridResult) ->
 		Depth1 is Depth + 1 ->
-		gameOtherPlayer(IdPlayer, NextPlayerId)
+		gameOtherPlayer(IdPlayer, NextPlayerId),
 		privatePlayerTreeExplorer(GridResult, IdPlayer, 1, EvaluationsResult, Depth1, NextPlayerId) ->
 		(
 			IdPlayer = CurrentPlayer ->
@@ -140,7 +140,7 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 			getMin(EvaluationsResult, Evaluation)
 		) ->
 		;
-		Evaluation is x
+		Evaluation is x,
 	) ->
 	nextCol1 is nextCol + 1 ->
 	privatePlayerTreeExplorer(Grid1, IdPlayer, nextCol1, MinMax, Depth, CurrentPlayer).
@@ -181,7 +181,21 @@ countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :-
 	gameGridGet(Matrix, ColumnId, NumLine, PlayerId) ->
 		Value1 is Value + 1,
 	countColumn(Matrix, ColumnId, NumLine + 1, PlayerId, Value1).
-	
+
+
+testEvaluate(Value) :- 
+		gameNewGrid(Grid),
+		gamePlay(Grid, 1, 1, ResGrid),
+		gamePlay(ResGrid, 1, 1, ResGrid2),
+		evaluateColumn(ResGrid2, 1, 1, Value).
+		
+
+evaluate(Matrix, ColumnId, PlayerId, Value) :-
+	evalutLine(Matrix, ColumnId, PlayerId, LinePawns),
+	LineValue = 10 ^ LinePaws,
+	evaluateColumn(Matrix, ColumnId, PlayerId, ColumnPawns),
+	ColumnValue = 10 ^ ColumnPawns,
+	Value is max(LineValue, ColumnValue).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initial call
