@@ -1,2 +1,46 @@
 \chapter{Projet~: Puissance~4}
 
+\section{Règles du jeux}
+
+Le puissance 4 est un jeux de societé à deux joueurs. Chaque joueurs doivent,
+chacun leurs tour, inserer un jeton de leurs couleur dans une des sept
+colones cote à cote, chacunes aillant une capacité maximal de
+six jetons. Le but du jeu est d'aligner verticalement, horizontalement ou
+ou en diagonal, 4 jetons de sa couleur avant l'adversaire.
+
+
+\section{But du joueur idéal}
+
+Dans le cas d'un joueur idéal, le but n'est simplement d'aligner 3 jetons precedament,
+puis prevoir de jouer le 4eme au tour suivant. En effet, l'adversaire pourrait bloquer cet alignement,
+lorsque c'est a son tour de jouer. L'objectif du joueur idéal est donc de réaliser
+au moins deux alignements de 3 jetons en un coup. Laissant ainsi le joueur adverse
+contre l'inévitable fatalité~: Il ne peut plus contrer ces alignements en un seul jeton.
+
+
+\section{Travail realisé}
+
+En plus de l'implémentation du module de méchanisme de jeux et realisation des
+tests unitaire, nous avons implementé 4 joueurs aillant des stratégies différentes~:
+
+\begin{itemize}
+
+    \item joueur aléatoire~;
+    \item joueur aléatoire munis d'heuristiques~;
+    \item joueur parcourant l'arbre des possibilités~;
+    \item inteligence artificielle apprenant par moteur d'inférence, de ses
+    échecs precédent.
+
+\end{itemize}
+
+Mais aussi~:
+
+\begin{itemize}
+
+    \item interface utilisateur en ligne de commende pour jouer une partie~;
+    \item module de tournoit générant des statistiques~;
+    \item module d'entrainement du moteur d'inférence~;
+    \item module d'étude de l'apprantissage du moteur d'inférence~;
+    \item sauvgarde et chargement de la base de connaissances du moteur d'inférence.
+
+\end{itemize}
