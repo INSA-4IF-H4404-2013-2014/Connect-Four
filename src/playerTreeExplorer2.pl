@@ -1,4 +1,4 @@
-:- [gameCore
+:- [gameCore].
 
 %privatePlayerTreeExplorer(Grid, IdPlayer, NumCol, NextCol, Evaluations, Depth, CurrentPlayer)
 
@@ -144,6 +144,7 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 	) ->
 	nextCol1 is nextCol + 1 ->
 	privatePlayerTreeExplorer(Grid1, IdPlayer, nextCol1, MinMax, Depth, CurrentPlayer).
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
