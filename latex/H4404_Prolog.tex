@@ -1,3 +1,6 @@
+
+% --------------------------------------------------------------- CONFIGURATIONS
+
 %ifdef TWOSIDE
 	%\documentclass[a4paper,12pt,final,twoside,openright]{book}
 %elif ONESIDE
@@ -5,6 +8,9 @@
 %endif
 
 \usepackage{rapport}
+
+
+% -------------------------------------------------------------- META: CONSTANTS
 
 \newcommand{\reporttitle}{Prolog}
 \newcommand{\enseignants}{Jean~François~\textsc{Boulicaut}\\ Mehdi~\textsc{Kaytoue}}
@@ -26,23 +32,39 @@
 \title{\reporttitle}
 \author{\reportauthor}
 %\setcounter{tocdepth}{4}
+
+
+% ------------------------------------------------------------------------- FILE
+
 \begin{document}
+
+
+    % ------------------------------------------------------------------- HEADER
+
 	\renewcommand{\chaptername}{} %\renewcommand{\thechapter}{}
 
 	\pagestyle{empty}
 	\pagenumbering{Roman}
+
+
+    % ------------------------------------------------------------ HEADER: TITLE
+
 	\include{title}
+
 	%ifdef TWOSIDE
 		%\cleardoublepage
 	%endif
 
 	%\include{title2}
 
-	%ifdef 
+	%ifdef TWOSIDE
 		%  \newpage
 		%	\null
 		%	\vfill
 	%endif
+
+
+    % --------------------------------------------------- HEADER: CONFIGURATIONS
 
 	\sloppy          % Justification moins stricte : des mots ne dépasseront pas des paragraphes
 
@@ -54,6 +76,18 @@
 	\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\chaptername\ \thechapter.\ #1}}{}}
 	\renewcommand{\sectionmark}[1]{\markright{\thesection{} #1}}
 
-	\include{exercices}
+
+    % ------------------------------------------------------------------ CONTENT
+
+    \chapter{Bilan des exercices}
+
+    \input{exercice1}
+    \input{exercice2}
+    \input{exercice3}
+    \input{exercice4}
+
 	\include{puissance4}
+
+
+    % ------------------------------------------------------------------- FOOTER
 \end{document}
