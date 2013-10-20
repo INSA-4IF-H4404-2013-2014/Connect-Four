@@ -1,0 +1,76 @@
+
+\chapter{Bilan des exercices}
+
+\section{Propriétés : variables liés par des predicats}
+
+La puissance de prolog vien du principe de reprouvabilite. Et les predicats ne
+representes alors que des proprieter sur des variables que l'on leurs passe en
+parametre. Considerons par exemple le code ci dessous :
+
+\begin{lstlisting}
+membre(X, [X|_]).
+membre(X, [_|L]) :- membre(X, L).
+\end{lstlisting}
+
+Alors on a à l'éxécution :
+
+\begin{lstlisting}
+?- membre(1, [1, 2, 3]).
+true
+
+?- membre(4, [1, 2, 3]).
+false
+\end{lstlisting}
+
+En effet, a la premiere intérogation, on vérifie le prédicat 1 apartenant à
+[1, 2, 3]. La proprieté etre ces deux paramêtres est alors vérifié, renvoyant
+ainsi vrai.
+
+
+\section{Reprouvabilitée}
+
+La reprouvabilitees consiste maintenant de definir des propriete entre des
+variables/constantes. Par exemple :
+
+\begin{lstlisting}
+membre(L, [1, 2, 3]).
+\end{lstlisting}
+
+On lis a ce moment que L compose la liste constante [1, 2, 3]. Ainsi a
+l'execution, Prolog peut alors evaluer les solutions de L grace a la propriete
+ainsi defini ci dessus.
+
+\begin{lstlisting}
+?- membre(L, [1, 2, 3]).
+L = 1;
+L = 2;
+L = 3;
+false
+\end{lstlisting}
+
+
+\section{Reprouvabilitée non-déterministe}
+
+La dangeureusitee de de la reprouvabilitée, est qu'il est possible qu'une
+infinitée de solutions vérifient une meme propriétée. Considerons par exemple
+le code suivant :
+
+\begin{lstlisting}
+?- membre(1, L).
+\end{lstlisting}
+
+Cette ecriture dit alors que 1 compose (la liste) L ce qui est equivalent a dire
+que la list L est composée de un (ou plusieurs) 1. Mais alors, combien de listes
+pourraient vérifié cette propriété ? Une infinité bien sur. Et pour preuve,
+voici l'execution de Prolog :
+
+\begin{lstlisting}
+?- membre(1, L).
+L = [1|_G2214] ;
+L = [_G2213, 1|_G2217] ;
+L = [_G2213, _G2216, 1|_G2220] ;
+L = [_G2213, _G2216, _G2219, 1|_G2223] ;
+L = [_G2213, _G2216, _G2219, _G2222, 1|_G2226] ;
+L = [_G2213, _G2216, _G2219, _G2222, _G2225, 1|_G2229] ;
+...
+\end{lstlisting}
