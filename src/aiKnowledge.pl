@@ -1,6 +1,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDES
 
+:- [traceUtils].
 :- [aiSchemaMatching].
 :- [aiSchemaProcessing].
 
@@ -15,7 +16,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET THE KNOWNLEDGE DATABASE
 % reset the knownledge database for unit tests
 
-aiInferenceResetDatabase :-
+aiKnowledgeReset :-
     retractall(aiKnowledge(_)) ->
     assert(aiKnowledge([
         [0, 0, 0],
@@ -27,9 +28,8 @@ aiInferenceResetDatabase :-
     !.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LEARN THE FIRST SHEMA
-% N W W W M
-:- aiInferenceResetDatabase.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESET KNOWNLEDGE DATABASE
+:- aiKnowledgeReset.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LIST ALL KNOWN SCHEMAS
@@ -72,8 +72,52 @@ aiKnowledgeLearn(Grid, KillerMoves, PlayerId) :-
 % find the nearest schema in the database for the givem <Grid> and <PlayerId>
 % aiKnowledgeNearestSchema(Grid, PlayerId, FoundSchema, PosX, PosY, MoveRemaining)
 
-aiKnowledgeNearestSchema(Grid, PlayerId, Schema, PosX, PosY, MoveRemaining) :-
-    aiKnowledge(Schema) ->
+privateAiKnowledgeNearestSchema(Grid, PlayerId, [Schema], Schema, MoveRemaining) :-
+    aiSchemaDistance(Grid, PlayerId, Schema, [_, _, MoveRemaining]).
+
+privateAiKnowledgeNearestSchema(Grid, PlayerId, [Schema|SchemaList], RSchema, RMoveRemaining) :-
+    aiSchemaDistance(Grid, PlayerId, Schema, [_, _, MoveRemaining]),
+    privateAiKnowledgeNearestSchema(Grid, PlayerId, SchemaList, SubSchema, SubMoveRemaining),
     (
-        aiSchemaDistance(Grid, PlayerId, Schema, [PosX, PosY, MoveRemaining])
+        (MoveRemaining < SubMoveRemaining) -> (
+            RMoveRemaining = MoveRemaining,
+            RSchema = Schema
+        ); (
+            RMoveRemaining = SubMoveRemaining,
+            RSchema = SubSchema
+        )
+    ).
+
+privateAiKnowledgeNearestSchemaFliped(Grid, PlayerId, [Schema], FlipedSchema, MoveRemaining) :-
+    aiSchemaHorizontalFlip(Schema, FlipedSchema),
+    aiSchemaDistance(Grid, PlayerId, FlipedSchema, [_, _, MoveRemaining]).
+
+privateAiKnowledgeNearestSchemaFliped(Grid, PlayerId, [Schema|SchemaList], RSchema, RMoveRemaining) :-
+    aiSchemaHorizontalFlip(Schema, FlipedSchema),
+    aiSchemaDistance(Grid, PlayerId, FlipedSchema, [_, _, MoveRemaining]),
+    privateAiKnowledgeNearestSchema(Grid, PlayerId, SchemaList, SubSchema, SubMoveRemaining),
+    (
+        (MoveRemaining < SubMoveRemaining) -> (
+            RMoveRemaining = MoveRemaining,
+            RSchema = FlipedSchema
+        ); (
+            RMoveRemaining = SubMoveRemaining,
+            RSchema = SubSchema
+        )
+    ).
+
+aiKnowledgeNearestSchema(Grid, PlayerId, Schema, MoveRemaining) :-
+    aiKnowledgeAll(SchemaList) ->
+    (
+        privateAiKnowledgeNearestSchema(Grid, PlayerId, SchemaList, Schema0, MoveRemaining0),
+        privateAiKnowledgeNearestSchemaFliped(Grid, PlayerId, SchemaList, Schema1, MoveRemaining1),
+        (
+            (MoveRemaining0 < MoveRemaining1) -> (
+                MoveRemaining = MoveRemaining0,
+                Schema = Schema0
+            ); (
+                MoveRemaining = MoveRemaining1,
+                Schema = Schema1
+            )
+        )
     ).

@@ -55,3 +55,21 @@ gameObviousMove(Grid, PlayerId, ColumnId) :-
         gameSurviveMoves(Grid, PlayerId, SurvieMoves) ->
         listFetch(SurvieMoves, 1, ColumnId)
     ), !.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHECK IF A PLAY IS A SUICIDE
+% check if a play is a suicide (the other player can win by playing the same
+% column right after)
+
+gameIsSuicideMove(Grid, PlayerId, ColumnId) :-
+    gamePlay(Grid, ColumnId, PlayerId, NewGrid) -> (
+        not(
+            gameOver(NewGrid, ColumnId, 0);
+            gameOver(NewGrid, ColumnId, PlayerId)
+        ),
+        gameIsValidePlay(NewGrid, ColumnId) -> (
+            gameOtherPlayer(PlayerId, OtherPlayerId),
+            gamePlay(NewGrid, ColumnId, OtherPlayerId, NewGrid2),
+            gameOver(NewGrid2, ColumnId, OtherPlayerId)
+        )
+    ), !.

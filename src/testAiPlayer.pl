@@ -7,9 +7,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNIT TESTS
 
 testAiPlayer :-
-    aiInferenceResetDatabase,
+    aiKnowledgeReset,
     iaPopulateKnowledge(playerRandom, 10),
-    aiInferenceResetDatabase.
+    aiKnowledgeReset.
 
 testAllAiPlayer :-
     test(testAiPlayer).

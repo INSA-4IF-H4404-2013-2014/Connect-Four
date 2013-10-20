@@ -32,6 +32,16 @@ testCaseGameSmartNoOneWinNextTurn([
     []
 ]).
 
+testCaseGameSmartSuicide([
+    [1, 1, 1, 2, 2, 2],
+    [2, 2, 2, 1, 1, 1],
+    [1, 1, 1, 2, 2, 2],
+    [2, 2, 2, 1, 1, 1],
+    [1, 1, 2, 1, 2, 2],
+    [2, 2, 1, 1, 2, 2],
+    [1, 1]
+]).
+
 testCaseGameSmartPlayer2Win([
     [1],
     [1],
@@ -84,7 +94,16 @@ testGameObviousMove :-
     not(gameObviousMove(G0, 2, 1)),
     (gameObviousMove(G1, 2, 5) ; gameObviousMove(G1, 2, 6)).
 
+testGameIsSuicideMove :-
+    testCaseGameSmartAlmostFullGrid(G1),
+    testCaseGameSmartSuicide(G2),
+    not(gameIsSuicideMove(G1, 1, 1)),
+    not(gameIsSuicideMove(G1, 2, 1)),
+    gameIsSuicideMove(G2, 2, 7),
+    not(gameIsSuicideMove(G2, 1, 7)).
+
 testAllGameSmart :-
 	test(testGameCanWin),
 	test(testGameWinningMoves),
-    test(testGameObviousMove).
+    test(testGameObviousMove),
+    test(testGameIsSuicideMove).

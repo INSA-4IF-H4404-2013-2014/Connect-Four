@@ -5,9 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%% SETTINGS - EDIT ACCORDINGLY %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Please add here all players to be tested, and give them a primary key.
 statsPlayerFightingPlayerDB(playerRandom, 1).
-statsPlayerFightingPlayerDB(playerRandom, 2).
-statsPlayerFightingPlayerDB(playerRandom, 3).
-statsPlayerFightingPlayerDB(playerRandom, 4).
+statsPlayerFightingPlayerDB(playerRandomSmart, 2).
 
 %Please indicate here the default number of matchs per round you want.
 statsPlayerDefaultMatchsPerRound(100).
@@ -33,6 +31,37 @@ statsPlayer(MatchsPerRound, Print) :-
 			privateStatsPlayerPrintTournamentResults
 		) ; true
 	).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CSV export %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First you need to run statsPlayer to populate the results DB.
+statsPlayerCsvExport(FileName) :-
+	open(FileName, write, OS),
+	(
+		forall(statsPlayerFightingPlayerDB(X,Y),
+			(write(OS, ',"'), write(OS, X), write(OS, '",,'))), write(OS, '\n'),
+		forall(statsPlayerFightingPlayerDB(X,Y),
+			write(OS, ',"p1","p2","draw"')), write(OS, '\n'),
+
+		forall(statsPlayerFightingPlayerDB(X1,X2),
+		(
+			%For each line
+			write(OS, '"'), write(OS, X1), write(OS, '"'),
+			forall(statsPlayerFightingPlayerDB(_,Y2),
+			(
+				%For each column
+				forall(statsPlayerTournamentResultsDB(X2,Y2,_,R),
+				(
+					%For each result
+					write(OS, ','), write(OS, R)
+				))
+			)),
+			write(OS, '\n')
+		)),	false ; close(OS)
+	).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -114,9 +143,10 @@ privateStatsPlayerPrintTournamentResults :-
 privateStatsPlayerOneRoundLoop(MatchsPerRound, P1Id, P2Id) :-
 	statsPlayerFightingPlayerDB(P1, P1Id), statsPlayerFightingPlayerDB(P2, P2Id),
 	privateStatsPlayerOneRoundLoop2(P1, P2, MatchsPerRound, NbWon1, NbWon2, NbDraw),
-	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 0, NbDraw)),
-	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 1, NbWon1)),
-	asserta(statsPlayerTournamentResultsDB(P1Id, P2Id, 2, NbWon2)), !.
+	%Don't change the order of the assert, cause I rely on it to display the stats table.
+	assert(statsPlayerTournamentResultsDB(P1Id, P2Id, 1, NbWon1)),
+	assert(statsPlayerTournamentResultsDB(P1Id, P2Id, 2, NbWon2)),
+	assert(statsPlayerTournamentResultsDB(P1Id, P2Id, 0, NbDraw)), !.
 
 privateStatsPlayerOneRoundLoop2(_, _, 0, 0, 0, 0).
 privateStatsPlayerOneRoundLoop2(P1, P2, MatchNumber, NbWon1, NbWon2, NbDraw) :-
