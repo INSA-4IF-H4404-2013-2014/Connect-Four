@@ -1,26 +1,27 @@
+\chapter{Bilan des exercices}
 
-\chapter{Bilan des éxercices}
+\section{Prédicats}
 
-\section{Predicats}
+La particularité de Prolog réside dans le fait qu'il n'y a plus d'itérations comme
+un langage de programmation conventionnel. Tout n'est que prédicat. Ainsi, la
+méthode de programmation est très différente. Fini le traitement de données
+dans des variables que l'on met à jour, car la programmation par prédicats permet
+simplement de lier des propriétés entre des variables et/ou constantes.
 
-La particularite Prolog reside dans le fait qu'il n'y a plus d'iterations comme
-un language de programmation conventionnel. Tout n'est que predicat. Ainsi, la
-methode de programmation change de facon de penser. Fini le traitement de donnes
-dans des variable que l'on met jour, car la programmation predicat permet
-simplement de lier des proprietes entre des variables et/ou constantes.
-
-Considerons pour la suite, le predicat :
-\[(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L\]
+Considérons pour la suite, le prédicat~:
+\[
+	(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L
+\]
 
 
 \section{Vérification de propriétés}
 
-La vérification de propriétés permet s'assurer que une (out plusieur) constantes
-verifies un ensemble de predicat. Considerons le code ci dessous :
+La vérification de propriétés permet de s'assurer qu'une (ou plusieurs) constantes
+vérifient un ensemble de prédicats. Considérons le code ci-dessus.
 
-Alors on a à l'éxécution :
+Alors on a à l'exécution~:
 
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(1, [1, 2, 3]).
 true
 
@@ -28,20 +29,19 @@ true
 false
 \end{lstlisting}
 
-En effet, a la premiere intérogation, on vérifie le prédicat $1 \in [1, 2, 3]$
-ce qui est vrai, d'ou la reponse de Prolog 'vrai'. La proprieté etre ces deux
-paramêtres est alors vérifié, renvoyant ainsi vrai. Tandis que la seconde
-interogation $4 \in [1, 2, 3]$ est fausse car $4 \notin [1, 2, 3]$, d'ou la
-reponse 'false'.
+En effet, à la première interrogation, on vérifie le prédicat $1 \in [1, 2, 3]$,
+ce qui est vrai, d'où la réponse de Prolog «~\textit{true}~». La propriété est alors vérifiée, 
+renvoyant ainsi vrai. Tandis que la seconde interogation $4 \in [1, 2, 3]$ est fausse car 
+$4 \notin [1, 2, 3]$, d'où la réponse «~\textit{false}~».
 
 
-\section{Reprouvabilitée}
+\section{Reprouvabilité}
 
-La reprouvabilitees consiste maintenant de definir des propriete entre des
-variables et/ou constantes. Par exemple :
-\begin{center}
-$X \in [1, 2, 3]$.
-\end{center}
+La reprouvabilité consiste à définir des propriétés entre des
+variables et/ou constantes. Par exemple~:
+\[
+	X \in [1, 2, 3]
+\]
 
  Ce qui en Prolog donne :
 \begin{lstlisting}[language=Prolog]
