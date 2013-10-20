@@ -162,8 +162,9 @@ countLine(Matrix, NumCol, LineId, PlayerId, Value) :- columnsNumber(NumCol - 1).
 
 countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
 	gameGridGet(Matrix, NumCol, LineId, PlayerId) ->
-		Value1 is Value + 1,
-	countLine(Matrix, NumCol + 1, LineId, PlayerId, Value1).
+		Value1 is Value + 1;
+	NumCol1 is NumCol + 1,
+	countLine(Matrix, NumCol1, LineId, PlayerId, Value1).
 	
 %%%%%%%%%%%%%%%%%%%%%%
 % Give the number of pawn of the playerId in the played column
@@ -179,8 +180,9 @@ countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :- linesNumber(NumLine -
 
 countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :-
 	gameGridGet(Matrix, ColumnId, NumLine, PlayerId) ->
-		Value1 is Value + 1,
-	countColumn(Matrix, ColumnId, NumLine + 1, PlayerId, Value1).
+		Value1 is Value + 1;
+	NumLine1 is NumLine + 1,
+	countColumn(Matrix, ColumnId, NumLine1, PlayerId, Value1).
 
 
 testEvaluate(Value) :- 
