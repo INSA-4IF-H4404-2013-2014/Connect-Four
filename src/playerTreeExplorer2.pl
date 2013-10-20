@@ -153,13 +153,15 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 % column to be played : ColumnId
 % player playing : PlayerId
 % actual matrix : Matrix
-
 evaluateLine(Matrix, ColumnId, PlayerId, Value) :-
 	getColumnHeight(Matrix, ColumnId, LineId),
-	countLine(Matrix, 1, LineId + 1, PlayerId, Value).
+	LineId1 is LineId + 1,
+	countLine(Matrix, 1, LineId1, PlayerId, Value).
 	
-countLine(Matrix, NumCol, LineId, PlayerId, Value) :- columnsNumber(NumCol - 1).
+% Stop when we are at the grid limit	
+countLine(Matrix, NumCol, LineId, PlayerId, Value) :- NumCol1 is NumCol - 1, columnsNumber(NumCol1).
 
+% Count the ammount of pawn belonging to PlayerId
 countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
 	gameGridGet(Matrix, NumCol, LineId, PlayerId) ->
 		Value1 is Value + 1;
@@ -176,15 +178,17 @@ countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
 
 evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- countColumn(Matrix, ColumnId, 1, PlayerId, Value).
 
-countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :- linesNumber(NumLine - 1).
+% Stop when we are at the grid limit
+countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :- NumLine1 is NumLine - 1, linesNumber(NumLine1).
 
+% Count the ammount of pawn belonging to PlayerId
 countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :-
 	gameGridGet(Matrix, ColumnId, NumLine, PlayerId) ->
-		Value1 is Value + 1;
+		Value1 is Value + 1; % Problem: Value is never initialized at 0
 	NumLine1 is NumLine + 1,
 	countColumn(Matrix, ColumnId, NumLine1, PlayerId, Value1).
-
-
+	
+% Mini-test for evaluateColumn
 testEvaluate(Value) :- 
 		gameNewGrid(Grid),
 		gamePlay(Grid, 1, 1, ResGrid),
@@ -209,5 +213,5 @@ playerTreeExplorer(Grid, Id, NumCol) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% How calling this player
-% launch(playerTreeExplorer, playerTest1, R).
+% How to call this player
+% gameProcess(playerTreeExplorer, playerTest1, R).
