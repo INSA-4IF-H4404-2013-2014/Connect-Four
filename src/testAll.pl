@@ -11,6 +11,7 @@
 :- [testAiSmart].
 :- [testAiPlayer].
 :- [testStatsPlayer].
+:- [testPlayerTreeExplorer].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUNCH ALL UNIT TESTS

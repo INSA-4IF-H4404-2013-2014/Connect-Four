@@ -1,118 +1,187 @@
 :- [gameCore].
 
-%%%%%%%%%%%%% Lauches the Tree Explorer Player and get its move decision %%%%%%%%%%%%%%%
-% Matrix is the game grid
-% The second parameter is the player number
-% ColumnIndexWanted is the column of the move chosen by the Player (return value)
-%playerTreeExplorer(Grid, Id, NumCol).
-
-maxDepth(1).
+%privatePlayerTreeExplorer(Grid, IdPlayer, NumCol, NextCol, Evaluations, Depth, CurrentPlayer)
 
 
-%%%%%%%%%%%%%%%%%%%%%%
-%BUGS ACTUELS :
-%L'Player ne divise pas ses branches, toutes les branches sont dans la mÃªme grille, donc 
-%elle met les pions dans les colonnes unes Ã  unes
-%Solution : Une fonction de plus qui s'appelle elle mÃªme avec incrÃ©mentation du nÂ° de colonne
-%et appel Ã  la fonction privatePlayerTreeExplorer
-%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Évaluation d'une grille de jeu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+evaluate(_, _, _, 1).
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%If the current column play allow us to win the game, we return the column number
-%=> Replace _ by 1 in order to stop only if we can immedplayertly win (else use the two Plays law)
-% If we are not at the depth 1, we have to check if the other player has won, then backtrack
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Peu importe la profondeur actuelle, on vÃ©rifie si l'un des joueurs a gagnÃ©
-
-%Si le joueur 1 a gagnÃ©, la premiÃ¨re colonne jouÃ©e est celle du coup Ã  jouer
-
-privatePlayerTreeExplorer(Grid, Id, NumCol, _, Depth, Plays, _, Id) :- 
-		length(Plays, L),
-		listFetch(Plays, L, LastPlay),
-		gameOver(Grid, LastPlay, Id),
-		write('Coup gagnant'),
-		write('depth='),write(Depth),nl,
-		write('grid='),write(Grid),nl,
-		write('lastPlay='),write(LastPlay),nl,
-		write('id='),write(Id),
-		NumCol is LastPlay.
-		
-%Si l'autre joueur a gagnÃ©, et que la profondeur est Ã  1, il faut jouer immÃ©dplayertement
-% le coup pour l'empÃªcher
-% Sinon, c'est une branche morte
-
-privatePlayerTreeExplorer(Grid, Id, NumCol, _, Depth, _, OpponentPlays, IdToPlay) :-
-		Id \= IdToPlay,
-		length(OpponentPlays, L),
-		listFetch(OpponentPlays, L, LastPlay),
-		gameOver(Grid, LastPlay, IdToPlay),
-		
-		%If depth = 1 : we have to play where the opponent can win
-		maxDepth(Depth) ->
-		write('Contre coup'),
-		NumCol is LastPlay ;
-		
-		%Else : dead branch
-		write('5'),
-		fail.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonctions requises par l'algo MIN-MAX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% removeXValues(List, Result) <=> Result = List\x
+% Remove x values
+%%%%%%%%%%%%%%%%%%%%
+removeXValues([], []).
+removeXValues([x|L], L1) :- removeXValues(L, L1).
+removeXValues([T|L], [T|L1]) :- removeXValues(L, L1). 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%If the maximal depth has been reached, we play random => IMPROVEMENT : Play where
-%the maximal aligned pawn number is the highest
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%7
-
-%Condition d'arrÃªt : Dans le cas (voir ci-dessus) ou aucun joueur n'a gagnÃ©,
-% on vÃ©rifie la profondeur : si toutes les colonnes ont Ã©tÃ© parcourues
-% et si la profondeur max est atteinte, on arrÃªte la recherche
-% et on joue random
-
-privatePlayerTreeExplorer(Grid, Id, NumCol, _, Depth, Plays, _, _) :-
-		write('4'),
-		length(Plays, L),
-		listFetch(Plays, L, LastPlay),
-		columnsNumber(LastPlay),
-		maxDepth(Depth),
-		playerRandom(Grid, Id, NumCol).
+%%%%%%%%%%%%%%%%%%%%
+% getMax(List, Max) <=> Max = getMax(List)
+% Retourne le plus grand élément présent dans une liste (x est une valeur à skipper)
+%%%%%%%%%%%%%%%%%%%%
+getMax([Max], Max).
+getMax([T|L], Max) :- getMax(L, Max1), (T >= Max1, Max = T; T < Max1, Max = Max1).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Next improvement : if two Plays on the same level allow us to win, that's the only play we choose !
-%(instead of accepting the first winning play)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Moteur principal de l'Player, avec incrÃ©mentation des colonnes et de la profondeur de recherche
+%%%%%%%%%%%%%%%%%%%%
+% getMin(List, Min) <=> Min = getMin(List)
+% Retourne le plus petit élément présent dans une liste (x est une valeur à skipper)
+%%%%%%%%%%%%%%%%%%%%
+getMin([Min], Min).
+getMin([x|L], Min) :- getMin(L, Min).
+getMin([T|L], Min) :- getMin(L, Min1), (T =< Min1, Min = T; T > Min1, Min = Min1).
 
-privatePlayerTreeExplorer(Grid, Id, NumCol, _, Depth, Plays, OpponentPlays, IdToPlay) :-
-		length(Plays, L),
-		listFetch(Plays, L, LastPlay),
-		columnsNumber(LastPlay),
-		write('3'),
-		Depth1 is Depth + 1, privatePlayerTreeExplorer(Grid, Id, NumCol, 1, Depth1, Plays, OpponentPlays, IdToPlay).
-		
-privatePlayerTreeExplorer(Grid, Id, NumCol, NextCol, Depth, Plays, OpponentPlays, IdToPlay) :-
-		write('2'),
-		gamePlay(Grid, NextCol, IdToPlay, Result),
+
+%%%%%%%%%%%%%%%%%%%%
+% indexOf(List, Elt, Idx) <=> Idx = indexOf(List, Elt)
+% Retourne l'index du premier élément égal à Elt présent dans la liste
+%%%%%%%%%%%%%%%%%%%%
+indexOf([Elt|_], Elt, 1).
+indexOf([_|L], Elt, Idx) :- indexOf(L, Elt, Idx1), Idx is Idx1 + 1.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ALGO MIN-MAX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% si nextCol = nbMaxCol + 1 : P1
+%		évaluations est une liste vide
+% fin
+% si profondeur maximale atteinte : P2
+%     JOUER un pion dans la colonne nextCol si possible
+%     ajouter en tête de la liste Evaluations le résultat de la fonction évaluation (ou x si on ne peut jouer)
+%     s appeler soit-même avec la grille copiée de la grille reçue, avec nextcol = nextcol + 1
+% fin
+% sinon : P3
+%     copier la grille reçue
+%     si on peut jouer
+%		  JOUER un pion dans la colonne nextCol
+%         s appeler soit-même avec la grille jouée, avec nextcol = 1 et depth += 1
+%         si idplayer = currentplayer
+%             ajouter en tête de la liste evaluations le max de la liste evaluations1 initialisée par l'appel au fils
+%         sinon
+%             ajouter en tête de la liste evaluations le min de la liste evaluations1 initialisée par l'appel au fils
+%         fin
+%	  sinon
+%         ajouter en tête de la liste evaluations x
+%     fin
+%     s appeler soit-même avec la grille copiée de la grille reçue, avec nextcol = nextcol + 1
+% fin
+%%%%%
+% Appel Initial :
+% On calcule le max d'évaluations
+% NumCol est l'indice du max
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%Profondeur maximale de recherche
+%%%%%%%%%%%%%%%%%%%%
+maxDepth(2).
+
+
+%%%%%%%%%%%%%%%%%%%%
+% P1
+% si nextCol = nbMaxCol + 1 : P1
+%		évaluations est une liste vide
+% fin
+%%%%%%%%%%%%%%%%%%%%
+privatePlayerTreeExplorer(_, _, NextCol, [], _, _) :-
+	NextCol1 is NextCol-1 ->
+	columnsNumber(NextCol1), write('col max reached') -> nl.
+	
+
+%%%%%%%%%%%%%%%%%%%%
+% P2
+% si profondeur maximale atteinte : P2
+%     copier la grille reçue
+%     JOUER un pion dans la colonne nextCol si possible
+%     ajouter en tête de la liste Evaluations le résultat de la fonction évaluation (ou x si on ne peut jouer)
+%     s appeler soit-même avec la grille copiée de la grille reçue, avec nextcol = nextcol + 1
+% fin
+%%%%%%%%%%%%%%%%%%%%
+privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, CurrentPlayer) :-
+	maxDepth(Depth) ->
+	write('max depth reached / depth=') -> write(Depth) -> write(' col=') -> write(NextCol) ->
+	copy_term(Grid, Grid1) ->
+	gameColumnHeight(Grid, NextCol, ColumnHeight) ->
+	(
+		not(linesNumber(ColumnHeight)) ->
+		write(' playing and evaluating') -> nl ->
+		gamePlay(Grid, NextCol, CurrentPlayer, GridResult) ->
+		gamePrintGrid(GridResult) ->  %TO DELETE
+		evaluate(GridResult, NextCol, CurrentPlayer, Evaluation)
+		;
+		write(' can t play') -> nl ->
+		Evaluation = x
+	) ->
+	NextCol1 is NextCol + 1 ->
+	write(' calling brother node') -> nl ->
+	privatePlayerTreeExplorer(Grid1, IdPlayer, NextCol1, L, Depth, CurrentPlayer).
+	
+	
+%%%%%%%%%%%%%%%%%%%%
+% P3 : 
+%     copier la grille reçue
+%     si on peut jouer
+%		  JOUER un pion dans la colonne nextCol
+%         s appeler soit-même avec la grille jouée, avec nextcol = 1 et depth += 1
+%         si idplayer = currentplayer : P4
+%             ajouter en tête de la liste evaluations le max de la liste evaluations1 initialisée par l'appel au fils
+%         sinon : P5
+%             ajouter en tête de la liste evaluations le min de la liste evaluations1 initialisée par l'appel au fils
+%         fin
+%	  sinon
+%         ajouter en tête de la liste evaluations x
+%     fin
+%     s appeler soit-même avec la grille copiée de la grille reçue, avec nextcol = nextcol + 1
+%%%%%%%%%%%%%%%%%%%%
+privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, CurrentPlayer) :-
+	write('depth=') -> write(Depth) -> write(' col=') -> write(NextCol) ->
+	copy_term(Grid, Grid1) ->
+	gameColumnHeight(Grid, NextCol, ColumnHeight) ->
+	(
+		not(linesNumber(ColumnHeight)) ->
+		write(' playing') -> nl ->
+		gamePlay(Grid, NextCol, CurrentPlayer, GridResult) ->
+		gamePrintGrid(GridResult) -> %TO DELETE
+		Depth1 is Depth + 1 ->
+		write(' calling deth + 1') -> nl ->
+		gameOtherPlayer(IdPlayer, NextPlayerId) ->
+		privatePlayerTreeExplorer(GridResult, IdPlayer, 1, EvaluationsResult, Depth1, NextPlayerId) ->
+		write(' evaluating the depth + 1 call') -> nl ->
+		removeXValues(EvaluationsResult, EvaluationsResult1) ->
 		(
-			(Id == IdToPlay, append(Plays, [NextCol], Plays2), OpponentPlays2 = OpponentPlays) ;
-			(append(OpponentPlays, [NextCol], OpponentPlays2), Plays2 = Plays)
-		),
-		NextCol1 is NextCol + 1,
-		privatePlayerTreeExplorer(Result, Id, NumCol, NextCol1, Depth, Plays2, OpponentPlays2, IdToPlay).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Player call
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Appel initplayerl
-
-playerTreeExplorer(Grid, Id, NumCol) :-
-		write('1'),
-		privatePlayerTreeExplorer(Grid, Id, NumCol, 1, 1, [], [], Id).
+			IdPlayer = CurrentPlayer ->
+			getMax(EvaluationsResult1, Evaluation)
+			;
+			getMin(EvaluationsResult1, Evaluation)
+		)
+		;
+		Evaluation = x
+	) ->
+	NextCol1 is NextCol + 1 ->
+	write(' calling brother node') -> nl ->
+	privatePlayerTreeExplorer(Grid1, IdPlayer, NextCol1, L, Depth, CurrentPlayer).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% launch(playerTreeExplorer, playerTest1, R).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Initial call
+playerTreeExplorer(Grid, PlayerId, NumCol) :-
+	write('=================================') -> nl ->
+	write('==== TREE EXPLORER INIT CALL ====') -> nl ->
+	write('=================================') -> nl -> 
+	gamePrintGrid(Grid) -> %TO DELETE
+	write('=================================') -> nl ->
+	
+	copy_term(Grid, Grid1) ->
+	privatePlayerTreeExplorer(Grid1, PlayerId, 1, Evaluations, 1, PlayerId) ->
+	removeXValues(Evaluations, Evaluations1) ->
+	getMax(Evaluations1, Max) ->
+	indexOf(Evaluations, Max, NumCol).

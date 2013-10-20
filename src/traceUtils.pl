@@ -6,7 +6,7 @@
 tracing(none).
 
 % constant which indicates if tracing what happend when playing
-%tracing(game).
+tracing(game).
 
 % Should playerRandom unit test tracing be activated?
 %tracing(playerrandom).
