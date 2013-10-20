@@ -42,7 +42,7 @@ variables et/ou constantes. Par exemple~:
 \]
 
  Ce qui en Prolog donne :
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(X, [1, 2, 3]).
 \end{lstlisting}
 
@@ -50,7 +50,7 @@ On lis a ce moment que $X$ compose la liste constante $[1, 2, 3]$. Ainsi a
 l'execution, Prolog peut evaluer les solutions de $L$ grace a cette proprietee
 ainsi définie :
 
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(L, [1, 2, 3]).
 L = 1;
 L = 2;
@@ -73,7 +73,7 @@ predicats. Par exemple~:
 \]
 
 Cela revient simplement a l'ecriture en Prolog :
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(L, [1, 2, 3]), membre(L, [3, 4, 2]).
 L = 2;
 L = 3;
@@ -87,7 +87,7 @@ La dangeureusitee de de la reprouvabilitée, est qu'il est possible qu'une
 infinitée de solutions vérifient une meme propriétée. Considerons par exemple
 le code suivant~:
 
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(1, L).
 \end{lstlisting}
 
@@ -105,7 +105,7 @@ Alors $\forall X \in \mathbb{N} / 1 \in cat([X], L)$
 de toutes les générer, causant une exception du au manque de mémoire de la
 machine.
 
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(1, L).
 L = [1|_G2214] ;
 L = [_G2213, 1|_G2217] ;
@@ -124,7 +124,7 @@ l'objectif est de pouvoir coder les siens. Pour cela, interessons nous a la
 reecriture de
 \[(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L\]
 
-\begin{lstlisting}[language=Prolog]
+\begin{lstlisting}[language=Prolog,frame=single]
 membre(X, [X|_]).
 membre(X, [_|L]) :- membre(X, L).
 \end{lstlisting}
