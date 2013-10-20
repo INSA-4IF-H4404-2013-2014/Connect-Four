@@ -10,4 +10,3 @@ pdflatex "$NOMDULIVRABLE.tex"
 pdflatex "$NOMDULIVRABLE.tex"
 pdflatex "$NOMDULIVRABLE.tex"
 ./clean.sh
-ln -f -t ../../ -s "$NOMDULIVRABLE.pdf" "exercices/latex-exercices/$NOMDULIVRABLE.pdf"
