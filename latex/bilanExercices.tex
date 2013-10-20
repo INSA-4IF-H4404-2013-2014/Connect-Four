@@ -10,9 +10,7 @@ dans des variable que l'on met jour, car la programmation predicat permet
 simplement de lier des proprietes entre des variables et/ou constantes.
 
 Considerons pour la suite, le predicat :
-\begin{center}
-$member(X, L)$ vrai si et seulement si $X \in L$.
-\end{center}
+\[(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L\]
 
 
 \section{Vérification de propriétés}
@@ -96,4 +94,17 @@ L = [_G2213, _G2216, _G2219, 1|_G2223] ;
 L = [_G2213, _G2216, _G2219, _G2222, 1|_G2226] ;
 L = [_G2213, _G2216, _G2219, _G2222, _G2225, 1|_G2229] ;
 ...
+\end{lstlisting}
+
+
+\section{Programation de prédicats}
+
+Au paravant, nous fesions que utiliser des prédicats, mais bien entendu,
+l'objectif est de pouvoir coder les siens. Pour cela, interessons nous a la
+reecriture de
+\[(membre(X, L) \Rightarrow vrai) \Leftrightarrow X \in L\]
+
+\begin{lstlisting}[language=Prolog]
+membre(X, [X|_]).
+membre(X, [_|L]) :- membre(X, L).
 \end{lstlisting}
