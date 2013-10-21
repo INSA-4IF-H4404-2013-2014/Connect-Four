@@ -137,3 +137,42 @@ Ainsi on en déduit le second prédicat~:
 \begin{lstlisting}[language=Prolog,frame=single]
 membre(X, [_|L]) :- membre(X, L).
 \end{lstlisting}
+
+
+\section{Prédicats avec calculs arithmétiques}
+
+On se propose d'implementer un predicat permetant de verifier a un element a une
+position donnée dans une liste : $X = L[I]$
+
+Exemple :
+\begin{lstlisting}[language=Prolog,frame=single]
+?- elementAtPos(2, hello, [hi, hello, bye]).
+true
+
+?- elementAtPos(3, hi, [hi, hello, bye]).
+false
+\end{lstlisting}
+
+
+Tout d'abort, le premier cas evidents survient lorsque la list $L$ est vide, le
+predicat doit etre faut~:
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(_, _, []) :- fail.
+\end{lstlisting}
+Notez que cette ligne est facultative, car definir un predicat comme echouant
+(fail) revien a ne pas le definir. Nous le metons ici simplement pour
+illustrer la demarche.
+
+Vien ensuite le cas evident ou nous voulons tester le premier element de la
+liste. Ainsi :
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(1, X, [X|_]).
+\end{lstlisting}
+
+Enfin, il demeure le cas ou ce n'est pas le premier element. Alors, l'idee, est
+de recursivement prouver $elementAtPos/3$ mais en retirant le premier element
+a chaque foie~:
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(I, X, [_|L]) :-
+    I > 1, I1 is I-1, elementAtPos(I1, X, L).
+\end{lstlisting}

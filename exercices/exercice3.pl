@@ -1,15 +1,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg2 = arg3[arg1]
 % END
-    elementFind(Pos, Pattern, [Pattern|_],Pos).
+    elementFind(1, Pattern, [Pattern|_]).
 
 % FOREACH
-    elementFind(Pos, Pattern, [_|ListEnd], CurPos) :-
-        NextPos is CurPos+1, elementFind(Pos, Pattern, ListEnd, NextPos).
-
-% INIT
-    elementFind(Pos, Pattern, List) :-
-        elementFind(Pos, Pattern, List, 1).
+    elementFind(Pos, Pattern, [_|ListEnd]) :-
+        Pos > 1, NextPos is Pos-1, elementFind(NextPos, Pattern, ListEnd).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS!
