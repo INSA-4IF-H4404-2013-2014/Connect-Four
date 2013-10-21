@@ -176,17 +176,17 @@ countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
 % player playing : PlayerId
 % actual matrix : Matrix
 
-evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- countColumn(Matrix, ColumnId, 1, PlayerId, Value).
+evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- countColumn(Matrix, ColumnId, 1, PlayerId, 0).
 
 % Stop when we are at the grid limit
-countColumn(Matrix, ColumnId, NumLine, PlayerId, 0) :- NumLine1 is NumLine - 1, linesNumber(NumLine1).
+countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :- NumLine1 is NumLine - 1, linesNumber(NumLine1).
 
 % Count the ammount of pawn belonging to PlayerId
 countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :-
 	gameGridGet(Matrix, ColumnId, NumLine, PlayerId) ->
-		Value1 is Value - 1,
+		Value1 is Value + 1,
 	NumLine1 is NumLine + 1,
-	countColumn(Matrix, ColumnId, NumLine1, PlayerId, Value). %Value1).
+	countColumn(Matrix, ColumnId, NumLine1, PlayerId, Value1).
 	
 % Mini-test for evaluateColumn
 testEvaluate(Value) :- 
