@@ -6,5 +6,6 @@
 :- [playerRandom].
 :- [playerHuman].
 :- [aiPlayer].
+:- [aiKnowledgeIO].
 :- [aiKnowledgePopulate].
 :- [statsPlayer].
