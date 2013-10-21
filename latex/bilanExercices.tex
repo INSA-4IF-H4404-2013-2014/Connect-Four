@@ -174,5 +174,39 @@ de recursivement prouver $elementAtPos/3$ mais en retirant le premier element
 a chaque foie~:
 \begin{lstlisting}[language=Prolog,frame=single]
 elementAtPos(I, X, [_|L]) :-
-    I > 1, I1 is I-1, elementAtPos(I1, X, L).
+    I1 is I-1, elementAtPos(I1, X, L).
+\end{lstlisting}
+
+
+\section{Recherche avec calculs arithmétiques}
+
+Avec le prédicat $elementAtPos/3$ défini ci dessus, il est alors facil de l'utiliser pour rechercher
+un element $X$ à une position $I$ dans une liste $L$.
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(2, X, [10, 11, 12]).
+X = 11 ;
+false
+\end{lstlisting}
+
+Cependant il survient une erreur spécial si nous cherchons l'index $I$ d'un élément
+$X$ dans une liste $L$.
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(I, 12, [10, 12]).
+ERROR: >/2: Arguments are not sufficiently instantiated
+\end{lstlisting}
+
+En effet si nous deroulons les predicat, nous optenons alors~:
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(I, 12, [10, 12]) :-
+    I1 is I - 1, elementAtPos(I1, 12, [12]).
+elementAtPos(I, 12, [10, 12]) :- elementAtPos(I + 1, 12, [12]).
+\end{lstlisting}
+
+Ainsi nous voyons l'expression $I + 1$ a verifie une propriété lié par le prédicat
+$elementAtPos/3$, générant une erreur car étant une variable non lié (unbound variable).
+
+En effet, cette erreur peut etre facilement reproduite par~:
+\begin{lstlisting}[language=Prolog,frame=single]
+?- elementAtPos(I + 2, 11, [10, 11, 12]).
+ERROR: elementAtPos/3: Arguments are not sufficiently instantiated
 \end{lstlisting}

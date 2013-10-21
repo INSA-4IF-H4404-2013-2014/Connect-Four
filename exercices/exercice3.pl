@@ -5,7 +5,7 @@
 
 % FOREACH
     elementFind(Pos, Pattern, [_|ListEnd]) :-
-        Pos > 1, NextPos is Pos-1, elementFind(NextPos, Pattern, ListEnd).
+        NextPos is Pos-1, elementFind(NextPos, Pattern, ListEnd).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS!
