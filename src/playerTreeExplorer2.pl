@@ -198,9 +198,9 @@ testEvaluate(Value) :-
 
 evaluate(Matrix, ColumnId, PlayerId, Value) :-
 	evalutLine(Matrix, ColumnId, PlayerId, LinePawns),
-	LineValue = 10 ^ LinePaws,
+	LineValue is 10 ^ LinePaws,
 	evaluateColumn(Matrix, ColumnId, PlayerId, ColumnPawns),
-	ColumnValue = 10 ^ ColumnPawns,
+	ColumnValue is 10 ^ ColumnPawns,
 	Value is max(LineValue, ColumnValue).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
