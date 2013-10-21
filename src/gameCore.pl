@@ -1,11 +1,5 @@
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONSTANTS
-% Constants
-% Game grid
-
-columnsNumber(7).
-linesNumber(6).
-numberOfAlignedPawnsToWin(4).
+:- [const].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET THE OTHER PLAYER ID
