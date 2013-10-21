@@ -1,5 +1,5 @@
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Text existance d'un membre dans une liste
+%%%%%%%%%%%%%%%%%%%%% Text existance d'un membre dans une liste
 % END
     membre(X, [X|_]).
 
@@ -7,7 +7,7 @@
     membre(X, [_|L]) :- membre(X, L).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Soustraction ensembliste : arg2\arg1 = arg3
+%%%%%%%%%%%%%%%%%%% Soustraction ensembliste : arg2\arg1 = arg3
 % END
     element1(X, [X|R], R).
 
@@ -15,7 +15,7 @@
     element1(X, [T|Q1], [T|Q2]) :- element1(X, Q1, Q2).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Extraction des permutations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Extraction des permutations
 % END
     extract(List, [X]) :-
         membre(X, List).
@@ -25,7 +25,7 @@
         element1(X, List, R), extract(R, L).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Concatenation de listes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Concatenation de listes
 % END
     concatLists([], Result, Result).
 
@@ -34,17 +34,17 @@
         concatLists(ListA, ListB, Result).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Inversion de la liste
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Inversion de la liste
 % END
     invertList([], []).
 
 % FOREACH
     invertList([X|List], Return) :-
-        invertList(List, Result), concatLists(Result, [X], Return).
+        invertList(List, Result),
+        concatLists(Result, [X], Return).
 
 
-% --------- GOTO: MARTIN
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg4 = arg3.replaceAll(arg1 by arg2)
+%%%%%%%%%%%%%%%%%%%%%%%% arg4 = arg3.replaceAll(arg1 by arg2)
 % END
     subsAll(_, _, [], []).
 
@@ -55,7 +55,7 @@
         subsAll(Pattern, Replace, List, Result), not(X = Pattern).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg4 = arg3.replaceFirst(arg1 by arg2)
+%%%%%%%%%%%%%%%%%%%%%% arg4 = arg3.replaceFirst(arg1 by arg2)
 % END
     subsFirst(Pattern, Replace, [Pattern|List], [Replace|List]).
 
@@ -64,7 +64,7 @@
         subsFirst(Pattern, Replace, List, Result), not(X = Pattern).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg4 = arg3.replaceOnce(arg1 by arg2)
+%%%%%%%%%%%%%%%%%%%%%%% arg4 = arg3.replaceOnce(arg1 by arg2)
 % END
     subsOnce(Pattern, Replace, [Pattern|List], [Replace|List]).
 
@@ -73,7 +73,7 @@
         subsOnce(Pattern, Replace, List, Result).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS!
 testsExo2 :-
     membre(a, [a,b]),
     not(membre(x, [a,b])),

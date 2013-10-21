@@ -1,5 +1,5 @@
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg2 = arg3[arg1]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg2 = arg3[arg1]
 % END
     elementFind(1, Pattern, [Pattern|_]).
 
@@ -8,7 +8,7 @@
         NextPos is Pos-1, elementFind(NextPos, Pattern, ListEnd).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS!
 testsExo3 :-
     elementFind(1, a, [a,b,c,a,b]),
     elementFind(4, a, [a,b,c,a,b]),
