@@ -33,10 +33,10 @@ renvoyant ainsi vrai. Tandis que la seconde interogation $4 \in [1, 2, 3]$ est f
 $4 \notin [1, 2, 3]$, d'où la réponse «~\textit{false}~».
 
 
-\section{Reprouvabilité}
+\section{Recherche de solutions}
 
-La reprouvabilité consiste à définir des propriétés entre des
-variables et/ou constantes. Par exemple~:
+La recherche de solution consiste à définir des propriétés entre des
+objects et/ou constantes. Par exemple~:
 \[
 	X \in [1, 2, 3]
 \]
@@ -46,23 +46,22 @@ variables et/ou constantes. Par exemple~:
 ?- membre(X, [1, 2, 3]).
 \end{lstlisting}
 
-On lis a ce moment que $X$ compose la liste constante $[1, 2, 3]$. Ainsi a
-l'execution, Prolog peut evaluer les solutions de $L$ grace a cette proprietee
-ainsi définie :
+Ainsi a l'éxécution, Prolog est capable d'évaluer les solutions de $X$ grace a
+cette propriétée ainsi définie :
 
 \begin{lstlisting}[language=Prolog,frame=single]
-?- membre(L, [1, 2, 3]).
-L = 1;
-L = 2;
-L = 3;
+?- membre(X, [1, 2, 3]).
+X = 1;
+X = 2;
+X = 3;
 false
 \end{lstlisting}
 
 
-\section{Reprouvabilitée multiple}
+\section{Recherche de solutions d'un système}
 
-Une propriétée sur une variable par exemple, peut etre definit par plusieur
-predicats. Par exemple~:
+Une propriétée sur une variable par exemple, peut être définit par plusieur
+prédicats. Par exemple~:
 \[
     \left\{  
     \begin{array}{c}
@@ -72,18 +71,18 @@ predicats. Par exemple~:
     \right .
 \]
 
-Cela revient simplement a l'ecriture en Prolog :
+Cela revient simplement a l'écriture en Prolog :
 \begin{lstlisting}[language=Prolog,frame=single]
-?- membre(L, [1, 2, 3]), membre(L, [3, 4, 2]).
-L = 2;
-L = 3;
+?- membre(X, [1, 2, 3]), membre(X, [3, 4, 2]).
+X = 2;
+X = 3;
 false
 \end{lstlisting}
 
 
-\section{Reprouvabilitée non-déterministe}
+\section{Recherche de solutions non-déterministe}
 
-La dangeureusitee de de la reprouvabilitée, est qu'il est possible qu'une
+La dangeureusitée de de la recherche de solution, est qu'il est possible qu'une
 infinitée de solutions vérifient une meme propriétée. Considerons par exemple
 le code suivant~:
 
@@ -91,7 +90,7 @@ le code suivant~:
 ?- membre(1, L).
 \end{lstlisting}
 
-Cette est equivalent à $1 \in L$. Mais alors, combien de listes
+Cette est équivalent à $1 \in L$. Mais alors, combien de listes
 pourraient vérifié cette propriété ?
 
 \textbf{Initialisation}~: Une liste telle que $[1, 2]$ vérifie cette propriété.
@@ -117,14 +116,24 @@ L = [_G2213, _G2216, _G2219, _G2222, _G2225, 1|_G2229] ;
 \end{lstlisting}
 
 
-\section{Programation de prédicats}
+\section{Programation de prédicats triviaux}
 
 Au paravant, nous fesions que utiliser des prédicats, mais bien entendu,
-l'objectif est de pouvoir coder les siens. Pour cela, interessons nous a la
-reecriture de
+l'objectif est de pouvoir coder les siens. C'est ici que la méthode de programmation diffère
+complement de la programmation itérative. Nous devons proceder avec une démarche
+d'analyse mathématique. Pour cela, interessons nous à la ré-écriture de
 \[(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L\]
 
+Tout d'abort, on remarque que $X \in [X, ...]$, ou autrement dit~:
+$X \in (L = cat([X], L1))$ avec $L1$ une autre liste. Alors on en deduit le
+premier prédicat :
 \begin{lstlisting}[language=Prolog,frame=single]
 membre(X, [X|_]).
+\end{lstlisting}
+
+On remarque par ailleur que~:
+\[\forall (X, Y) \in \mathbb{E}^2, X \in L \Rightarrow X \in cat([Y], L)\]
+Ainsi on en déduit le second prédicat~:
+\begin{lstlisting}[language=Prolog,frame=single]
 membre(X, [_|L]) :- membre(X, L).
 \end{lstlisting}
