@@ -7,8 +7,9 @@
 
 
 playerHuman(Grid, PlayerId, ColumnId) :-
+    uiColors(Colored),
     gamePrintGrid(Grid),
-	gamePrintSymbols(PlayerId, Symb),
+	gamePrintSymbols(Colored, PlayerId, Symb),
 	write('---playeur--- ('),
 	write(Symb),
 	write(') which column ? '),
