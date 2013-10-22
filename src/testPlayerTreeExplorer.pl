@@ -37,8 +37,8 @@ testIndexOf :-
 testEvaluate(Value) :- 
 		gameNewGrid(Grid),
 		gamePlay(Grid, 1, 1, ResGrid),
-		gamePlay(ResGrid, 1, 1, ResGrid2),
-		gamePlay(ResGrid2, 1, 2, ResGrid3),
+		gamePlay(ResGrid, 1, 2, ResGrid2),
+		gamePlay(ResGrid2, 1, 1, ResGrid3),
 		evaluateColumn(ResGrid3, 1, 1, Value).
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

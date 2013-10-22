@@ -83,34 +83,21 @@ countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
 % column to be played : ColumnId
 % player playing : PlayerId
 % actual matrix : Matrix
+evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- gameColumnHeight(Matrix, ColumnId, LineId), countColumn(Matrix, ColumnId, LineId, PlayerId, Value).
 
-evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- countColumn(Matrix, ColumnId, 1, PlayerId, Value).
+countColumn(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; LineId = 0), !.
 
-% Stop when we are at the grid limit
-countColumn(Matrix, ColumnId, NumLine, PlayerId, 0) :- NumLine1 is NumLine - 1, linesNumber(NumLine1).
-
-% Count the ammount of pawn belonging to PlayerId
-countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :-
-	NumLine1 is NumLine + 1 ->
-	countColumn(Matrix, ColumnId, NumLine1, PlayerId, Value1) ->
-	(
-		gameGridGet(Matrix, ColumnId, NumLine, PlayerId) ->
-		Value is Value1 + 1
-		;
-		Value is Value1
-	).
+countColumn(Matrix, ColumnId, LineId, PlayerId, Value) :- 
+	LineId1 is LineId + 1 ->
+		countColumn(Matrix, ColumnId, LineId1, PlayerId, Value1) ->
+		Value is Value1 + 1.
 		
-
 evaluate(Matrix, ColumnId, PlayerId, Value) :-
 	evalutLine(Matrix, ColumnId, PlayerId, LinePawns),
 	LineValue is 10 ^ LinePaws,
 	evaluateColumn(Matrix, ColumnId, PlayerId, ColumnPawns),
 	ColumnValue is 10 ^ ColumnPawns,
 	Value is max(LineValue, ColumnValue).
-
-
-
-
 
 
 
