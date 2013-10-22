@@ -249,7 +249,97 @@ countDiago2Right(Matrix, ColumnId, LineId, PlayerId, Value) :-
 	(ColumnId1 is ColumnId + 1, LineId1 is LineId - 1) ->
 		countDiago2Right(Matrix, ColumnId1, LineId1, PlayerId, Value1) ->
 			Value is Value1 + 1.			
+			
+			
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DISTANCE EVALUATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Get the minimum of the two value, but the min is > 0
+getMinDistance(0, Value, Value) :- !.
+getMinDistance(Value, 0, Value) :- !.
+getMinDistance(Value1, Value2, Value) :- getMin([Value1, Value2], Value), !.
+
+
+% Get the Value of the distance from one PlayerId's pawn to another in the same line in the Matrix
+% If distance > 3 or out of grid, Value = 0
+distanceLine(Matrix, ColumnId, PlayerId, Value) :-
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId + 1,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,
+	countDistanceLineLeft(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceLineRight(Matrix, ColumnId, ColumnId2, LineId1, PlayerId, Value2),
+	getMinDistance(Value1, Value2, Value).
+
+countDistanceLineLeft(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+		Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			Value > 3;
+			ColumnId = 0
+		), 
+		!.
+	
+countDistanceLineLeft(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+
+		
+countDistanceLineLeft(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	ColumnId1 is ColumnId - 1 ->
+		countDistanceLineLeft(Matrix, ColumnRef, ColumnId1, LineId, PlayerId, Value).
+		
+		
+		
+countDistanceLineRight(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :-
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1))
+	), 
+	!.
+		
+countDistanceLineRight(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+
+
+countDistanceLineRight(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	ColumnId1 is ColumnId + 1 ->
+		countDistanceLineRight(Matrix, ColumnRef, ColumnId1, LineId, PlayerId, Value).
+	
+
+% Get the Value of the distance from one PlayerId's pawn to another in the same column in the Matrix
+% If distance > 3 or out of grid, Value = 0
+distanceColumn(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId), 
+	LineId1 is LineId + 1,
+	countDistanceColumn(Matrix, ColumnId, LineId1, LineId, PlayerId, Value).
+
+countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, 0) :-
+	Value is (abs(LineRef - LineId)) - 1 ->
+	(	
+		Value > 3;
+		LineId = 0
+	), 
+	!.
+	
+countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :- 
+	Value is (abs(LineRef - LineId)) - 1 ->
+		(
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+		
+countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :-
+	LineId1 is LineId - 1 ->
+		countDistanceColumn(Matrix, ColumnId, LineRef, LineId1, PlayerId, Value).
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ALGO MIN-MAX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
