@@ -71,6 +71,26 @@ testEvaluateDiago1(Column, Value) :-
 	gamePrintGrid(ResGrid15),
 	evaluateDiago1(ResGrid15, Column, 1, Value).
 	
+testEvaluateDiago2(Column, Value) :-
+	gameNewGrid(Grid),
+	gamePlay(Grid, 1, 1, ResGrid),
+	gamePlay(ResGrid, 2, 1, ResGrid2),
+	gamePlay(ResGrid2, 2, 2, ResGrid3),
+	gamePlay(ResGrid3, 3, 1, ResGrid5),
+	gamePlay(ResGrid5, 3, 1, ResGrid6),
+	gamePlay(ResGrid6, 3, 1, ResGrid7),
+	gamePlay(ResGrid7, 4, 2, ResGrid8),
+	gamePlay(ResGrid8, 4, 2, ResGrid9),
+	gamePlay(ResGrid9, 4, 2, ResGrid10),
+	gamePlay(ResGrid10, 5, 1, ResGrid11),
+	gamePlay(ResGrid11, 5, 1, ResGrid12),
+	gamePlay(ResGrid12, 5, 1, ResGrid13),
+	gamePlay(ResGrid13, 5, 1, ResGrid14),
+	gamePlay(ResGrid14, 5, 1, ResGrid15),
+	gamePlay(ResGrid15, 2, 2, ResGrid16),
+	gamePrintGrid(ResGrid16),
+	evaluateDiago2(ResGrid16, Column, 1, Value).
+	
 	
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

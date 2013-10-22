@@ -153,6 +153,51 @@ countDiago1Right(Matrix, ColumnId, LineId, PlayerId, Value) :-
 		countDiago1Right(Matrix, ColumnId1, LineId1, PlayerId, Value1) ->
 			Value is Value1 + 1.
 
+			
+%%%%%%%%%%%%%%%%%%%%%%
+% Give the number of pawn of the playerId in the played first diagonale (from top left to bottom right)
+%%%%%%%%%%%%%%%%%%%%%%
+% return value : Value
+% column to be played : ColumnId
+% player playing : PlayerId
+% actual matrix : Matrix
+evaluateDiago2(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId + 2,
+	LineId2 is LineId,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,	
+	countDiago2Left(Matrix, ColumnId1, LineId1, PlayerId, Value1), countDiago2Right(Matrix, ColumnId2, LineId2, PlayerId, Value2),
+	Value is Value1 + Value2 - 1.
+	
+% Stop when a pawn doesn't belong to the player or we are out of the grid
+countDiago2Left(Matrix, ColumnId, LineId, PlayerId, 1) :- 
+	(
+		not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)); 
+		ColumnId = 0; 
+		(LineId1 is LineId - 1, linesNumber(LineId1))
+	), 
+	!.
+
+countDiago2Left(Matrix, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId - 1, LineId1 is LineId + 1) ->
+		countDiago2Left(Matrix, ColumnId1, LineId1, PlayerId, Value1) ->
+			Value is Value1 + 1.
+			
+% Stop when a pawn doesn't belong to the player or we are out of the grid			
+countDiago2Right(Matrix, ColumnId, LineId, PlayerId, 1) :- 
+	(
+		not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)); 
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1));
+		LineId = 0
+	), 
+	!.
+	
+countDiago2Right(Matrix, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId + 1, LineId1 is LineId - 1) ->
+		countDiago2Right(Matrix, ColumnId1, LineId1, PlayerId, Value1) ->
+			Value is Value1 + 1.			
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ALGO MIN-MAX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
