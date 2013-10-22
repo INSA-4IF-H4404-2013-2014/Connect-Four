@@ -59,9 +59,24 @@ evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
 	evaluateLine(Matrix, ColumnId, PlayerId, Line),
 	evaluateDiago1(Matrix, ColumnId, PlayerId, Diago1),
 	evaluateDiago2(Matrix, ColumnId, PlayerId, Diago2).
-
+	
+distanceAll(Matrix, ColumnId, PlayerId, Column, Line/*, Diago1, Diago2*/) :-
+	distanceColumn(Matrix, ColumnId, PlayerId, Column),
+	distanceLine(Matrix, ColumnId, PlayerId, Line)
+	/*,
+	distanceDiago1(Matrix, ColumnId, PlayerId, Diago1),
+	distanceDiago2(Matrix, ColumnId, PlayerId, Diago2)
+	*/.
+/*
+*/
 % Convert the number of align pawn of the player into the corresponding value
 currentPlayerCoeff(Value, Result) :- Value1 is Value - 1, Result is 10 ^ Value1.
+
+% Convert the distance value into a score -> currentPlayerDistCoeff(Value, Score)
+currentPlayerDistCoeff(0, 0).
+currentPlayerDistCoeff(1, 5).
+currentPlayerDistCoeff(2, 2).
+currentPlayerDistCoeff(3, 1).
 
 % Return the maximum value obtained by evaluation for the current player
 evaluateCurrentPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
@@ -70,7 +85,12 @@ evaluateCurrentPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
 	currentPlayerCoeff(Line, RLine),
 	currentPlayerCoeff(Diago1, RDiago1),
 	currentPlayerCoeff(Diago2, RDiago2),
-	getMax([RColumn, RLine, RDiago1, RDiago2], MaxWin).
+	distanceAll(Matrix, ColumnId, PlayerId, DColumn, Dline /*DDiago1, DDiago2*/),
+	currentPlayerDistCoeff(DColumn, RDColumn),
+	currentPlayerDistCoeff(DLine, RDLine),
+	/*currentPlayerDistCoeff(DDiago1, RDDiago1),
+	currentPlayerDistCoeff(DDiago2, RDDiago2),*/
+	getMax([RColumn, RLine, RDiago1, RDiago2, RDColumn, RDLine/*, RDDiago1, RDDiago2*/], MaxWin).
 
 % Convert the number of align pawn of the opponent into the corresponding value	
 otherPlayerCoeff(Value, Result) :- Value1 is Value - 1, Coeff is 10 ^ Value1, Result is 5 * Coeff.
