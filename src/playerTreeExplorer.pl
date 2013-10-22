@@ -52,7 +52,15 @@ indexOf([_|L], Elt, Idx) :- indexOf(L, Elt, Idx1), Idx is Idx1 + 1.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Évaluation d'une grille de jeu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-evaluate(_, _, _, 1).
+
+% Launch all the evaluations
+evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
+	evaluateColumn(Matrix, ColumnId, PlayerId, Column),
+	evaluateLine(Matrix, ColumnId, PlayerId, Line),
+	evaluateDiago1(Matrix, ColumnId, PlayerId, Diago1),
+	evaluateDiago2(Matrix, ColumnId, PlayerId, Diago2).
+
+%evaluate(_, _, _, 1).
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Give the number of pawn of the playerId in the played line
