@@ -3,12 +3,6 @@
 %privatePlayerTreeExplorer(Grid, IdPlayer, NumCol, NextCol, Evaluations, Depth, CurrentPlayer)
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Évaluation d'une grille de jeu
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-evaluate(_, _, _, 1).
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fonctions requises par l'algo MIN-MAX
@@ -46,6 +40,78 @@ getMin([T|L], Min) :- getMin(L, Min1), (T =< Min1, Min = T; T > Min1, Min = Min1
 %%%%%%%%%%%%%%%%%%%%
 indexOf([Elt|_], Elt, 1).
 indexOf([_|L], Elt, Idx) :- indexOf(L, Elt, Idx1), Idx is Idx1 + 1.
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Évaluation d'une grille de jeu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+evaluate(_, _, _, 1).
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Give the number of pawn of the playerId in the played line
+%%%%%%%%%%%%%%%%%%%%%%
+% return value : Value
+% column to be played : ColumnId
+% player playing : PlayerId
+% actual matrix : Matrix
+evaluateLine(Matrix, ColumnId, PlayerId, Value) :-
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId + 1,
+	countLine(Matrix, 1, LineId1, PlayerId, Value).
+	
+% Stop when we are at the grid limit	
+countLine(Matrix, NumCol, LineId, PlayerId, 0) :- NumCol1 is NumCol - 1, columnsNumber(NumCol1).
+
+% Count the ammount of pawn belonging to PlayerId
+countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
+	gameGridGet(Matrix, NumCol, LineId, PlayerId) ->
+		Value1 is Value - 1;
+	NumCol1 is NumCol + 1,
+	countLine(Matrix, NumCol1, LineId, PlayerId, Value1).
+	
+%%%%%%%%%%%%%%%%%%%%%%
+% Give the number of pawn of the playerId in the played column
+%%%%%%%%%%%%%%%%%%%%%%
+% return value : Value
+% column to be played : ColumnId
+% player playing : PlayerId
+% actual matrix : Matrix
+
+evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- countColumn(Matrix, ColumnId, 1, PlayerId, Value).
+
+% Stop when we are at the grid limit
+countColumn(Matrix, ColumnId, NumLine, PlayerId, 0) :- NumLine1 is NumLine - 1, linesNumber(NumLine1).
+
+% Count the ammount of pawn belonging to PlayerId
+countColumn(Matrix, ColumnId, NumLine, PlayerId, Value) :-
+	NumLine1 is NumLine + 1 ->
+	countColumn(Matrix, ColumnId, NumLine1, PlayerId, Value1) ->
+	(
+		gameGridGet(Matrix, ColumnId, NumLine, PlayerId) ->
+		Value is Value1 + 1
+		;
+		Value is Value1
+	).
+		
+
+evaluate(Matrix, ColumnId, PlayerId, Value) :-
+	evalutLine(Matrix, ColumnId, PlayerId, LinePawns),
+	LineValue is 10 ^ LinePaws,
+	evaluateColumn(Matrix, ColumnId, PlayerId, ColumnPawns),
+	ColumnValue is 10 ^ ColumnPawns,
+	Value is max(LineValue, ColumnValue).
+
+
+
+
+
 
 
 
