@@ -64,8 +64,10 @@ evaluate(_, _, _, 1).
 evaluateLine(Matrix, ColumnId, PlayerId, Value) :-
 	gameColumnHeight(Matrix, ColumnId, LineId),
 	LineId1 is LineId + 1,
-	ColumnId1 is ColumnId,
-	countLineLeft(Matrix, ColumnId, LineId1, PlayerId, Value). %-> countLineRight(Matrix, ColumnId1, LineId1, PlayerId, Value).
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,
+	countLineLeft(Matrix, ColumnId1, LineId1, PlayerId, Value1), countLineRight(Matrix, ColumnId2, LineId1, PlayerId, Value2),
+	Value is Value1 + Value2 - 1.
 
 countLineLeft(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; ColumnId = 0), !.
 
@@ -75,7 +77,7 @@ countLineLeft(Matrix, ColumnId, LineId, PlayerId, Value) :-
 			Value is Value1 + 1.
 			
 			
-countLineRight(Matrix, ColumnId, LineId, PlayerId, Value) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; (ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1))), !.
+countLineRight(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; (ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1))), !.
 	
 countLineRight(Matrix, ColumnId, LineId, PlayerId, Value) :-
 	ColumnId1 is ColumnId + 1 ->
