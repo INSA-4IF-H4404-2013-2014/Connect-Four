@@ -84,16 +84,6 @@ countLineRight(Matrix, ColumnId, LineId, PlayerId, Value) :-
 		countLineRight(Matrix, ColumnId1, LineId, PlayerId, Value1) ->
 			Value is Value1 + 1.
 	
-/*% Stop when we are at the grid limit	
-countLine(Matrix, NumCol, LineId, PlayerId, 0) :- NumCol1 is NumCol - 1, columnsNumber(NumCol1).
-
-% Count the ammount of pawn belonging to PlayerId
-countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
-	gameGridGet(Matrix, NumCol, LineId, PlayerId) ->
-		Value1 is Value - 1;
-	NumCol1 is NumCol + 1,
-	countLine(Matrix, NumCol1, LineId, PlayerId, Value1).*/
-	
 %%%%%%%%%%%%%%%%%%%%%%
 % Give the number of pawn of the playerId in the played column
 %%%%%%%%%%%%%%%%%%%%%%
@@ -119,7 +109,49 @@ evaluate(Matrix, ColumnId, PlayerId, Value) :-
 	Value is max(LineValue, ColumnValue).
 
 
+%%%%%%%%%%%%%%%%%%%%%%
+% Give the number of pawn of the playerId in the played first diagonale (from bottom left to top right)
+%%%%%%%%%%%%%%%%%%%%%%
+% return value : Value
+% column to be played : ColumnId
+% player playing : PlayerId
+% actual matrix : Matrix
+evaluateDiago1(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId,
+	LineId2 is LineId + 2,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,	
+	countDiago1Left(Matrix, ColumnId1, LineId1, PlayerId, Value1), countDiago1Right(Matrix, ColumnId2, LineId2, PlayerId, Value2),
+	Value is Value1 + Value2 - 1.
+	
+% Stop when a pawn doesn't belong to the player or we are out of the grid
+countDiago1Left(Matrix, ColumnId, LineId, PlayerId, 1) :- 
+	(
+		not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)); 
+		ColumnId = 0; 
+		LineId = 0
+	), 
+	!.
 
+countDiago1Left(Matrix, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId - 1, LineId1 is LineId - 1) ->
+		countDiago1Left(Matrix, ColumnId1, LineId1, PlayerId, Value1) ->
+			Value is Value1 + 1.
+			
+% Stop when a pawn doesn't belong to the player or we are out of the grid			
+countDiago1Right(Matrix, ColumnId, LineId, PlayerId, 1) :- 
+	(
+		not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)); 
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1));
+		(LineId1 is LineId - 1, linesNumber(LineId1))
+	), 
+	!.
+	
+countDiago1Right(Matrix, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId + 1, LineId1 is LineId + 1) ->
+		countDiago1Right(Matrix, ColumnId1, LineId1, PlayerId, Value1) ->
+			Value is Value1 + 1.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ALGO MIN-MAX
