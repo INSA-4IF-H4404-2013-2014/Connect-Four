@@ -34,12 +34,22 @@ testIndexOf :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evaluate function	
 % Mini-test for evaluateColumn
-testEvaluate(Value) :- 
+testEvaluateColumn(Value) :- 
 		gameNewGrid(Grid),
 		gamePlay(Grid, 1, 1, ResGrid),
 		gamePlay(ResGrid, 1, 2, ResGrid2),
 		gamePlay(ResGrid2, 1, 1, ResGrid3),
 		evaluateColumn(ResGrid3, 1, 1, Value).
+		
+testEvaluateLine(Value) :-
+	gameNewGrid(Grid),
+	gamePlay(Grid, 1, 1, ResGrid),
+	gamePlay(ResGrid, 2, 2, ResGrid2),
+	gamePlay(ResGrid2, 6, 1, ResGrid3),
+	gamePlay(ResGrid3, 5, 1, ResGrid4),
+	gamePlay(ResGrid4, 3, 1, ResGrid5),
+	gamePrintGrid(ResGrid5),
+	evaluateLine(ResGrid5, 4, 1, Value).
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % How to call this player

@@ -64,9 +64,25 @@ evaluate(_, _, _, 1).
 evaluateLine(Matrix, ColumnId, PlayerId, Value) :-
 	gameColumnHeight(Matrix, ColumnId, LineId),
 	LineId1 is LineId + 1,
-	countLine(Matrix, 1, LineId1, PlayerId, Value).
+	ColumnId1 is ColumnId,
+	countLineLeft(Matrix, ColumnId, LineId1, PlayerId, Value). %-> countLineRight(Matrix, ColumnId1, LineId1, PlayerId, Value).
+
+countLineLeft(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; ColumnId = 0), !.
+
+countLineLeft(Matrix, ColumnId, LineId, PlayerId, Value) :-
+	ColumnId1 is ColumnId - 1 ->
+		countLineLeft(Matrix, ColumnId1, LineId, PlayerId, Value1) ->
+			Value is Value1 + 1.
+			
+			
+countLineRight(Matrix, ColumnId, LineId, PlayerId, Value) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; (ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1))), !.
 	
-% Stop when we are at the grid limit	
+countLineRight(Matrix, ColumnId, LineId, PlayerId, Value) :-
+	ColumnId1 is ColumnId + 1 ->
+		countLineRight(Matrix, ColumnId1, LineId, PlayerId, Value1) ->
+			Value is Value1 + 1.
+	
+/*% Stop when we are at the grid limit	
 countLine(Matrix, NumCol, LineId, PlayerId, 0) :- NumCol1 is NumCol - 1, columnsNumber(NumCol1).
 
 % Count the ammount of pawn belonging to PlayerId
@@ -74,7 +90,7 @@ countLine(Matrix, NumCol, LineId, PlayerId, Value) :-
 	gameGridGet(Matrix, NumCol, LineId, PlayerId) ->
 		Value1 is Value - 1;
 	NumCol1 is NumCol + 1,
-	countLine(Matrix, NumCol1, LineId, PlayerId, Value1).
+	countLine(Matrix, NumCol1, LineId, PlayerId, Value1).*/
 	
 %%%%%%%%%%%%%%%%%%%%%%
 % Give the number of pawn of the playerId in the played column
@@ -90,8 +106,9 @@ countColumn(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, C
 countColumn(Matrix, ColumnId, LineId, PlayerId, Value) :- 
 	LineId1 is LineId + 1 ->
 		countColumn(Matrix, ColumnId, LineId1, PlayerId, Value1) ->
-		Value is Value1 + 1.
-		
+			Value is Value1 + 1.
+	
+	
 evaluate(Matrix, ColumnId, PlayerId, Value) :-
 	evalutLine(Matrix, ColumnId, PlayerId, LinePawns),
 	LineValue is 10 ^ LinePaws,
