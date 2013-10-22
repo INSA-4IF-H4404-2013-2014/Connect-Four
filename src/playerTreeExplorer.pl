@@ -60,7 +60,51 @@ evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
 	evaluateDiago1(Matrix, ColumnId, PlayerId, Diago1),
 	evaluateDiago2(Matrix, ColumnId, PlayerId, Diago2).
 
-%evaluate(_, _, _, 1).
+% Convert the number of align pawn of the player into the corresponding value
+currentPlayerCoeff(Value, Result) :- Value1 is Value - 1, Result is 10 ^ Value1.
+
+% Return the maximum value obtained by evaluation for the current player
+evaluateCurrentPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
+	evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2),
+	currentPlayerCoeff(Column, RColumn),
+	currentPlayerCoeff(Line, RLine),
+	currentPlayerCoeff(Diago1, RDiago1),
+	currentPlayerCoeff(Diago2, RDiago2),
+	getMax([RColumn, RLine, RDiago1, RDiago2], MaxWin).
+
+% Convert the number of align pawn of the opponent into the corresponding value	
+otherPlayerCoeff(Value, Result) :- Value1 is Value - 1, Coeff is 10 ^ Value1, Result is 5 * Coeff.
+
+% Return the maximum value obtained by evaluation for the opponent player
+evaluateOtherPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
+	gameOtherPlayer(PlayerId, OtherPlayer),
+	evaluateAll(Matrix, ColumnId, OtherPlayer, Column, Line, Diago1, Diago2),
+	otherPlayerCoeff(Column, RColumn),
+	otherPlayerCoeff(Line, RLine),
+	otherPlayerCoeff(Diago1, RDiago1),
+	otherPlayerCoeff(Diago2, RDiago2),
+	getMax([RColumn, RLine, RDiago1, RDiago2], MaxWin).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%					!!!!!!!!!!! CAUTION !!!!!!!!!!	
+
+% All evalute predicates count the number of conscutive pawns in the line, column or diagonals
+% corresponding at the ColumnId.
+
+% THIS NUMBER INCLUDES THE PAWN PLAYED!
+
+% For example, if no pawns are aligned on line, evaluateLine(Matrix, ColumnId, PlayerId, Value)
+% will get Value = 1.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Give the number of pawn of the playerId in the played line
@@ -104,7 +148,7 @@ evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- gameColumnHeight(Matrix, Co
 countColumn(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; LineId = 0), !.
 
 countColumn(Matrix, ColumnId, LineId, PlayerId, Value) :- 
-	LineId1 is LineId + 1 ->
+	LineId1 is LineId - 1 ->
 		countColumn(Matrix, ColumnId, LineId1, PlayerId, Value1) ->
 			Value is Value1 + 1.
 	
