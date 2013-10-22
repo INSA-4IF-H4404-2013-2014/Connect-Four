@@ -62,13 +62,12 @@ evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
 	
 distanceAll(Matrix, ColumnId, PlayerId, Column, Line/*, Diago1, Diago2*/) :-
 	distanceColumn(Matrix, ColumnId, PlayerId, Column),
-	distanceLine(Matrix, ColumnId, PlayerId, Line)
+	distanceLine(Matrix, ColumnId, PlayerId, Line).
 	/*,
 	distanceDiago1(Matrix, ColumnId, PlayerId, Diago1),
 	distanceDiago2(Matrix, ColumnId, PlayerId, Diago2)
-	*/.
-/*
-*/
+	.*/
+
 % Convert the number of align pawn of the player into the corresponding value
 currentPlayerCoeff(Value, Result) :- Value1 is Value - 1, Result is 10 ^ Value1.
 
@@ -85,7 +84,7 @@ evaluateCurrentPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
 	currentPlayerCoeff(Line, RLine),
 	currentPlayerCoeff(Diago1, RDiago1),
 	currentPlayerCoeff(Diago2, RDiago2),
-	distanceAll(Matrix, ColumnId, PlayerId, DColumn, Dline /*DDiago1, DDiago2*/),
+	distanceAll(Matrix, ColumnId, PlayerId, DColumn, DLine /*DDiago1, DDiago2*/),
 	currentPlayerDistCoeff(DColumn, RDColumn),
 	currentPlayerDistCoeff(DLine, RDLine),
 	/*currentPlayerDistCoeff(DDiago1, RDDiago1),
