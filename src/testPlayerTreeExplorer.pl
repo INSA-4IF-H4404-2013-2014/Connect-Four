@@ -134,6 +134,18 @@ testEvaluateOtherPlayer(Column, PlayerId, Value) :-
 	gamePrintGrid(ResGrid17),
 	evaluateOtherPlayer(ResGrid17, Column, PlayerId, Value).
 
+	
+testEvaluateOtherPlayer2(Column, PlayerId, Value) :-
+	gameNewGrid(Grid),
+	gamePlay(Grid, 2, 1, Grid1),
+	gamePlay(Grid1, 2, 1, Grid2),
+	gamePlay(Grid2, 3, 2, Grid3),
+	gamePlay(Grid3, 3, 1, Grid4),
+	gamePlay(Grid4, 4, 2, Grid5),
+	gamePlay(Grid5, 4, 1, Grid6),
+	gamePlay(Grid6, 2, 2, Grid7),
+	gamePrintGrid(Grid7),
+	evaluateOtherPlayer(Grid7, Column, PlayerId, Value).
 
 testDistanceLine(Column, PlayerId, Value) :-
 	gameNewGrid(Grid),
