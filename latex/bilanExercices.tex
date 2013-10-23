@@ -93,8 +93,6 @@ le code suivant~:
 Il est équivalent à $1 \in L$. Cherchons à déterminer combien de listes
 pourraient vérifier cette propriété~:
 
-\pagebreak
-
 \begin{description}
 \item[Initialisation~:]{La liste $[1, 2]$ par exemple vérifie cette propriété.}
 \item[Hérédité~:]
@@ -151,9 +149,9 @@ membre(X, [_|L]) :- membre(X, L).
 \section{Prédicats avec calculs arithmétiques}
 
 On se propose d'implémenter un prédicat permettant de vérifier un élement à une
-position donnée dans une liste : $X = L[I]$
+position donnée dans une liste~: $X = L[I]$.
 
-Exemple :
+Exemple~:
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- elementAtPos(2, hello, [hi, hello, bye]).
 true
@@ -163,38 +161,38 @@ false
 \end{lstlisting}
 
 
-Tout d'abord, le premier cas évidents survient lorsque la liste $L$ est vide, le
+Tout d'abord, le premier cas évident survient lorsque la liste $L$ est vide, le
 prédicat doit alors être faux puisqu'aucun élément ne peut exister dans une liste vide~:
 \begin{lstlisting}[language=Prolog,frame=single]
 elementAtPos(_, _, []) :- fail.
 \end{lstlisting}
 Notez que cette ligne est facultative, car définir un prédicat comme échouant
-(fail) reviens à ne pas le définir. Nous illustrons ici simplement la démarche que nous avons suivis.
+(\texttt{fail}) revient à ne pas le définir. Nous illustrons ici simplement la démarche que nous avons suivie.
 
-Viens ensuite le cas évident où nous voulons tester le premier élément de la
-liste.
+Vient ensuite le cas évident où nous voulons tester le premier élément de la liste~:
 \begin{lstlisting}[language=Prolog,frame=single]
 elementAtPos(1, X, [X|_]).
 \end{lstlisting}
 
-Enfin, il demeure le cas où $X$ n'est pas le premier élément. Alors, l'idee, est
-de récursivement prouver $elementAtPos/3$ mais en retirant le premier élément de la liste $L$
-a chaque fois~:
+Enfin, il demeure le cas où $X$ n'est pas le premier élément. Alors, l'idée est
+de récursivement prouver \texttt{elementAtPos/3}, mais en retirant le premier élément de la liste $L$ à chaque fois~:
 \begin{lstlisting}[language=Prolog,frame=single]
 elementAtPos(I, X, [_|L]) :-
     I1 is I-1, elementAtPos(I1, X, L).
 \end{lstlisting}
-Vous aurez remarqué ici la présence d'un index $I$ qui est décrémenté dans $I1$. En effet, le système de récursion marche de telle sorte que lorsqu'une solution sera trouvée via le cas évident, si elle est trouvée, alors la valeur $I1$ de l'avant dernier appel récursif sera égal à 1, et donc il pourra être vu comme 
-\[
-elementAtPos(I, X, [\_|L]) :-\ \ 1\ is\ I-1,\ elementAtPos(1, X, L).
-\] et ainsi de suite, la valeur de $I$ dépendra donc de la profondeur de la récursion nécessaire, or comme la tête de la liste est enlevée à chaque récursion cela correspond bien à un index de la liste. 
+
+Vous aurez remarqué ici la présence d'un index $I$ qui est décrémenté dans $I1$. En effet, le système de récursion fonctionne de telle sorte que lorsqu'une solution sera trouvée via le cas évident, si elle est trouvée, alors la valeur $I1$ de l'avant-dernier appel récursif sera égale à 1, et donc il pourra être vu comme~:
+\begin{lstlisting}[language=Prolog,frame=single]
+elementAtPos(I, X, [_|L]) :- 1 is I-1, elementAtPos(1, X, L).
+\end{lstlisting}
+Et ainsi de suite, la valeur de $I$ dépendra donc de la profondeur de la récursion nécessaire,
+or comme la tête de la liste est enlevée à chaque récursion cela correspond bien à un index de la liste.
 
 \section{Recherche avec calculs arithmétiques}
 
-Avec le prédicat $elementAtPos/3$ défini ci dessus, il est alors facile de l'utiliser pour rechercher
-un élément $X$ à une position $I$ dans une liste $L$.
+Il est alors facile d'utiliser le prédicat \texttt{elementAtPos/3} défini ci-dessus pour rechercher un élément $X$ à une position $I$ dans une liste $L$.
 \begin{lstlisting}[language=Prolog,frame=single]
-elementAtPos(2, X, [10, 11, 12]).
+?- elementAtPos(2, X, [10, 11, 12]).
 X = 11 ;
 false
 \end{lstlisting}
@@ -202,7 +200,7 @@ false
 Cependant si nous cherchons l'index $I$ d'un élément
 $X$ donné et dans une liste $L$ donnée, il survient une erreur spéciale.
 \begin{lstlisting}[language=Prolog,frame=single]
-elementAtPos(I, 12, [10, 12]).
+?- elementAtPos(I, 12, [10, 12]).
 ERROR: >/2: Arguments are not sufficiently instantiated
 \end{lstlisting}
 
@@ -213,10 +211,10 @@ elementAtPos(I, 12, [10, 12]) :-
 elementAtPos(I, 12, [10, 12]) :- elementAtPos(I - 1, 12, [12]).
 \end{lstlisting}
 
-Ainsi nous voyons l'expression $I - 1$ tente de vérifier une propriété liée par le prédicat
-$elementAtPos/3$. Cela génère une erreur car elle est une variable non liée (unbound variable).
+Nous voyons que l'expression $I - 1$ tente de vérifier une propriété liée par le prédicat
+\texttt{elementAtPos/3}. Cela génère une erreur car elle est une variable non liée (\textit{unbound variable}).
 
-En effet, cette erreur peut etre facilement reproduite par~:
+En effet, cette erreur peut être facilement reproduite par~:
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- elementAtPos(I + 2, 11, [10, 11, 12]).
 ERROR: elementAtPos/3: Arguments are not sufficiently instantiated
