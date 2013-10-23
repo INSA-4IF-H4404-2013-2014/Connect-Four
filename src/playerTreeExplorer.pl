@@ -76,13 +76,11 @@ evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
 	evaluateDiago1(Matrix, ColumnId, PlayerId, Diago1),
 	evaluateDiago2(Matrix, ColumnId, PlayerId, Diago2).
 	
-distanceAll(Matrix, ColumnId, PlayerId, Column, Line/*, Diago1, Diago2*/) :-
+distanceAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
 	distanceColumn(Matrix, ColumnId, PlayerId, Column),
-	distanceLine(Matrix, ColumnId, PlayerId, Line).
-	/*,
+	distanceLine(Matrix, ColumnId, PlayerId, Line),
 	distanceDiago1(Matrix, ColumnId, PlayerId, Diago1),
-	distanceDiago2(Matrix, ColumnId, PlayerId, Diago2)
-	.*/
+	distanceDiago2(Matrix, ColumnId, PlayerId, Diago2).
 
 % Convert the number of align pawn of the player into the corresponding value
 currentPlayerCoeff(Value, Result) :- Value1 is Value - 1, Result is 10 ^ Value1.
@@ -90,8 +88,8 @@ currentPlayerCoeff(Value, Result) :- Value1 is Value - 1, Result is 10 ^ Value1.
 % Convert the distance value into a score -> currentPlayerDistCoeff(Value, Score)
 currentPlayerDistCoeff(0, 0).
 currentPlayerDistCoeff(1, 5).
-currentPlayerDistCoeff(2, 2).
-currentPlayerDistCoeff(3, 1).
+currentPlayerDistCoeff(2, 3).
+currentPlayerDistCoeff(3, 2).
 
 % Return the maximum value obtained by evaluation for the current player
 evaluateCurrentPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
@@ -100,12 +98,12 @@ evaluateCurrentPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
 	currentPlayerCoeff(Line, RLine),
 	currentPlayerCoeff(Diago1, RDiago1),
 	currentPlayerCoeff(Diago2, RDiago2),
-	distanceAll(Matrix, ColumnId, PlayerId, DColumn, DLine /*DDiago1, DDiago2*/),
+	distanceAll(Matrix, ColumnId, PlayerId, DColumn, DLine, DDiago1, DDiago2),
 	currentPlayerDistCoeff(DColumn, RDColumn),
 	currentPlayerDistCoeff(DLine, RDLine),
-	/*currentPlayerDistCoeff(DDiago1, RDDiago1),
-	currentPlayerDistCoeff(DDiago2, RDDiago2),*/
-	getMax([RColumn, RLine, RDiago1, RDiago2, RDColumn, RDLine/*, RDDiago1, RDDiago2*/], MaxWin).
+	currentPlayerDistCoeff(DDiago1, RDDiago1),
+	currentPlayerDistCoeff(DDiago2, RDDiago2),
+	getMax([RColumn, RLine, RDiago1, RDiago2, RDColumn, RDLine, RDDiago1, RDDiago2], MaxWin).
 
 % Convert the number of align pawn of the opponent into the corresponding value	
 otherPlayerCoeff(Value, Result) :- Value1 is Value - 1, Coeff is 10 ^ Value1, Result is 5 * Coeff.
@@ -373,6 +371,117 @@ countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :-
 countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :-
 	LineId1 is LineId - 1 ->
 		countDistanceColumn(Matrix, ColumnId, LineRef, LineId1, PlayerId, Value).
+		
+		
+% Get the Value of the distance from one PlayerId's pawn to another in the same diago1 in the Matrix
+% If distance > 3 or out of grid, Value = 0
+distanceDiago1(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId - 1,
+	LineId2 is LineId + 1,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,	
+	countDistanceDiago1Left(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceDiago1Right(Matrix, ColumnId, ColumnId2, LineId2, PlayerId, Value2),
+	getMinDistance(Value1, Value2, Value).
+	
+% Stop when a pawn doesn't belong to the player or we are out of the grid
+countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		ColumnId = 0;
+		LineId = 0
+	), 
+	!.
+	
+countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+
+countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId - 1, LineId1 is LineId - 1) ->
+		countDistanceDiago1Left(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+			
+% Stop when a pawn doesn't belong to the player or we are out of the grid			
+countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1));
+		(LineId1 is LineId - 1, linesNumber(LineId1))
+	), 
+	!.
+	
+countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+	
+countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId + 1, LineId1 is LineId + 1) ->
+		countDistanceDiago1Right(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+		
+		
+% Get the Value of the distance from one PlayerId's pawn to another in the same diago2 in the Matrix
+% If distance > 3 or out of grid, Value = 0
+distanceDiago2(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId + 1,
+	LineId2 is LineId - 1,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,	
+	countDistanceDiago2Left(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceDiago2Right(Matrix, ColumnId, ColumnId2, LineId2, PlayerId, Value2),
+	getMinDistance(Value1, Value2, Value).
+	
+% Stop when a pawn doesn't belong to the player or we are out of the grid
+countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		ColumnId = 0; 
+		(LineId1 is LineId - 1, linesNumber(LineId1))
+	), 
+	!.
+	
+countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+
+countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId - 1, LineId1 is LineId + 1) ->
+		countDistanceDiago2Left(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+		
+		
+% Stop when a pawn doesn't belong to the player or we are out of the grid			
+countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1));
+		LineId = 0
+	), 
+	!.
+	
+countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+	
+countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId + 1, LineId1 is LineId - 1) ->
+		countDistanceDiago2Right(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+		
+		
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ALGO MIN-MAX
