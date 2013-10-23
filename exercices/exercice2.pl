@@ -1,5 +1,4 @@
-
-%%%%%%%%%%%%%%%%%%%%% Text existance d'un membre dans une liste
+%%%%%%%%%%%%%%%%%%%%% Test existence d'un membre dans une liste
 % END
     membre(X, [X|_]).
 
