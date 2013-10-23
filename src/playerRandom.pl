@@ -19,7 +19,7 @@ playerRandom(Matrix, _, ColumnIndexWantedMove) :-
 % Might dye by suicide
 
 % Play if the player has or winning move or can counter the opponent in the appropriate column
-playerRandomSmartKamikaze(Matrix, PlayerId, ColumnId) :-
+playerRandomKamikaze(Matrix, PlayerId, ColumnId) :-
 	gameObviousMove(Matrix, PlayerId, ColumnId) ->
         true;
         playerRandom(Matrix, PlayerId, ColumnId).
