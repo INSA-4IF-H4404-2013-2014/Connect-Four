@@ -9,3 +9,4 @@
 :- [aiKnowledgeIO].
 :- [aiKnowledgePopulate].
 :- [statsPlayer].
+:- [statsMatch].
