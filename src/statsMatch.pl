@@ -7,4 +7,4 @@ statsMatch(Player1, Player2, NumberCall) :-
 	write(Result),
 	write('\n'),
 	NumberCall2 is NumberCall - 1,  
-	statsMatch(Player1, Player2, NumberCall2).
+	statsMatch(Player1, Player2, NumberCall2), !.
