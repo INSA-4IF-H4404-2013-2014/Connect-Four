@@ -358,6 +358,116 @@ countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :-
 countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :-
 	LineId1 is LineId - 1 ->
 		countDistanceColumn(Matrix, ColumnId, LineRef, LineId1, PlayerId, Value).
+		
+		
+% Get the Value of the distance from one PlayerId's pawn to another in the same diago1 in the Matrix
+% If distance > 3 or out of grid, Value = 0
+distanceDiago1(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId - 1,
+	LineId2 is LineId + 1,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,	
+	countDistanceDiago1Left(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceDiago1Right(Matrix, ColumnId, ColumnId2, LineId2, PlayerId, Value2),
+	getMinDistance(Value1, Value2, Value).
+	
+% Stop when a pawn doesn't belong to the player or we are out of the grid
+countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		ColumnId = 0;
+		LineId = 0
+	), 
+	!.
+	
+countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+
+countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId - 1, LineId1 is LineId - 1) ->
+		countDistanceLineLeft(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+			
+% Stop when a pawn doesn't belong to the player or we are out of the grid			
+countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1));
+		(LineId1 is LineId - 1, linesNumber(LineId1))
+	), 
+	!.
+	
+countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+	
+countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId + 1, LineId1 is LineId + 1) ->
+		countDistanceDiago1Right(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+		
+		
+% Get the Value of the distance from one PlayerId's pawn to another in the same diago2 in the Matrix
+% If distance > 3 or out of grid, Value = 0
+distanceDiago2(Matrix, ColumnId, PlayerId, Value) :- 
+	gameColumnHeight(Matrix, ColumnId, LineId),
+	LineId1 is LineId + 1,
+	LineId2 is LineId - 1,
+	ColumnId1 is ColumnId - 1,
+	ColumnId2 is ColumnId + 1,	
+	countDistanceDiago2Left(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceDiago2Right(Matrix, ColumnId, ColumnId2, LineId2, PlayerId, Value2),
+	getMinDistance(Value1, Value2, Value).
+	
+% Stop when a pawn doesn't belong to the player or we are out of the grid
+countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		ColumnId = 0; 
+		(LineId1 is LineId - 1, linesNumber(LineId1))
+	), 
+	!.
+	
+countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+
+countDistancediago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId - 1, LineId1 is LineId + 1) ->
+		countDistanceDiago2(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+			
+% Stop when a pawn doesn't belong to the player or we are out of the grid			
+countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+	(	
+		Value > 3;
+		(ColumnId1 is ColumnId - 1, columnsNumber(ColumnId1));
+		LineId = 0
+	), 
+	!.
+	
+countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :- 
+	Value is (abs(ColumnRef - ColumnId)) - 1 ->
+		(	
+			gameGridGet(Matrix, ColumnId, LineId, PlayerId)
+		),
+		!.
+	
+countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
+	(ColumnId1 is ColumnId + 1, LineId1 is LineId - 1) ->
+		countDistanceDiago2Right(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
+		
+		
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ALGO MIN-MAX

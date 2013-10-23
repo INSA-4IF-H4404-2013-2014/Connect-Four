@@ -171,6 +171,27 @@ testDistanceColumn(Column, PlayerId, Value) :-
 	gamePrintGrid(ResGrid16),	
 	distanceColumn(ResGrid16, Column, PlayerId, Value).
 	
+testDistanceDiago(Column, PlayerId, V1, V2) :-
+	gameNewGrid(Grid),
+	gamePlay(Grid, 1, 1, ResGrid),
+	gamePlay(ResGrid, 2, 1, ResGrid2),
+	gamePlay(ResGrid2, 2, 2, ResGrid3),
+	gamePlay(ResGrid3, 3, 1, ResGrid5),
+	gamePlay(ResGrid5, 3, 1, ResGrid6),
+	gamePlay(ResGrid6, 3, 1, ResGrid7),
+	gamePlay(ResGrid7, 4, 2, ResGrid8),
+	gamePlay(ResGrid8, 4, 2, ResGrid9),
+	gamePlay(ResGrid9, 5, 1, ResGrid11),
+	gamePlay(ResGrid11, 5, 1, ResGrid12),
+	gamePlay(ResGrid12, 5, 1, ResGrid13),
+	gamePlay(ResGrid13, 5, 1, ResGrid14),
+	gamePlay(ResGrid14, 5, 1, ResGrid15),
+	gamePlay(ResGrid15, 2, 2, ResGrid16),
+	gamePlay(ResGrid16, 7, 1, ResGrid17), 
+	gamePrintGrid(ResGrid17),	
+	distanceDiago1(ResGrid17, Column, PlayerId, V1),
+	distanceDiago2(ResGrid17, Column, PlayerId, V2).
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % How to call this player
 % gameProcess(playerTreeExplorer, playerRandom, Result).
