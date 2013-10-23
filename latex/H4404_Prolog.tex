@@ -42,6 +42,7 @@
     % ------------------------------------------------------------------- HEADER
 
 	\renewcommand{\chaptername}{} %\renewcommand{\thechapter}{}
+	\renewcommand{\contentsname}{Sommaire}
 
 	\pagestyle{empty}
 	\pagenumbering{Roman}
@@ -68,7 +69,10 @@
 
 	\sloppy          % Justification moins stricte : des mots ne dépasseront pas des paragraphes
 
-
+    \frontmatter
+		\pagestyle{empty}
+		\tableofcontents
+		\addtocontents{toc}{\protect\thispagestyle{empty}}
 
 	\mainmatter
 	\pagestyle{headings}
@@ -83,6 +87,12 @@
 
 	\include{puissance4}
 
+	\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+	\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+	\addcontentsline{toc}{part}{Annexes}
+	\part*{Annexes}
+	\appendix
 	\include{implementationExercices}
 
 
