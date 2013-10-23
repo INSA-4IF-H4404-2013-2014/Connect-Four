@@ -134,7 +134,7 @@ evaluateOtherPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
 % actual matrix : Matrix
 evaluateLine(Matrix, ColumnId, PlayerId, Value) :-
 	gameColumnHeight(Matrix, ColumnId, LineId),
-	LineId1 is LineId + 1,
+	LineId1 is LineId,
 	ColumnId1 is ColumnId - 1,
 	ColumnId2 is ColumnId + 1,
 	countLineLeft(Matrix, ColumnId1, LineId1, PlayerId, Value1), countLineRight(Matrix, ColumnId2, LineId1, PlayerId, Value2),
@@ -162,7 +162,7 @@ countLineRight(Matrix, ColumnId, LineId, PlayerId, Value) :-
 % column to be played : ColumnId
 % player playing : PlayerId
 % actual matrix : Matrix
-evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- gameColumnHeight(Matrix, ColumnId, LineId), countColumn(Matrix, ColumnId, LineId, PlayerId, Value).
+evaluateColumn(Matrix, ColumnId, PlayerId, Value) :- gameColumnHeight(Matrix, ColumnId, LineId), LineId1 is LineId - 1, countColumn(Matrix, ColumnId, LineId1, PlayerId, Value).
 
 countColumn(Matrix, ColumnId, LineId, PlayerId, 1) :- (not(gameGridGet(Matrix, ColumnId, LineId, PlayerId)) ; LineId = 0), !.
 
@@ -189,8 +189,8 @@ evaluate(Matrix, ColumnId, PlayerId, Value) :-
 % actual matrix : Matrix
 evaluateDiago1(Matrix, ColumnId, PlayerId, Value) :- 
 	gameColumnHeight(Matrix, ColumnId, LineId),
-	LineId1 is LineId,
-	LineId2 is LineId + 2,
+	LineId1 is LineId - 1,
+	LineId2 is LineId + 1,
 	ColumnId1 is ColumnId - 1,
 	ColumnId2 is ColumnId + 1,	
 	countDiago1Left(Matrix, ColumnId1, LineId1, PlayerId, Value1), countDiago1Right(Matrix, ColumnId2, LineId2, PlayerId, Value2),
@@ -234,8 +234,8 @@ countDiago1Right(Matrix, ColumnId, LineId, PlayerId, Value) :-
 % actual matrix : Matrix
 evaluateDiago2(Matrix, ColumnId, PlayerId, Value) :- 
 	gameColumnHeight(Matrix, ColumnId, LineId),
-	LineId1 is LineId + 2,
-	LineId2 is LineId,
+	LineId1 is LineId + 1,
+	LineId2 is LineId - 1,
 	ColumnId1 is ColumnId - 1,
 	ColumnId2 is ColumnId + 1,	
 	countDiago2Left(Matrix, ColumnId1, LineId1, PlayerId, Value1), countDiago2Right(Matrix, ColumnId2, LineId2, PlayerId, Value2),
@@ -284,7 +284,7 @@ getMinDistance(Value1, Value2, Value) :- getMin([Value1, Value2], Value), !.
 % If distance > 3 or out of grid, Value = 0
 distanceLine(Matrix, ColumnId, PlayerId, Value) :-
 	gameColumnHeight(Matrix, ColumnId, LineId),
-	LineId1 is LineId + 1,
+	LineId1 is LineId,
 	ColumnId1 is ColumnId - 1,
 	ColumnId2 is ColumnId + 1,
 	countDistanceLineLeft(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceLineRight(Matrix, ColumnId, ColumnId2, LineId1, PlayerId, Value2),
@@ -337,8 +337,8 @@ countDistanceLineRight(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
 % If distance > 3 or out of grid, Value = 0
 distanceColumn(Matrix, ColumnId, PlayerId, Value) :- 
 	gameColumnHeight(Matrix, ColumnId, LineId), 
-	LineId1 is LineId + 1,
-	countDistanceColumn(Matrix, ColumnId, LineId1, LineId, PlayerId, Value).
+	LineId1 is LineId - 1,
+	countDistanceColumn(Matrix, ColumnId, LineId, LineId1, PlayerId, Value).
 
 countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, 0) :-
 	Value is (abs(LineRef - LineId)) - 1 ->
