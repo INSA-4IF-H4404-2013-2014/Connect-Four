@@ -7,6 +7,8 @@
 
 playerList(uiPlayer).
 playerList(playerRandom).
+playerList(playerRandomKamikaze).
+playerList(playerRandomSmart).
 playerList(playerTreeExplorer).
 playerList(aiPlayer).
 
