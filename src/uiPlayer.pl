@@ -2,11 +2,11 @@
 :- [gamePrint].
 
 %
-% launch the playerHuman which ask a move to the user until this move is valid.
+% launch the uiPlayer which ask a move to the user until this move is valid.
 %
 
 
-playerHuman(Grid, PlayerId, ColumnId) :-
+uiPlayer(Grid, PlayerId, ColumnId) :-
     uiColors(Colored),
     gamePrintGrid(Grid),
 	gamePrintSymbols(Colored, PlayerId, Symb),
@@ -36,5 +36,5 @@ playerHuman(Grid, PlayerId, ColumnId) :-
         write('---playeur--- invalide input\n'),
         write('    To play: press between 1 and 7\n'),
         write('    To abandon: press 0\n'),
-        playerHuman(Grid, PlayerId, ColumnId)
+        uiPlayer(Grid, PlayerId, ColumnId)
     ), !.
