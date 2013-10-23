@@ -2,22 +2,21 @@
 
 \section{Prédicats}
 
-La particularité de Prolog réside dans le fait qu'il n'y a pas d'itérations comme
-un langage de programmation conventionnel, tout n'est que prédicat. Ainsi, la
+La particularité de \texttt{Prolog} réside dans le fait qu'il n'y a pas d'itérations comme
+dans un langage de programmation conventionnel~: tout n'est que prédicat. Ainsi, la
 méthode de programmation est très différente. Il n'y a pas de traitement de données
-dans des variables que l'on met à jour, car la programmation par prédicats permet
+dans des variables que l'on met à jour, car la programmation par prédicat permet
 simplement de lier des propriétés entre des variables et/ou constantes.
 
-Considérons pour la suite, le prédicat
+\section{Vérification de propriétés}
+Considérons pour la suite, le prédicat suivant~:
 \[(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L\]
 
 
-\section{Vérification de propriétés}
+La vérification de propriétés permet de s'assurer qu'une (ou plusieurs) constante
+vérifie un ensemble de prédicats.
 
-La vérification de propriétés permet de s'assurer qu'une (ou plusieurs) constantes
-vérifient un ensemble de prédicats. Considérons le code énoncé précédemment.
-
-Alors on a à l'exécution
+Considérons le code énoncé précédemment. Alors on a à l'exécution~:
 
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(1, [1, 2, 3]).
@@ -28,25 +27,26 @@ false
 \end{lstlisting}
 
 En effet, à la première interrogation, on vérifie le prédicat $1 \in [1, 2, 3]$,
-cette propriété est vérifiée, d'où la réponse de Prolog «~\textit{true}~». Tandis que la seconde interrogation $4 \in [1, 2, 3]$ est fausse car 
+cette propriété est vérifiée, d'où la réponse de \texttt{Prolog} «~\textit{true}~». Tandis que la seconde interrogation $4 \in [1, 2, 3]$ est fausse car
 $4 \notin [1, 2, 3]$, d'où la réponse «~\textit{false}~».
 
 
 \section{Recherche de solutions}
 
-La recherche de solution consiste à définir des propriétés entre des
-objects et/ou constantes. Par exemple
+La recherche de solutions consiste à définir des propriétés entre des objets et/ou constantes. Par exemple~:
 \[
 	X \in [1, 2, 3]
 \]
 
- Ce qui en Prolog donne
+\pagebreak
+
+Ce qui en \texttt{Prolog} donne~:
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(X, [1, 2, 3]).
 \end{lstlisting}
 
-Ainsi a l'éxécution, Prolog est capable d'évaluer les solutions de $X$ grace a
-la définition précédente du prédicat membre
+Ainsi, à l'exécution, \texttt{Prolog} est capable d'évaluer les solutions de $X$ grâce à
+la définition précédente du prédicat membre.
 
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(X, [1, 2, 3]).
@@ -56,11 +56,12 @@ X = 3;
 false
 \end{lstlisting}
 
+On demande à \texttt{Prolog} s'il peut prouver le prédicat fourni. Ici, il existe plusieurs manières de le prouver. Taper le caractère «\texttt{;}» permet de lui demander de prouver le prédicat d'une autre façon. Cela explique le mot \texttt{false} à la fin, signifiant qu'il est impossible de prouver ce prédicat d'une autre manière que les trois précédemment données.
+
 
 \section{Recherche de solutions d'un système}
 
-Les propriétés d'une variable par exemple, peuvent être définies par plusieurs
-prédicats. Par exemple
+Les propriétés d'une variable par exemple, peuvent être définies par plusieurs prédicats. Par exemple~:
 \[
     \left\{  
     \begin{array}{c}
@@ -70,7 +71,7 @@ prédicats. Par exemple
     \right .
 \]
 
-Peut revenir simplement en Prolog à
+Peut revenir simplement en \texttt{Prolog} à
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(X, [1, 2, 3]), membre(X, [3, 4, 2]).
 X = 2;
@@ -83,25 +84,31 @@ false
 
 Le risque encouru lors de la recherche de solution(s), est qu'il est possible qu'une
 infinité de solutions vérifie une même propriété. Considérons par exemple
-le code suivant
+le code suivant~:
 
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(1, L).
 \end{lstlisting}
 
-Qui est équivalent à $1 \in L$. Cherchons à déterminer combien de listes
-pourraient vérifier cette propriété :
+Il est équivalent à $1 \in L$. Cherchons à déterminer combien de listes
+pourraient vérifier cette propriété~:
 
-\textbf{Initialisation}~: La liste $[1, 2]$ par exemple vérifie cette propriété.
+\pagebreak
 
-\textbf{Hérédité}~: En notant $cat(A, B)$ la concaténation de deux listes $A$ et
-$B$,\\
-Soit une liste $L$ telle que $1 \in L$,\\
-Alors $\forall X \in \mathbb{N} / 1 \in cat([X], L)$
+\begin{description}
+\item[Initialisation~:]{La liste $[1, 2]$ par exemple vérifie cette propriété.}
+\item[Hérédité~:]
+{
+	En notant $cat(A, B)$ la concaténation de deux listes $A$ et $B$,
+		\begin{itemize}
+			\item soit une liste $L$ telle que $1 \in L$,
+			\item alors $\forall X \in \mathbb{N}~~/~~1 \in cat([X], L)$.
+		\end{itemize}
+}
 
-\textbf{Conclusion}~: Il existe une infinité de solutions et Prolog va essayer
-de toutes les générer, causant une exception due au manque de mémoire de la
-machine.
+\item[Conclusion~:]{Il existe une infinité de solutions et \texttt{Prolog} va essayer
+de toutes les générer, causant une exception due au manque de mémoire de la machine.}
+\end{description}
 
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- membre(1, L).
@@ -117,22 +124,25 @@ L = [_G2213, _G2216, _G2219, _G2222, _G2225, 1|_G2229] ;
 
 \section{Programmation de prédicats triviaux}
 
-Auparavant, nous nous contentions d'utiliser des prédicats, mais, bien entendu,
-l'objectif est de pouvoir en coder soi-même. C'est ici que la méthode de programmation diffère
-complétement de la programmation itérative. Nous devons procéder avec une démarche
-d'analyse mathématique. Pour cela, intéressons-nous à la ré-écriture de
-\[(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L\]
+Depuis le début de ce rapport, nous nous sommes contentés d'utiliser des prédicats, mais bien entendu,
+l'objectif est de pouvoir en programmer soi-même. C'est ici que la méthode de programmation diffère
+complètement de la programmation itérative. Nous devons procéder avec une démarche
+d'analyse mathématique. Pour cela, intéressons-nous à la réécriture de~:
 
-Tout d'abord, on peut remarquer que si $X$ se trouve en tête de $L$ alors il appartient de manière évidente à cette liste. Autrement dit $X \in [X, ...]$, ou encore
-$X \in (L = cat([X], L1))$ avec $L1$ une autre liste. Alors on en déduit le
-premier prédicat 
+\[
+	(membre(X, L) \Leftrightarrow vrai) \Leftrightarrow X \in L
+\]
+
+Tout d'abord, on peut remarquer que si $X$ se trouve en tête de $L$, alors il appartient de manière évidente à cette liste. Autrement dit $X \in [X, ...]$, ou encore
+$X \in (L = cat([X], L1))$ avec $L1$ une autre liste. Alors on en déduit le premier prédicat~:
+
 \begin{lstlisting}[language=Prolog,frame=single]
 membre(X, [X|_]).
 \end{lstlisting}
 
 On remarque par ailleurs que si $X$ n'est pas en tête de la liste recherchée, alors il faut vérifier s'il n'est pas en tête de la sous-liste associée au retrait de cette tête, 
 \[\forall (X, Y) \in \mathbb{E}^2, X \in L \Rightarrow X \in cat([Y], L)\]
-Ainsi on en déduit le second prédicat
+Ainsi on en déduit le second prédicat~:
 \begin{lstlisting}[language=Prolog,frame=single]
 membre(X, [_|L]) :- membre(X, L).
 \end{lstlisting}

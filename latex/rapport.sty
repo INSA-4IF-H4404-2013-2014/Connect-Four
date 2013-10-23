@@ -64,53 +64,6 @@
 \PrerenderUnicode{é}
 
 
-
-
-% ================== GLOSSAIRE ================== %
-\usepackage[style=listgroup,toc,footnote,acronym]{glossaries} %nonumberlist
-%\renewcommand*{\glstextformat}[1]{#1} %Permet de mettre en forme un mot du glossaire cité
-
-\defglsdisplayfirst{\uwave{#1#4}} %Première apparition des mots du glossaire
-\defglsdisplay{\uwave{#1#4}} %Apparitions des mots du glossaire autres que la première
-
-%\defglsdisplayfirst[\acronymtype]{\uuline{\acronymfont{#1}#4}} %Première apparition des acronymes (à n'utiliser que sans l'option footnote, car sinon la footnote est écrasée et n'est pas créée).
-%\defglsdisplay[\acronymtype]{\texttt{\acronymfont{#1}#4}} %Apparitions des acronymes autres que la première
-
-%\makeatletter
-%    \defglsdisplayfirst[\acronymtype]{%
-%    \firstacronymfont{#1}#4\noexpand\protect\noexpand\footnote{%
-%       \noexpand\protect\noexpand\glslink
-%         [\@gls@link@opts]{\@gls@link@label}{#2}}}%
-%\makeatother
-
-\renewcommand{\firstacronymfont}[1]{\textsc{#1}}
-\renewcommand{\acronymfont}[1]{\bsc{#1}}
-
-%\makeatletter
-%   \defglsdisplayfirst[\acronymtype]{%
-%     \firstacronymfont{#1}#4\noexpand\protect\noexpand\footnote{%
-%     \noexpand\protect\noexpand\glslink
-%       [\@gls@link@opts]{\@gls@link@label}{#3}}}%
-%\makeatother
-
-\makeglossaries
-\include{glossaire}
-
-%Permet d'avoir les bons headers pour les glossaires (implique la déclaration de chapitres vides avant chaque \printglossary)
-\makeatletter
-\renewcommand*{\glossarysection}[2][\@gls@title]{%
-\def\@gls@title{#2}%
-\@ifundefined{phantomsection}{%
-\@glossarysection{#1}{#2}}{\@p@glossarysection{#1}{#2}}%
-}
-\makeatother
-
-
-
-
-
-
-
 \usepackage[nottoc,notlof]{tocbibind}
 
 %\renewcommand{\appendixtocname}{Annexes}
