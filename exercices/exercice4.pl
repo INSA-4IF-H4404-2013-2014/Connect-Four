@@ -1,4 +1,3 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% isSet(A)
 % END
     isSet(_, []).
@@ -28,7 +27,7 @@
         genSet(L, Result, []).
 
 
-% all following function are assuming the parameters
+% All following functions assume the parameters
 % are (un)ordered sets!!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg3 = arg1 U arg2
 % END
@@ -77,7 +76,7 @@
         setMinus(A, B, Minus),
         setMinus(B, A, Minus).
 
-% Actualy, the areEqualSets time complexity is the same as
+% Actually, the areEqualSets time complexity is the same as
 % setMinus O(len(A)*len(B)). But with sorted sets given into
 % parameters, this complexity would fall down to
 % O(min(len(A),len(B))).
