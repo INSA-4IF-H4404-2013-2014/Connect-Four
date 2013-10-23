@@ -12,6 +12,9 @@ playerList(playerRandomSmart).
 playerList(playerTreeExplorer).
 playerList(aiPlayer).
 
+
+ui :- ui(uiPlayer, 1).
+
 ui(PlayerAgainst, 1) :-
 	playerList(PlayerAgainst),
 	gameProcess(uiPlayer, PlayerAgainst, R, FinishGrid),
