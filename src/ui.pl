@@ -12,11 +12,18 @@ playerList(playerRandomSmart).
 playerList(playerTreeExplorer).
 playerList(aiPlayer).
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUCHES uiPlayer / uiPlayer game
+ui :- ui(uiPlayer, 1).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUCHES uiPlayer / PlayerAgainst game
 ui(PlayerAgainst, 1) :-
 	playerList(PlayerAgainst),
 	gameProcess(uiPlayer, PlayerAgainst, R, FinishGrid),
 	privateUiPrintEnd(FinishGrid, R).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUCHES PlayerAgainst / uiPlayer game
 ui(PlayerAgainst, 2) :-
 	playerList(PlayerAgainst),
 	gameProcess(PlayerAgainst, uiPlayer, R, FinishGrid),

@@ -59,7 +59,7 @@ privateGameProcess(Grid, PlayerId, Player, OtherPlayer, FinishGrid, Print, Resul
 						(
 							uiColors(Colored),
 							gamePrintSymbols(Colored, PlayerId, Symb),
-							write('\n---player--- ('),
+							write('---player--- ('),
 							write(Symb),
 							write(') just played into column '),
 							write(ColumnId),
