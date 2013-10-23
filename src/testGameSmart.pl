@@ -42,6 +42,26 @@ testCaseGameSmartSuicide([
     [1, 1]
 ]).
 
+testCaseGameSmartSuicide2([
+    [],
+    [1, 2],
+    [1, 2],
+    [1, 2],
+    [],
+    [],
+    []
+]).
+
+testCaseGameSmartSuicide3([
+    [],
+    [1, 2],
+    [2, 2],
+    [1, 2],
+    [],
+    [1],
+    []
+]).
+
 testCaseGameSmartPlayer2Win([
     [1],
     [1],
@@ -102,8 +122,20 @@ testGameIsSuicideMove :-
     gameIsSuicideMove(G2, 2, 7),
     not(gameIsSuicideMove(G2, 1, 7)).
 
+testGameSuicideMoves :-
+    testCaseGameSmartSuicide(G1),
+    testCaseGameSmartSuicide2(G2),
+    testCaseGameSmartSuicide3(G3),
+    gameSuicideMoves(G1, 1, []),
+    gameSuicideMoves(G1, 2, [7]),
+    gameSuicideMoves(G2, 1, []),
+    gameSuicideMoves(G2, 2, []),
+    gameSuicideMoves(G3, 1, [1, 5]),
+    gameSuicideMoves(G3, 2, []).
+
 testAllGameSmart :-
 	test(testGameCanWin),
 	test(testGameWinningMoves),
     test(testGameObviousMove),
-    test(testGameIsSuicideMove).
+    test(testGameIsSuicideMove),
+    test(testGameSuicideMoves).
