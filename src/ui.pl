@@ -3,6 +3,7 @@
 :- [playerRandom].
 :- [playerTreeExplorer].
 :- [aiPlayer].
+:- [gamePrint].
 
 playerList(uiPlayer).
 playerList(playerRandom).
@@ -21,8 +22,10 @@ ui(PlayerAgainst, 2) :-
 
 privateUiPrintEnd(FinishGrid, R) :-
 	gamePrintGrid(FinishGrid),
+	uiColors(Colored),
+	gamePrintSymbols(Colored, R, Symb),
 	(
-		( (R == 0) -> write('This is a draw match! Don\'t stay on a draw match. Play again and LET THE BEST WIN!') ) ;
-		( (R == 1) -> write('Player 1 WON!') ) ;
-		( (R == 2) -> write('Player 2 WON!') )
+		( (R == 0) -> write('\nThis is a DRAW match! Don\'t stay on a draw match. Play again and LET THE BEST WIN!') ) ;
+		( (R == 1) -> ( write('\nPlayer 1 ('), write(Symb), write(') WON!') ) ) ;
+		( (R == 2) -> ( write('\nPlayer 2 ('), write(Symb), write(') WON!') ) )
 	).
