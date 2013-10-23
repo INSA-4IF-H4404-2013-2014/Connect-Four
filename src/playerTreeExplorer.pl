@@ -389,7 +389,7 @@ distanceDiago1(Matrix, ColumnId, PlayerId, Value) :-
 	getMinDistance(Value1, Value2, Value).
 	
 % Stop when a pawn doesn't belong to the player or we are out of the grid
-countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+countDistanceDiago1Left(_, ColumnRef, ColumnId, LineId, _, 0) :-
 	Value is (abs(ColumnRef - ColumnId)) - 1 ->
 	(	
 		Value > 3;
@@ -410,7 +410,7 @@ countDistanceDiago1Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
 		countDistanceDiago1Left(Matrix, ColumnRef, ColumnId1, LineId1, PlayerId, Value).
 			
 % Stop when a pawn doesn't belong to the player or we are out of the grid			
-countDistanceDiago1Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+countDistanceDiago1Right(_, ColumnRef, ColumnId, LineId, _, 0) :-
 	Value is (abs(ColumnRef - ColumnId)) - 1 ->
 	(	
 		Value > 3;
@@ -443,7 +443,7 @@ distanceDiago2(Matrix, ColumnId, PlayerId, Value) :-
 	getMinDistance(Value1, Value2, Value).
 	
 % Stop when a pawn doesn't belong to the player or we are out of the grid
-countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+countDistanceDiago2Left(_, ColumnRef, ColumnId, LineId, _, 0) :-
 	Value is (abs(ColumnRef - ColumnId)) - 1 ->
 	(	
 		Value > 3;
@@ -465,7 +465,7 @@ countDistanceDiago2Left(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
 		
 		
 % Stop when a pawn doesn't belong to the player or we are out of the grid			
-countDistanceDiago2Right(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+countDistanceDiago2Right(_, ColumnRef, ColumnId, LineId, _, 0) :-
 	Value is (abs(ColumnRef - ColumnId)) - 1 ->
 	(	
 		Value > 3;
