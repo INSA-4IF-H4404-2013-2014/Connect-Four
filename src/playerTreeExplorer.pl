@@ -111,7 +111,11 @@ otherPlayerCoeff(Value, Result) :- Value1 is Value - 1, Coeff is 10 ^ Value1, Re
 % Return the maximum value obtained by evaluation for the opponent player
 evaluateOtherPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
 	gameOtherPlayer(PlayerId, OtherPlayer),
-	evaluateAll(Matrix, ColumnId, OtherPlayer, Column, Line, Diago1, Diago2),
+	evaluateAll(Matrix, ColumnId, OtherPlayer, Column1, Line1, Diago11, Diago21),
+	Column is Column1 - 1,
+	Line is Line1 - 1,
+	Diago1 is Diago11 - 1,
+	Diago2 is Diago21 - 1,
 	otherPlayerCoeff(Column, RColumn),
 	otherPlayerCoeff(Line, RLine),
 	otherPlayerCoeff(Diago1, RDiago1),
