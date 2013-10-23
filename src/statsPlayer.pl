@@ -1,6 +1,6 @@
-:- [gameCore].
-:- [playerRandom].
+
 :- [gameProcess].
+:- [playerRandom].
 
 %%%%%%%%%%%%%%%%%%%%%%%% SETTINGS - EDIT ACCORDINGLY %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Please add here all players to be tested, and give them a primary key.
