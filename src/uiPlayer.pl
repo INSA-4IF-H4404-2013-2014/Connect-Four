@@ -26,9 +26,7 @@ uiPlayer(Grid, PlayerId, ColumnId) :-
                 gamePlay(Grid, ColumnId, PlayerId, _)
             )
         )
-    ) -> (
-        write('\n')
-    );
+    ) -> ( true ) ;
     (
         write('\n'),
         write('---player--- invalid input\n'),
