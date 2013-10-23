@@ -52,6 +52,22 @@ indexOf([_|L], Elt, Idx) :- indexOf(L, Elt, Idx1), Idx is Idx1 + 1.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Évaluation d'une grille de jeu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Function to use :
+% evaluatePlay(Grid, ColumnId, PlayerId, MaxScore)
+
+evaluatePlay(Grid, ColumnId, PlayerId, MaxScore) :-
+	evaluateCurrentPlayer(Grid, ColumnId, PlayerId, Evaluation1) ->
+	evaluateOtherPlayer(Grid, ColumnId, PlayerId, Evaluation2) ->
+	(
+		Evaluation1 > Evaluation2 ->
+		MaxScore is Evaluation1
+		;
+		MaxScore is Evaluation2
+	).
+	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Launch all the evaluations
 evaluateAll(Matrix, ColumnId, PlayerId, Column, Line, Diago1, Diago2) :-
@@ -103,8 +119,7 @@ evaluateOtherPlayer(Matrix, ColumnId, PlayerId, MaxWin) :-
 	otherPlayerCoeff(Diago1, RDiago1),
 	otherPlayerCoeff(Diago2, RDiago2),
 	getMax([RColumn, RLine, RDiago1, RDiago2], MaxWin).
-
-
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %					!!!!!!!!!!! CAUTION !!!!!!!!!!	
@@ -174,7 +189,7 @@ countColumn(Matrix, ColumnId, LineId, PlayerId, Value) :-
 	
 evaluate(Matrix, ColumnId, PlayerId, Value) :-
 	evalutLine(Matrix, ColumnId, PlayerId, LinePawns),
-	LineValue is 10 ^ LinePaws,
+	LineValue is 10 ^ LinePawns,
 	evaluateColumn(Matrix, ColumnId, PlayerId, ColumnPawns),
 	ColumnValue is 10 ^ ColumnPawns,
 	Value is max(LineValue, ColumnValue).
@@ -290,7 +305,7 @@ distanceLine(Matrix, ColumnId, PlayerId, Value) :-
 	countDistanceLineLeft(Matrix, ColumnId, ColumnId1, LineId1, PlayerId, Value1), countDistanceLineRight(Matrix, ColumnId, ColumnId2, LineId1, PlayerId, Value2),
 	getMinDistance(Value1, Value2, Value).
 
-countDistanceLineLeft(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :- 
+countDistanceLineLeft(_, ColumnRef, ColumnId, _, _, 0) :- 
 		Value is (abs(ColumnRef - ColumnId)) - 1 ->
 		(	
 			Value > 3;
@@ -312,7 +327,7 @@ countDistanceLineLeft(Matrix, ColumnRef, ColumnId, LineId, PlayerId, Value) :-
 		
 		
 		
-countDistanceLineRight(Matrix, ColumnRef, ColumnId, LineId, PlayerId, 0) :-
+countDistanceLineRight(_, ColumnRef, ColumnId, _, _, 0) :-
 	Value is (abs(ColumnRef - ColumnId)) - 1 ->
 	(	
 		Value > 3;
@@ -340,7 +355,7 @@ distanceColumn(Matrix, ColumnId, PlayerId, Value) :-
 	LineId1 is LineId - 1,
 	countDistanceColumn(Matrix, ColumnId, LineId, LineId1, PlayerId, Value).
 
-countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, 0) :-
+countDistanceColumn(_, _, LineRef, LineId, _, 0) :-
 	Value is (abs(LineRef - LineId)) - 1 ->
 	(	
 		Value > 3;
@@ -393,7 +408,7 @@ countDistanceColumn(Matrix, ColumnId, LineRef, LineId, PlayerId, Value) :-
 %%%%%%%%%%%%%%%%%%%%
 %Profondeur maximale de recherche
 %%%%%%%%%%%%%%%%%%%%
-maxDepth(2).
+maxDepth(1).
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -404,7 +419,8 @@ maxDepth(2).
 %%%%%%%%%%%%%%%%%%%%
 privatePlayerTreeExplorer(_, _, NextCol, [], _, _) :-
 	NextCol1 is NextCol-1 ->
-	columnsNumber(NextCol1), write('col max reached') -> nl.
+	columnsNumber(NextCol1).
+	%write('col max reached') -> nl.
 	
 
 %%%%%%%%%%%%%%%%%%%%
@@ -423,14 +439,13 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 	gameColumnHeight(Grid, NextCol, ColumnHeight) ->
 	(
 		not(linesNumber(ColumnHeight)) ->
-		write(' playing and evaluating') -> nl ->
 		gamePlay(Grid, NextCol, CurrentPlayer, GridResult) ->
 		gamePrintGrid(GridResult) ->  %TO DELETE
-		evaluate(GridResult, NextCol, CurrentPlayer, Evaluation)
+		evaluatePlay(GridResult, NextCol, CurrentPlayer, Evaluation)
 		;
 		write(' can t play') -> nl ->
 		Evaluation = x
-	) ->
+	) ->  write(' evaluating the grid : ') -> write(Evaluation) -> nl ->
 	NextCol1 is NextCol + 1 ->
 	write(' calling brother node') -> nl ->
 	privatePlayerTreeExplorer(Grid1, IdPlayer, NextCol1, L, Depth, CurrentPlayer).
@@ -458,14 +473,13 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 	gameColumnHeight(Grid, NextCol, ColumnHeight) ->
 	(
 		not(linesNumber(ColumnHeight)) ->
-		write(' playing') -> nl ->
+		%write(' playing') -> nl ->
 		gamePlay(Grid, NextCol, CurrentPlayer, GridResult) ->
 		gamePrintGrid(GridResult) -> %TO DELETE
 		Depth1 is Depth + 1 ->
 		write(' calling deth + 1') -> nl ->
 		gameOtherPlayer(IdPlayer, NextPlayerId) ->
 		privatePlayerTreeExplorer(GridResult, IdPlayer, 1, EvaluationsResult, Depth1, NextPlayerId) ->
-		write(' evaluating the depth + 1 call') -> nl ->
 		removeXValues(EvaluationsResult, EvaluationsResult1) ->
 		(
 			IdPlayer = CurrentPlayer ->
@@ -475,7 +489,7 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 		)
 		;
 		Evaluation = x
-	) ->
+	) ->  write(' evaluating the depth + 1 call : ') -> write(Evaluation) -> nl ->
 	NextCol1 is NextCol + 1 ->
 	write(' calling brother node') -> nl ->
 	privatePlayerTreeExplorer(Grid1, IdPlayer, NextCol1, L, Depth, CurrentPlayer).
@@ -484,14 +498,17 @@ privatePlayerTreeExplorer(Grid, IdPlayer, NextCol, [Evaluation|L], Depth, Curren
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initial call
 playerTreeExplorer(Grid, PlayerId, NumCol) :-
-	write('=================================') -> nl ->
-	write('==== TREE EXPLORER INIT CALL ====') -> nl ->
-	write('=================================') -> nl -> 
-	gamePrintGrid(Grid) -> %TO DELETE
-	write('=================================') -> nl ->
+	%write('=================================') -> nl ->
+	%write('==== TREE EXPLORER INIT CALL ====') -> nl ->
+	%write('=================================') -> nl -> 
+	%gamePrintGrid(Grid) -> %TO DELETE
+	%write('=================================') -> nl ->
 	
 	copy_term(Grid, Grid1) ->
 	privatePlayerTreeExplorer(Grid1, PlayerId, 1, Evaluations, 1, PlayerId) ->
 	removeXValues(Evaluations, Evaluations1) ->
 	getMax(Evaluations1, Max) ->
-	indexOf(Evaluations, Max, NumCol).
+	indexOf(Evaluations, Max, NumCol) ->
+	write(' FINAL EVALUATION = ') -> write(Evaluations) -> nl ->
+	write(' Max = ') -> write(Max) -> nl ->
+	write(' COL = ') -> write(NumCol) -> nl.

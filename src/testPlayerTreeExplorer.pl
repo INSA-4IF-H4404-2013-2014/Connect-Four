@@ -174,4 +174,5 @@ testDistanceColumn(Column, PlayerId, Value) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % How to call this player
 % gameProcess(playerTreeExplorer, playerRandom, Result).
+% gameProcess(playerTreeExplorer, playerHuman, Result).
 	
