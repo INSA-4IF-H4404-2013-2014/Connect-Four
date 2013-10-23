@@ -2,15 +2,14 @@
 :- [gamePrint].
 
 %
-% launch the playerHuman which ask a move to the user until this move is valid.
+% launch the uiPlayer which ask a move to the user until this move is valid.
 %
 
 
-playerHuman(Grid, PlayerId, ColumnId) :-
+uiPlayer(Grid, PlayerId, ColumnId) :-
     uiColors(Colored),
-    gamePrintGrid(Grid),
 	gamePrintSymbols(Colored, PlayerId, Symb),
-	write('---playeur--- ('),
+	write('---player--- ('),
 	write(Symb),
 	write(') which column ? '),
 	get_single_char(C),
@@ -24,17 +23,14 @@ playerHuman(Grid, PlayerId, ColumnId) :-
                 write(' -> '),
                 write(ColumnId),
                 write('\n'),
-                gamePlay(Grid, ColumnId, PlayerId, NewGrid),
-                gamePrintGrid(NewGrid)
+                gamePlay(Grid, ColumnId, PlayerId, _)
             )
         )
-    ) -> (
-        write('\n')
-    );
+    ) -> ( true ) ;
     (
         write('\n'),
-        write('---playeur--- invalide input\n'),
-        write('    To play: press between 1 and 7\n'),
+        write('---player--- invalid input\n'),
+        write('    To play, press between 1 and 7\n'),
         write('    To abandon: press 0\n'),
-        playerHuman(Grid, PlayerId, ColumnId)
+        uiPlayer(Grid, PlayerId, ColumnId)
     ), !.

@@ -1,4 +1,3 @@
-
 personne(pjeanmarie,h).
 personne(mmathieu,h).
 personne(mscuturici,f).

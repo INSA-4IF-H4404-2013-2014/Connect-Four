@@ -1,46 +1,39 @@
 \chapter{Projet~: Puissance~4}
 
-\section{Règles du jeux}
-
-Le puissance 4 est un jeux de societé à deux joueurs. Chaque joueurs doivent,
-chacun leurs tour, inserer un jeton de leurs couleur dans une des sept
-colones cote à cote, chacunes aillant une capacité maximal de
-six jetons. Le but du jeu est d'aligner verticalement, horizontalement ou
-ou en diagonal, 4 jetons de sa couleur avant l'adversaire.
+\section{Règles du jeu}
+Le \texttt{Puissance~4} est un jeu de société à deux joueurs. Chaque joueur doit,
+chacun son tour, insérer un jeton de sa couleur dans une des sept colonnes
+du plateau de jeu, chacune ayant une capacité maximale de six jetons. On peut voir chaque colonne comme
+une pile de jetons, puisqu'on ne peut qu'empiler des jetons les uns sur les autres.
+Le but du jeu est d'\textbf{aligner} verticalement, horizontalement ou en diagonale \textbf{4~jetons} de sa couleur avant l'adversaire.
 
 
 \section{But du joueur idéal}
 
-Dans le cas d'un joueur idéal, le but n'est simplement d'aligner 3 jetons precedament,
-puis prévoir de jouer le 4\up{ème} au tour suivant. En effet, l'adversaire pourrait bloquer cet alignement,
-lorsque c'est a son tour de jouer. L'objectif du joueur idéal est donc de réaliser
-au moins deux alignements de 3 jetons en un coup. Laissant ainsi le joueur adverse
-contre l'inévitable fatalité~: Il ne peut plus contrer ces alignements en un seul jeton.
+Dans le cas d'un joueur idéal, le but est simplement, après avoir aligné 3~jetons,
+de prévoir de jouer le 4\up{ème} au tour suivant. Mais, comme l'adversaire pourrait casser la ligne en jouant à cet endroit
+lors de son tour, l'objectif du joueur idéal est donc de réaliser au moins deux alignements de 3 jetons,
+laissant ainsi le joueur adverse contre l'inévitable~: il ne pourra plus contrer ces alignements en un seul jeton.
 
 
-\section{Travail realisé}
+\section{Travail réalisé}
 
-En plus de l'implémentation du module de méchanisme de jeux et réalisation des
-tests unitaire, nous avons implementé 4 joueurs aillant des stratégies différentes~:
-
+En plus de l'implémentation du module du mécanisme de jeu et de la réalisation des
+tests unitaires, nous avons implémenté 4 joueurs autonomes, dont une intelligence artificielle~:
 \begin{itemize}
 
     \item joueur aléatoire~;
-    \item joueur aléatoire munis d'heuristiques~;
+    \item joueur aléatoire muni d'heuristiques~;
     \item joueur parcourant l'arbre des possibilités~;
-    \item inteligence artificielle apprenant par \textbf{moteur d'inférence}, de ses
-    échecs precédent.
-
+    \item intelligence artificielle apprenant par \textbf{moteur d'inférence} de ses
+    échecs précédents.\\
 \end{itemize}
 
-Mais aussi~:
-
+Mais également~:
 \begin{itemize}
-
-    \item interface utilisateur en ligne de commende pour jouer une partie~;
-    \item module de tournoit générant des statistiques~;
+    \item interface utilisateur en ligne de commande pour jouer une partie~;
+    \item module de tournois générant des statistiques~;
     \item module d'entrainement du moteur d'inférence~;
-    \item module d'étude de l'apprantissage du moteur d'inférence~;
-    \item sauvgarde et chargement de la base de connaissances du moteur d'inférence.
-
+    \item module d'étude de l'apprentissage du moteur d'inférence~;
+    \item sauvegarde et chargement de la base de connaissances du moteur d'inférence.
 \end{itemize}

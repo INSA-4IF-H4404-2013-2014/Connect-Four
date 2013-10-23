@@ -1,11 +1,12 @@
-:- [gameCore].
-:- [playerRandom].
+
 :- [gameProcess].
+:- [playerRandom].
 
 %%%%%%%%%%%%%%%%%%%%%%%% SETTINGS - EDIT ACCORDINGLY %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Please add here all players to be tested, and give them a primary key.
 statsPlayerFightingPlayerDB(playerRandom, 1).
-statsPlayerFightingPlayerDB(playerRandomSmart, 2).
+statsPlayerFightingPlayerDB(playerRandomKamikaze, 2).
+statsPlayerFightingPlayerDB(playerRandomSmart, 3).
 
 %Please indicate here the default number of matchs per round you want.
 statsPlayerDefaultMatchsPerRound(100).

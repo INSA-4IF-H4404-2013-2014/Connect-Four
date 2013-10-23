@@ -4,7 +4,10 @@
 :- [gameOver].
 :- [gameProcess].
 :- [playerRandom].
-:- [playerHuman].
+:- [playerTreeExplorer].
 :- [aiPlayer].
+:- [aiKnowledgeIO].
 :- [aiKnowledgePopulate].
+:- [ui].
 :- [statsPlayer].
+:- [statsMatch].

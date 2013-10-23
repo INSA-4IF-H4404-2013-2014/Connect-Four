@@ -73,3 +73,23 @@ gameIsSuicideMove(Grid, PlayerId, ColumnId) :-
             gameOver(NewGrid2, ColumnId, OtherPlayerId)
         )
     ), !.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHECK IF A PLAY IS A SUICIDE
+gameSuicideMoves(_, _, [], 0).
+
+gameSuicideMoves(Grid, PlayerId, [ColumnId|ColumnIds], ColumnId) :-
+    gameIsSuicideMove(Grid, PlayerId, ColumnId),
+    ColumnId1 is ColumnId - 1,
+    gameSuicideMoves(Grid, PlayerId, ColumnIds, ColumnId1).
+
+gameSuicideMoves(Grid, PlayerId, ColumnIds, ColumnId) :-
+    not(gameIsSuicideMove(Grid, PlayerId, ColumnId)),
+    ColumnId1 is ColumnId - 1,
+    gameSuicideMoves(Grid, PlayerId, ColumnIds, ColumnId1).
+
+gameSuicideMoves(Grid, PlayerId, ColumnIds) :-
+    columnsNumber(ColumnId),
+    gameSuicideMoves(Grid, PlayerId, RColumnIds, ColumnId),
+    reverse(RColumnIds, ColumnIds),
+    !.

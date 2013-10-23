@@ -1,7 +1,9 @@
 
 :- [gameCore].
 :- [gameOver].
+:- [uiPlayer].
 :- [traceUtils].
+:- [gamePrint].
 
 
 % ==============================================================================
@@ -17,9 +19,15 @@
 % ==============================================================================
 
 gameProcess(Player1, Player2, Result, FinishGrid) :-
-	gameNewGrid(Grid), 
-	privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, Result),
-    !.
+	gameNewGrid(Grid),
+	(
+		(
+			( (Player1 = uiPlayer) ; (Player2 = uiPlayer) ) ->
+				privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, 1, Result)
+		) ;
+		privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, 0, Result)
+	).
+
 
 
 % ==============================================================================
@@ -34,30 +42,44 @@ gameProcess(Player1, Player2, Result) :-
 
 
 % ====================================================================== PRIVATE
-
-privateGameProcess(Grid, PlayerId, Player, OtherPlayer, FinishGrid, Result) :-
-    call(Player, Grid, PlayerId, ColumnId) ->
-    (
-        not(gameIsValidePlay(Grid, ColumnId)) -> ( % invalide play => abandon
-            debugWrite(game, [Player, ' has returned an invalide column id\n']),
-            FinishGrid = Grid,
-            gameOtherPlayer(PlayerId, Result)
-        );
-        gamePlay(Grid, ColumnId, PlayerId, NewGrid),
-        (
-            debugWrite(game, [Player, ' has played column ', ColumnId, '\n']),
-            gameOver(NewGrid, ColumnId, OverResult) -> (
-                FinishGrid = Grid,
-                Result = OverResult
-            );
-            (
-                gameOtherPlayer(PlayerId, OtherPlayerId),
-                privateGameProcess(NewGrid, OtherPlayerId, OtherPlayer, Player, FinishGrid, Result)
-            )
-        )
-    );
-    ( % Player has failed => abandon
-        debugWrite(game, [Player, ' has failed']),
-        FinishGrid = Grid,
-        gameOtherPlayer(PlayerId, Result)
-    ).
+privateGameProcess(Grid, PlayerId, Player, OtherPlayer, FinishGrid, Print, Result) :-
+	((Print == 1) -> (gamePrintGrid(Grid),write('\n')) ; true),
+	(
+		call(Player, Grid, PlayerId, ColumnId) ->
+		(
+			not(gameIsValidePlay(Grid, ColumnId)) -> ( % invalide play => abandon
+				debugWrite(game, [Player, ' has returned an invalid column id\n']),
+				FinishGrid = Grid,
+				gameOtherPlayer(PlayerId, Result)
+			);
+			gamePlay(Grid, ColumnId, PlayerId, NewGrid),
+			(
+				(
+					((Print == 1), not(Player = uiPlayer)) ->
+						(
+							uiColors(Colored),
+							gamePrintSymbols(Colored, PlayerId, Symb),
+							write('---player--- ('),
+							write(Symb),
+							write(') just played into column '),
+							write(ColumnId),
+							write('\n')
+						)
+					; true
+				),
+				gameOver(NewGrid, ColumnId, OverResult) -> (
+					FinishGrid = NewGrid,
+					Result = OverResult
+				);
+				(
+					gameOtherPlayer(PlayerId, OtherPlayerId),
+					privateGameProcess(NewGrid, OtherPlayerId, OtherPlayer, Player, FinishGrid, Print, Result)
+				)
+			)
+		);
+		( % Player has failed => abandon
+			debugWrite(game, [Player, ' has failed']),
+			FinishGrid = Grid,
+			gameOtherPlayer(PlayerId, Result)
+		)
+	).

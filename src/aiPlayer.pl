@@ -30,5 +30,5 @@ aiPlayer(Grid, PlayerId, ColumnId) :-
     -> (
         true
     ); (
-        playerRandom(Grid, PlayerId, ColumnId)
+        playerRandomSmart(Grid, PlayerId, ColumnId)
     ).

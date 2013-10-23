@@ -20,6 +20,24 @@ aiKnowledgeLoad(FilePath, Schemas) :-
     ).
 
 
+% ==============================================================================
+% aiKnowledgeStore(FilePath)
+% -------------------------
+% <FilePath> : the knowledge database's file path to write to
+% ==============================================================================
+
+aiKnowledgeStore(FilePath) :-
+    aiKnowledgeAll(Schemas) -> (
+        aiKnowledgeStore(FilePath, Schemas)
+    ).
+
+aiKnowledgeStore(FilePath, Schemas) :-
+    open(FilePath, write, Stream) -> (
+        privateAiKnowledgeStore(Stream, Schemas),
+        close(Stream)
+    ).
+
+
 % ====================================================================== PRIVATE
 
 privateAiKnowledgeLoad([], []).
@@ -44,3 +62,27 @@ privateAiKnowledgeLoadSave([]).
 privateAiKnowledgeLoadSave([Schema|Schemas]) :-
     aiKnowledgeSaveSchema(Schema),
     privateAiKnowledgeLoadSave(Schemas).
+
+
+
+privateAiKnowledgeStore(_, []).
+privateAiKnowledgeStore(Stream, [[Element|Schema]|Schemas]) :-
+    write(Stream, '\''),
+    privateAiKnowledgeStoreElement(Stream, Element),
+    privateAiKnowledgeStoreSchema(Stream, Schema),
+    privateAiKnowledgeStore(Stream, Schemas).
+
+privateAiKnowledgeStoreSchema(Stream, []) :-
+    write(Stream, '\'.\n').
+
+privateAiKnowledgeStoreSchema(Stream, [Element|Schema]) :-
+    write(Stream, ','),
+    privateAiKnowledgeStoreElement(Stream, Element),
+    privateAiKnowledgeStoreSchema(Stream, Schema).
+
+privateAiKnowledgeStoreElement(Stream, [X,Y,Z]) :-
+    write(Stream, X),
+    write(Stream, ' '),
+    write(Stream, Y),
+    write(Stream, ' '),
+    write(Stream, Z).
