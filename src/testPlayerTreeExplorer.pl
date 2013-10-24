@@ -1,5 +1,6 @@
 :- [playerTreeExplorer].
 :- [playerRandom].
+:- [uiPlayer].
 :- [gameCore].
 :- [gameProcess].
 :- [playerTreeExplorer].
@@ -30,6 +31,17 @@ testIndexOf :-
 	indexOf([1], 1, Idx),
 	indexOf([x,1,2,x,3,4,x], 4, Idx),
 	indexOf([x,1,2,4,x,3,4,x], 4, Idx).
+	
+testCountItem :- 
+	countItem([], 2, N),
+	countItem([2], 2, N),
+	countItem([1, 2, 3, 2, 5, 2], 2, N).
+	
+testCountNegative :-
+	countNegative([], NbOcc),
+	countNegative([5], NbOcc),
+	countNegative([-1000], NbOcc),
+	countNegative([-2,1,-1,3,8], NbOcc).
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evaluate function	
