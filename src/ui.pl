@@ -20,17 +20,17 @@ ui :- ui(uiPlayer, 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUCHES uiPlayer / PlayerAgainst game
 ui(PlayerAgainst, 1) :-
 	playerList(PlayerAgainst),
-	gameProcess(uiPlayer, PlayerAgainst, R, FinishGrid),
-	privateUiPrintEnd(FinishGrid, R).
+	gameProcess(uiPlayer, PlayerAgainst, R, FinishGrid, LastColumnPlayed),
+	privateUiPrintEnd(FinishGrid, R, LastColumnPlayed).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LAUCHES PlayerAgainst / uiPlayer game
 ui(PlayerAgainst, 2) :-
 	playerList(PlayerAgainst),
-	gameProcess(PlayerAgainst, uiPlayer, R, FinishGrid),
-	privateUiPrintEnd(FinishGrid, R).
+	gameProcess(PlayerAgainst, uiPlayer, R, FinishGrid, LastColumnPlayed),
+	privateUiPrintEnd(FinishGrid, R, LastColumnPlayed).
 
-privateUiPrintEnd(FinishGrid, R) :-
-	gamePrintGrid(FinishGrid),
+privateUiPrintEnd(FinishGrid, R, LastColumnPlayed) :-
+	gamePrintGrid(FinishGrid, LastColumnPlayed),
 	uiColors(Colored),
 	gamePrintSymbols(Colored, R, Symb),
 	(
