@@ -14,17 +14,20 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% arg2 = set(arg1)
 % END
-    genSet([], Result, Result).
+    genSet([], []).
 
 % FOREACH
-    genSet([X|L], Result, BuildedSet) :-
-        member(X, BuildedSet) ->
-        genSet(L, Result, BuildedSet) ;
-        genSet(L, Result, [X|BuildedSet]).
+    genSet([X|L], Set) :-
+        member(X, L) ->
+        genSet(L, Set) ;
+        genSet(L, RSet),
+        Set = [X|RSet].
 
-% INIT
-    genSet(L,Result) :-
-        genSet(L, Result, []).
+
+hello(X) :-
+    integer(X),
+        write('hello\n'),
+        X = 1.
 
 
 % All following functions assume the parameters
