@@ -19,14 +19,15 @@
 % ==============================================================================
 
 gameProcess(Player1, Player2, Result, FinishGrid, LastColumnPlayed) :-
-	gameNewGrid(Grid),
-	(
-		(
-			( (Player1 = uiPlayer) ; (Player2 = uiPlayer) ) ->
-				privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, 1, 0, LastColumnPlayed, Result)
-		) ;
-		privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, 0, 0, LastColumnPlayed, Result)
-	).
+    gameNewGrid(Grid),
+    (
+        (
+            ( (Player1 = uiPlayer) ; (Player2 = uiPlayer) ) ->
+                privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, 1, 0, LastColumnPlayed, Result)
+        ) ;
+        privateGameProcess(Grid, 1, Player1, Player2, FinishGrid, 0, 0, LastColumnPlayed, Result)
+    ),
+    !.
 
 
 
