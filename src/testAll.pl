@@ -12,6 +12,7 @@
 :- [testAiSmart].
 :- [testAiPlayer].
 :- [testStatsPlayer].
+:- [testStatsMatch].
 :- [testPlayerTreeExplorer].
 
 
@@ -29,4 +30,5 @@ testAll :-
     testAllAiKnowledgeIO,
     testAllAiSmart,
     testAllAiPlayer,
-	testAllStatsPlayer.
+	testAllStatsPlayer,
+	testAllStatsMatch.
