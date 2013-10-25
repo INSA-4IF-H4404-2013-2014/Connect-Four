@@ -218,36 +218,34 @@ En effet, cette erreur peut être facilement reproduite par~:
 ERROR: elementAtPos/3: Arguments are not sufficiently instantiated
 \end{lstlisting}
 
-% ------ UNCORRECTED
 \section{Conditions}
-En Prolog, il est possible de realisé des conditions avec la syntaze suivante :
+En \texttt{Prolog}, il est possible de réaliser des conditions avec la syntaxe suivante~:
 \begin{lstlisting}[language=Prolog,frame=single]
 (condition) -> (faire quelque chose) ; (faire autre chose)
 \end{lstlisting}
 
-Codons par exemple, un prédicat liant une liste, et un ensemble associer.
-Naivement, une liste vide est alors liée a un ensemble vide~:
+Codons par exemple, un prédicat liant une liste et un ensemble associé.
+Trivialement, une liste vide est alors liée à un ensemble vide~:
 \begin{lstlisting}[language=Prolog,frame=single]
 genSet([], []).
 \end{lstlisting}
 
-Soit $L$ une liste, $S$ son ensemble associé et $X_n$ telle que $L_{n} = cat([X_n], L_{n-1})$,\\
-Alors~: $S_{n} = cat([X_n], S_{n-1}) \Leftrightarrow X_n \notin S_{n-1}$ car $S_{n}$ un ensemble.\\
-D'ou~:
+Soit $L$ une liste, $S$ son ensemble associé et $X_n$ tel que $L_{n} = cat([X_n], L_{n-1})$,\\
+Alors~: $S_{n} = cat([X_n], S_{n-1}) \Leftrightarrow X_n \notin S_{n-1}$ car $S_{n}$ est un ensemble.\\
+D'où~:
 \begin{lstlisting}[language=Prolog,frame=single]
 genSet([X|L], Set) :- member(X, L), genSet(L, Set).
 genSet([X|L], [X|S]) :- not(member(X, L)), genSet(L, S).
 \end{lstlisting}
 
-Remarquez alors que les deux predicats ci dessus sont complémentaire. Mais si nous avions
-été dans un cas complementaire mais avec une condition plus compliquer, La condition
-permet alors de factoriser le code, prévenant ainsi les souci de complétude~:
+Remarquez alors que les deux prédicats ci-dessus sont complémentaires. Mais si nous avions
+été dans un cas similaire mais plus complexe, la condition permet alors de factoriser le code, prévenant ainsi les problèmes de maintenabilité du code source~:
 \begin{lstlisting}[language=Prolog,frame=single]
 genSet([X|L], S) :- member(X, L) -> genSet(L, S) ; genSet(L, R), S = [X|R].
 \end{lstlisting}
 
-\section{Implication pour garder un déterminisme}
-Considerons le code si dessous generant une liste ordonnée $[N, N-1, ..., 1]$~:
+\section{Causalité}
+Considérons le code ci-dessous générant une liste ordonnée $[N, N-1, ..., 1]$~:
 \begin{lstlisting}[language=Prolog,frame=single]
 generateRList([], 0).
 generateRList([I|L], I) :- I1 is I - 1, generate(L, I1).
@@ -261,16 +259,17 @@ R = [1, 2, 3, 4, 5, 6, 7] ;
 ERROR: Out of global stack
 \end{lstlisting}
 
-En effet, Prolog va essayer de chercher toute les solutions $L$ et $R$ vérifiant ce
-prédicat. Alors la premiere solution est obvieuse par l'ordre des predicats. Mais
-prolog va aussi essayer de chercher des solution vérifiant cette propriéte mais en partant
-de $sort$. Ce dernier etant non déterministe, l'infinitée de solutions fait planter
-Prolog. Seulement, en remplaceant un $ET$ par une implication, on obtient~:
+En effet, \texttt{Prolog} va essayer de chercher toutes les solutions $L$ et $R$ vérifiant ce
+prédicat. Alors la première solution est évidente par l'ordre des prédicats. Mais
+\texttt{Prolog} va aussi essayer de chercher des solutions vérifiant cette propriété mais en commençant par évaluer
+\texttt{sort}. Ce dernier étant non déterministe, l'infinité de solutions provoque un dépassement de la pile.
+Mais en remplaçant un «~\texttt{,}~» (et) par un «~\texttt{->}~» (causalité), on obtient~:
 \begin{lstlisting}[language=Prolog,frame=single]
 ?- generateRList(L, 7) -> sort(L, R).
 L = [7, 6, 5, 4, 3, 2, 1],
 R = [1, 2, 3, 4, 5, 6, 7].
 ?-
 \end{lstlisting}
-En effet, nous précision que si $R$ ne vérifie pas $generateRList(R, 7)$, alors
-il n'est meme pas la peine d'aller plus loint.
+
+Ici, nous précisons que si $L$ ne vérifie pas \texttt{generateRList(L, 7)}, alors
+il n'est pas la peine d'aller plus loin.
