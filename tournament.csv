@@ -1,0 +1,7 @@
+,"playerRandom",,,"playerRandomKamikaze",,,"playerRandomSmart",,,"playerTreeExplorer",,,"aiPlayer",,
+,"p1","p2","draw","p1","p2","draw","p1","p2","draw","p1","p2","draw","p1","p2","draw"
+"playerRandom",31,19,0,3,47,0,2,48,0,1,49,0,0,50,0
+"playerRandomKamikaze",48,2,0,25,24,1,27,22,1,35,15,0,6,37,7
+"playerRandomSmart",50,0,0,31,18,1,27,21,2,35,14,1,8,34,8
+"playerTreeExplorer",50,0,0,34,16,0,25,25,0,0,50,0,0,50,0
+"aiPlayer",50,0,0,46,2,2,37,10,3,50,0,0,50,0,0
